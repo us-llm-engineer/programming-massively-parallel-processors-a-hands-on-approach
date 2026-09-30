@@ -1,0 +1,45 @@
+========== RESOURCE CLIFFS on NVIDIA GeForce GTX 1650 Ti (1024 thread slots/SM, 65536 regs/SM, 65536 B smem/SM) ==========
+
+---- A. Register cliff (block = 256 threads, no smem) ----
+  K      regs/thr   regs/block     blocks/SM  threads/SM occupancy  
+  4      19         4864           4          1024          100.0%  
+  8      26         6656           4          1024          100.0%  
+  16     46         11776          4          1024          100.0%  
+  32     64         16384          4          1024          100.0%  
+  48     64         16384          4          1024          100.0%  
+  64     96         24576          2          512            50.0%  <-- CLIFF
+  80     128        32768          2          512            50.0%  
+  96     128        32768          2          512            50.0%  
+  128    168        43008          1          256            25.0%  <-- CLIFF
+  160    255        65280          1          256            25.0%   (spilling?)
+  Read: occupancy falls in whole-block steps (256 threads each), never smoothly.
+  Registers per thread is decided by the compiler, so a 'harmless' code change can
+  move a kernel across a step. The book's 10->11 example is exactly this.
+
+---- B. Shared-memory cliff (block = 256 threads, kernel with few registers) ----
+  kernel uses 26 regs/thread
+  smem/block     blocks/SM  threads/SM occupancy  
+  0              4          1024          100.0%  
+  4096           4          1024          100.0%  
+  8192           4          1024          100.0%  
+  12288          4          1024          100.0%  
+  16384          4          1024          100.0%  
+  20480          3          768            75.0%  <-- CLIFF
+  24576          2          512            50.0%  <-- CLIFF
+  32768          2          512            50.0%  
+  40960          1          256            25.0%  <-- CLIFF
+  49152          1          256            25.0%  
+  Read: with 65536 B of smem per SM the block count is floor(smem_SM / smem_block);
+  the runtime also reserves a small amount per block, so exact boundaries sit slightly
+  below the round numbers (book's G80 example: 5 KB/block -> 3 blocks, not 4).
+
+---- C. Two resources at once: which limiter wins? (block = 256) ----
+  regs     smem/block   blocks/SM  threads/SM note
+  26       0            4          1024       both allow the same
+  96       0            2          512        REGISTERS bind
+  26       24576        2          512        SHARED MEMORY binds
+  96       24576        2          512        both allow the same
+  128      0            2          512        REGISTERS bind
+  128      12288        2          512        REGISTERS bind
+  Read: the SM obeys the tightest of all partitions at once; fixing the one you
+  expected may change nothing if another resource is the real limiter.

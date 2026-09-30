@@ -1,0 +1,26 @@
+========== OCCUPANCY vs MEASURED TIME on NVIDIA GeForce GTX 1650 Ti ==========
+block = 128 threads, 1048576 threads total, 15 reps after warm-up
+
+smem/blk blocks/SM warps/SM  occup.   | RAND             | SEQ              | FMA1             | FMA4             |
+                                      | ms (x vs full)   | ms (x vs full)   | ms (x vs full)   | ms (x vs full)   |
+8192     8         32         100.0%  |    7.285 ( 1.00x) |    0.487 ( 1.00x) |    1.463 ( 1.00x) |    1.482 ( 1.00x) |
+9216     7         28          87.5%  |    7.267 ( 1.00x) |    0.512 ( 1.05x) |    1.473 ( 1.01x) |    1.478 ( 1.00x) |
+10752    6         24          75.0%  |    7.267 ( 1.00x) |    0.556 ( 1.14x) |    1.470 ( 1.01x) |    1.473 ( 0.99x) |
+13056    5         20          62.5%  |    7.265 ( 1.00x) |    0.630 ( 1.30x) |    1.470 ( 1.01x) |    1.474 ( 0.99x) |
+16384    4         16          50.0%  |    7.259 ( 1.00x) |    0.756 ( 1.55x) |    1.476 ( 1.01x) |    1.483 ( 1.00x) |
+21760    3         12          37.5%  |    7.260 ( 1.00x) |    0.954 ( 1.96x) |    1.482 ( 1.01x) |    1.485 ( 1.00x) |
+32768    2         8           25.0%  |    7.262 ( 1.00x) |    1.361 ( 2.80x) |    1.549 ( 1.06x) |    1.485 ( 1.00x) |
+49152    1         4           12.5%  |    7.377 ( 1.01x) |    2.619 ( 5.38x) |    3.070 ( 2.10x) |    1.629 ( 1.10x) |
+
+'x vs full' = time relative to the first row (max blocks/SM). 2.00x means twice as slow.
+Small steps (a few %) are within run-to-run noise; an earlier run showed one 13% outlier.
+
+How to read:
+  RAND : random 64 MB gathers are limited by DRAM random-access throughput; even a few warps
+         keep the memory system busy, so residency barely matters (no exposed-latency effect).
+  SEQ  : coalesced dependent loads are cheap for DRAM but each step waits a full memory latency,
+         so time tracks how many warps are resident to cover that wait (the book's claim).
+  FMA1 : a dependent FMA chain needs a few warps per scheduler; it only degrades at the lowest
+         occupancy rows.
+  FMA4 : four independent chains give each thread its own parallelism (ILP), so it tolerates
+         low occupancy better. Occupancy is a means to hide latency, not the goal itself.

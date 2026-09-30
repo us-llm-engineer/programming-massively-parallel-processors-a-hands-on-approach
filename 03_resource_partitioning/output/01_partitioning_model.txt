@@ -1,0 +1,42 @@
+========== DYNAMIC PARTITIONING OF SM RESOURCES ==========
+
+---- A. Per-SM limits: the book's G80 vs this GPU ----
+  resource (per SM)                  G80 (book)     this GPU
+  thread slots                              768         1024
+  thread-block slots                          8           16
+  32-bit registers                         8192        65536
+  shared memory (bytes)                   16384        65536
+  max threads per block                     512         1024
+  this GPU: NVIDIA GeForce GTX 1650 Ti, 16 SMs, warp = 32 -> max 32 resident warps/SM
+
+---- B. The book's own examples, reproduced with the formula (G80 limits) ----
+  case                                                              model   book  limiter       threads/SM
+  256 thr, 10 regs/thr           (Ch.6: 3 blocks, 768 thr)              3      3  thread slots  768  OK
+  256 thr, 11 regs/thr  <- cliff (Ch.6: 2 blocks, 512 thr)              2      2  registers     512  OK
+  64 thr/block                   (Ch.6: 8 blocks, 512 thr)              8      8  block slots   512  OK
+  256 thr, 5 KB smem/block       (Ch.5: 3 blocks)                       3      3  thread slots  768  OK
+  256 thr, 2 KB smem (16x16 tile)(Ch.5: 3 blocks, 6 KB used)            3      3  thread slots  768  OK
+  Read: 10->11 registers per thread costs a whole block: 768 -> 512 threads (-33%).
+  The book calls this a 'performance cliff'.
+
+---- C. This GPU: blocks/SM vs block size (trivial kernel, no smem) ----
+  kernel uses 8 registers/thread, 0 B static smem
+  block    model      runtime    limiter       threads/SM warps/SM     occupancy
+  32       16         16         block slots   512        16            50.0%  
+  64       16         16         thread=block  1024       32           100.0%  
+  128      8          8          thread slots  1024       32           100.0%  
+  256      4          4          thread slots  1024       32           100.0%  
+  512      2          2          thread slots  1024       32           100.0%  
+  1024     1          1          thread slots  1024       32           100.0%  
+  Read: block size 32 hits the BLOCK-slot cap (16 blocks x 1 warp = 16 warps) -> 50% occupancy
+  although thread slots and registers are free: the conflict between two hardware caps.
+  Sizes >= 64 fill the 1024 thread slots. (Book, G80: 64-thread blocks stop at 8 blocks = 512 thr.)
+
+---- D. Batch-3 tiled matmul kernels on this GPU ----
+  TILE_WIDTH  threads  regs   smem B    blocks/SM  threads/SM occupancy  limiter(model)
+  8           64       40     512       16         1024          100.0%  thread=block
+  16          256      38     2048      4          1024          100.0%  thread slots
+  32          1024     41     8192      1          1024          100.0%  thread slots
+  Read: all three fill the thread slots (100% occupancy; TILE_WIDTH 8 ties with the block-slot cap).
+  So residency does NOT explain batch 3's timings (tile 8 slowest, tile 32 fastest);
+  that ordering is consistent with data reuse (larger tile = fewer DRAM bytes), not occupancy.

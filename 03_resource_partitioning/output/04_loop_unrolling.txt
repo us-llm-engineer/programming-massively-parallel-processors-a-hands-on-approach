@@ -1,0 +1,39 @@
+========== LOOP UNROLLING on NVIDIA GeForce GTX 1650 Ti ==========
+warm timings: 1 warm-up round + 20 averaged rounds, variants interleaved
+
+---- 1. Tiled matmul dot-product loop (book Fig 6.14 / 6.16), N = 1024 ----
+  correctness of all 12 variants vs CPU (16 sampled rows): PASS
+  tile   unroll     regs   blocks/SM  ms        GFLOP/s   vs unroll 1
+  8      1 (none)   20     16         11.644    184.4     1.00x
+  8      2          20     16         11.624    184.7     1.00x
+  8      4          24     16         10.027    214.2     1.16x
+  8      8 (full)   40     16         9.904     216.8     1.18x
+  16     1 (none)   20     4          7.990     268.8     1.00x
+  16     2          20     4          7.952     270.0     1.00x
+  16     4          24     4          6.420     334.5     1.24x
+  16     16 (full)  38     4          6.330     339.2     1.26x
+  32     1 (none)   20     1          7.586     283.1     1.00x
+  32     2          20     1          7.556     284.2     1.00x
+  32     4          24     1          6.088     352.8     1.25x
+  32     32 (full)  41     1          5.809     369.7     1.31x
+  Book reference (G80): full unroll gave >20% at 16x16 tiles, ~0% at 8x8 (memory-bound).
+
+---- 2. Pure instruction issue: 8 independent FMA chains ----
+  unroll   regs   blocks/SM  ms        GFLOP/s   vs unroll 1
+  1        15     4          3.238     2652.5    1.00x
+  2        14     4          3.144     2731.9    1.03x
+  4        15     4          3.158     2720.1    1.03x
+  8        22     4          3.148     2728.5    1.03x
+  16       22     4          3.143     2732.9    1.03x
+  Loop body = 8 FMAs; overhead per iteration (counter, compare, branch) is a visible share
+  of issued instructions, which is the situation the book's 1/3 argument describes.
+
+---- 3. Memory-bound streaming sum (64 MB read, 16 coalesced loads/thread) ----
+  unroll   regs   blocks/SM  ms        GB/s      vs unroll 1
+  1        10     4          0.474     141.7     1.00x
+  2        15     4          0.437     153.5     1.08x
+  4        26     4          0.432     155.4     1.10x
+  16       36     4          0.426     157.5     1.11x
+  Theoretical DRAM peak from device properties: 192 GB/s.
+  If every row sits at the same GB/s, DRAM (not instructions) is the limit and unrolling
+  cannot help, which is the book's 8x8-tile observation.
