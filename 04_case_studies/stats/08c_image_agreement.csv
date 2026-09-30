@@ -1,0 +1,4 @@
+trigonometry,mse,psnr_db,rel_rms_pct
+accurate sinf/cosf (v4),1.7484e-08,126.60,0.00014
+hardware, reduced to one cycle (v5),1.6156e-08,126.94,0.00014
+hardware, NO range reduction,2.0602e-08,125.89,0.00016

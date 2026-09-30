@@ -1,0 +1,43 @@
+==================== MRI RECONSTRUCTION FROM A SIMULATED NON-CARTESIAN SCAN (NVIDIA GeForce GTX 1650 Ti) ====================
+phantom -> radial k-space samples -> d = F rho + 1 % complex noise -> images. PSNR = 20 log10(max(I0)/sqrt(MSE)); images are scaled by the
+best real factor before comparison. [book] full reconstruction against a phantom: PSNR 27.6 dB (CPU and accurate GPU) vs 27.5 dB with hardware trig.
+
+---- 2D 128x128, 128 radial spokes x 128 samples : 16384 voxels x 16384 k-space samples (2.68e+08 pairs per F or F^H) ----
+  scan check: DC sample |d| = 2030.67 vs sum of phantom = 2031.20 (F rho at k = 0)
+  method                                         trig     PSNR (dB)   rel RMS %  iteration   time ms   
+  plain adjoint F^H d                            accurate 14.1        79.3       0           11.6      
+  density-compensated adjoint F^H(w d)           accurate 20.3        39.0       0           11.3      
+  plain adjoint F^H d                            hardware 14.1        79.3       0           7.9       
+  density-compensated adjoint F^H(w d)           hardware 20.3        39.0       0           7.6       
+  CG (F^H F + lambda I) x = F^H d                accurate 14.1        79.3       1           24.5      
+  CG (F^H F + lambda I) x = F^H d                accurate 19.7        41.6       5           122.1     
+  CG (F^H F + lambda I) x = F^H d                accurate 23.2        28.0       10          241.9     
+  CG (F^H F + lambda I) x = F^H d                accurate 24.3        24.5       40          864.7     
+  CG (F^H F + lambda I) x = F^H d                hardware 14.1        79.3       1           11.9      
+  CG (F^H F + lambda I) x = F^H d                hardware 19.7        41.6       5           71.8      
+  CG (F^H F + lambda I) x = F^H d                hardware 23.2        28.0       10          145.7     
+  CG (F^H F + lambda I) x = F^H d                hardware 24.3        24.5       40          550.4     
+
+---- 3D 32^3, 256 radial spokes x 128 samples : 32768 voxels x 32768 k-space samples (1.07e+09 pairs per F or F^H) ----
+  scan check: DC sample |d| = 2866.99 vs sum of phantom = 2861.70 (F rho at k = 0)
+  method                                         trig     PSNR (dB)   rel RMS %  iteration   time ms   
+  plain adjoint F^H d                            accurate 14.2        87.6       0           39.4      
+  density-compensated adjoint F^H(w d)           accurate 16.1        70.0       0           38.5      
+  plain adjoint F^H d                            hardware 14.2        87.6       0           40.4      
+  density-compensated adjoint F^H(w d)           hardware 16.1        70.0       0           38.9      
+  CG (F^H F + lambda I) x = F^H d                accurate 14.2        87.6       1           85.7      
+  CG (F^H F + lambda I) x = F^H d                accurate 16.5        67.0       5           434.9     
+  CG (F^H F + lambda I) x = F^H d                accurate 17.4        60.1       10          882.0     
+  CG (F^H F + lambda I) x = F^H d                accurate 17.9        57.2       25          2203.4    
+  CG (F^H F + lambda I) x = F^H d                hardware 14.2        87.6       1           73.3      
+  CG (F^H F + lambda I) x = F^H d                hardware 16.5        67.0       5           377.5     
+  CG (F^H F + lambda I) x = F^H d                hardware 17.4        60.1       10          752.0     
+  CG (F^H F + lambda I) x = F^H d                hardware 17.9        57.2       25          1852.6    
+
+How to read: 'plain adjoint' is blurred by the uneven sampling density of radial spokes; density compensation fixes the blur but keeps streaking
+and noise; the CG solution uses the whole data model and should give the highest PSNR. The last rows compare accurate against hardware trigonometry.
+Images (central slice for 3D) are in stats/08e_*.bin; run `make figures` to render figures/08_reconstruction*.png.
+
+ALL VARIANTS PASS
+
+[GPU during this run: 6.6 s wall | mean utilisation 70 % | >= 50 % for 76 % of the time, idle (<= 5 %) for 24 % | mean SM clock 1309 MHz | mean power 27.7 W | max temp 75 C | NVML, 100 ms samples]

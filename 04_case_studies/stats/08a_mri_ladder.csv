@@ -1,0 +1,7 @@
+version,scale,voxels,samples,ms,gpairs_per_s,gflops_13,err_rel_rms,check
+"v1 naive (global memory)",reduced,262144,8192,99.3031,21.6255,281.13,1.01e-05,PASS
+"v2 registers",reduced,262144,8192,79.4386,27.0333,351.43,1.01e-05,PASS
+"v3 constant memory, 3 arrays",reduced,262144,8192,112.7991,19.0381,247.50,1.01e-05,PASS
+"v4 constant memory, struct",reduced,262144,8192,78.0460,27.5156,357.70,1.01e-05,PASS
+"v5 + hardware sin/cos",reduced,262144,8192,51.2398,41.9105,544.84,7.46e-06,PASS
+v5 full scale,full,2097152,284592,8994.4,66.3562,862.63,2.69e-05,PASS

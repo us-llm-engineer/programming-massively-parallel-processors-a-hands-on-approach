@@ -1,0 +1,27 @@
+==================== MRI F^H d: THE OPTIMISATION LADDER (NVIDIA GeForce GTX 1650 Ti) ====================
+[book] G80 results for the full problem: naive 5.4 GFLOPS (41 min), constant memory + registers 22.8 GFLOPS (9.8 min), fully optimised 144.5 GFLOPS (1.5 min).
+Error = worst |GPU - double CPU| over 200 sampled voxels, relative to the RMS magnitude of the reference values (PASS if < 1e-3 for accurate
+trigonometry, < 5e-3 for hardware trigonometry). Reduced scale: mean of 5 timed runs after 1 warm-up.
+
+---- 0. Loop fission: mu = conj(Phi) d on the GPU, 65536 samples: max |GPU - CPU| = 6.0e-08  PASS ----
+
+---- 1. Reduced scale: 262144 voxels (64^3) x 8192 samples = 2.15e+09 pairs; sequential CPU (Fig 8.4B, 1 core): 0.047 G pairs/s ----
+version                            ms        G pairs/s   GFLOPS     vs v1      vs CPU      regs      | err       
+v1 naive (global memory)           99.30     21.63       281.1      1.00       455.6       32        | 1.0e-05   PASS
+v2 registers                       79.44     27.03       351.4      1.25       569.6       30        | 1.0e-05   PASS
+v3 constant memory, 3 arrays       112.80    19.04       247.5      0.88       401.1       30        | 1.0e-05   PASS
+v4 constant memory, struct         78.05     27.52       357.7      1.27       579.7       30        | 1.0e-05   PASS
+v5 + hardware sin/cos              51.24     41.91       544.8      1.94       883.0       25        | 7.5e-06   PASS
+  'vs CPU' is the ratio of pair rates (GPU pairs/s over the single-core sequential rate). Book reference for the ladder shape: each step
+  should be faster than the one before; the size of each step on this GPU is what the table shows.
+
+---- 2. FULL scale (the book's benchmark): 128^3 = 2,097,152 voxels x 284,592 samples, version v5 ----
+  (waited 1 s for the GPU to cool to 73 C before measuring)
+  pairs: 5.968e+11 | time: 8.99 s | 66.36 G pairs/s | 862.6 GFLOPS (13 per pair) | launches: 139 chunks of 2048 samples
+  sequential CPU at 0.047 G pairs/s would need about 12575 s (3.5 h): not run. Book: 342 min on its CPU, 1.5 min on the G80.
+  error at 32 sampled voxels (32 x 284,592 terms in double precision): 2.69e-05 relative to the RMS value 518.4  PASS
+  note: GPU at 83 C, SM clock 1350 MHz right after this row (thermal/power management can slow later rows)
+
+ALL VARIANTS PASS
+
+[GPU during this run: 14.4 s wall | mean utilisation 86 % | >= 50 % for 94 % of the time, idle (<= 5 %) for 0 % | mean SM clock 1377 MHz | mean power 32.5 W | max temp 84 C | NVML, 100 ms samples]

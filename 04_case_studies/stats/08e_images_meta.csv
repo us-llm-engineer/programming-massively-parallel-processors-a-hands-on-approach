@@ -1,0 +1,13 @@
+case,tag,size
+2D,phantom,128
+2D,adjoint,128
+2D,dcf,128
+2D,cg05_acc,128
+2D,cg10_acc,128
+2D,cg40_acc,128
+3D,phantom,32
+3D,adjoint,32
+3D,dcf,32
+3D,cg05_acc,32
+3D,cg10_acc,32
+3D,cg25_acc,32

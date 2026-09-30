@@ -1,0 +1,6 @@
+case                                                  time ms          inst_executed.sum  inst_executed_pipe_xu.sum issue_active.avg.pct_of_pe pipe_fma_cycles_active.avg warps_active.avg.pct_of_pe      t_sector_hit_rate.pct
+fhd_v1                                                  97.86              5637283840.00               134217728.00                      66.73                      63.56                      97.97                      98.52
+fhd_v2                                                  79.47              5033394176.00               134217728.00                      73.37                      80.22                      97.88                      98.39
+fhd_v3                                                 110.78              4765646848.00               134217728.00                      49.88                      56.16                      94.74                      99.41
+fhd_v4                                                  77.07              4832755712.00               134217728.00                      72.64                      82.71                      97.70                      99.41
+void fhd_v5<1>                                          48.10              2148630528.00               201326592.00                      60.90                      40.26                      80.19                      99.43

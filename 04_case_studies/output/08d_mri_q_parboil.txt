@@ -1,0 +1,18 @@
+==================== MRI-Q ON THE PARBOIL DATASETS (NVIDIA GeForce GTX 1650 Ti) ====================
+Q(x) = sum_k |phi_k|^2 exp(i 2 pi k.x), one thread per voxel. Error vs a double reference at 200 sampled voxels, relative to the RMS of Q.
+Mean of 20 timed runs after a warm-up and a clock-priming pass.
+
+set    numK     numX      pairs       | variant                            ms         G pairs/s   vs CPU     | err
+small  3072     32768     1.01e+08    | accurate, k-space in global memory 2.800      35.96       643        | 5.6e-06 PASS
+small  3072     32768     1.01e+08    | accurate, float4 in constant memory 2.464      40.85       731        | 5.6e-06 PASS
+small  3072     32768     1.01e+08    | hardware sin/cos, reduced, constant 0.981      102.65      1837       | 5.6e-06 PASS
+large  2048     262144    5.37e+08    | accurate, k-space in global memory 18.477     29.06       435        | 3.6e-06 PASS
+large  2048     262144    5.37e+08    | accurate, float4 in constant memory 15.269     35.16       526        | 3.6e-06 PASS
+large  2048     262144    5.37e+08    | hardware sin/cos, reduced, constant 5.392      99.57       1490       | 3.0e-06 PASS
+
+How to read: 'vs CPU' is the ratio of pair rates against the single-core float loop on the same data. The small set has few voxels (32^3) and
+the large set many more (64^3) but fewer samples; per-pair cost is what matters when comparing rows. Times include the constant-memory uploads.
+
+ALL VARIANTS PASS
+
+[GPU during this run: 2.4 s wall | mean utilisation 31 % | >= 50 % for 30 % of the time, idle (<= 5 %) for 30 % | mean SM clock 1356 MHz | mean power 26.5 W | max temp 75 C | NVML, 100 ms samples]

@@ -1,0 +1,42 @@
+==================== MRI F^H d: ACCURACY AND TUNING (NVIDIA GeForce GTX 1650 Ti) ====================
+
+---- A. Sine/cosine accuracy vs the size of the argument (1,000,000 random angles per range, double-precision reference) ----
+[book] hardware trigonometry trades a little accuracy for a lot of speed. Max abs error of sin/cos:
+|angle| up to    | raw __sinf     reduced __sinf   accurate sinf 
+3.1              | 4.02e-07       4.93e-07         7.83e-08      
+6.3              | 8.56e-07       6.81e-07         8.63e-08      
+100.0            | 1.00e-05       7.19e-06         8.58e-08      
+1000.0           | 1.36e-04       8.79e-05         8.53e-08      
+10000.0          | 1.17e-03       7.84e-04         8.55e-08      
+  Read: raw hardware sine/cosine degrades as |angle| grows; reducing the argument to one cycle first is somewhat better, but from about
+  1000 rad up both are limited by the float ANGLE itself (spacing ~1e-4 rad there), which the accurate library functions also see
+  (their error here is measured against the double sine of the same float angle, so it stays at float precision).
+
+---- B. F^H d image agreement with the double-precision image (book: PSNR 27.6 dB vs 27.5 dB with fast trig) ----
+4096 voxels x 8192 samples (1186.3 ms in double on the CPU). PSNR = 20 log10(max|I0| / sqrt(MSE)) on the magnitude image; 'rel RMS' = sqrt(MSE) / RMS(|I0|).
+trigonometry                                   MSE          PSNR (dB)    rel RMS (%) 
+accurate sinf/cosf (v4)                        1.748e-08    126.6        0.0001      
+hardware, reduced to one cycle (v5)            1.616e-08    126.9        0.0001      
+hardware, NO range reduction                   2.060e-08    125.9        0.0002      
+  Read: the PSNR here measures agreement of the SAME F^H d image computed two ways, so it is far above the book's 27 dB, which
+  measured a full reconstruction against a phantom (dominated by the reconstruction itself). What carries over is the ordering:
+  accurate > reduced hardware >> raw hardware, and that a reduced hardware kernel costs almost nothing in image agreement.
+
+---- C. Joint tuning sweep on the fast kernel: 262,144 voxels (64^3) x 8,192 samples, min of 3 launches per combination ----
+  (waited 5 s for the GPU to cool to 74 C before measuring)
+block    chunk    unroll   | ms        G pairs/s   regs   blocks/SM  
+best combination per block size (of 20 chunk x unroll combinations each):
+  block 32   best: chunk 4096  unroll 8  ->  23.62 ms  (90.9 G pairs/s)
+  block 64   best: chunk 4096  unroll 8  ->  21.77 ms  (98.7 G pairs/s)
+  block 128  best: chunk 4096  unroll 8  ->  21.74 ms  (98.8 G pairs/s)
+  block 256  best: chunk 2048  unroll 4  ->  24.09 ms  (89.1 G pairs/s)
+  block 512  best: chunk 4096  unroll 4  ->  26.30 ms  (81.6 G pairs/s)
+one-at-a-time tuning (block, then chunk, then unroll): block 32, chunk 4096, unroll 8 = 23.62 ms
+
+overall: best  block 128, chunk 4096, unroll 8 = 21.74 ms | worst block 128, chunk 256, unroll 1 = 150.82 ms (6.9x slower than best)
+default (block 256, chunk 2048, unroll 1) = 42.25 ms. Joint search vs default: +94.4 %; joint search vs one-at-a-time: +8.7 % [book: about 20 % vs one-at-a-time].
+all 100 combinations are in stats/08c_tuning.csv (for the heat-map).
+
+ALL VARIANTS PASS
+
+[GPU during this run: 21.7 s wall | mean utilisation 63 % | >= 50 % for 68 % of the time, idle (<= 5 %) for 28 % | mean SM clock 1291 MHz | mean power 24.2 W | max temp 85 C | NVML, 100 ms samples]

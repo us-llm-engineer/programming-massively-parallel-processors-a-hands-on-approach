@@ -1,0 +1,7 @@
+dataset,numK,numX,pairs,variant,ms,gpairs_per_s,err_rel_rms,check
+small,3072,32768,100663296,"accurate, k-space in global memory",2.9063,34.6365,5.61e-06,PASS
+small,3072,32768,100663296,"accurate, float4 in constant memory",2.4818,40.5600,5.61e-06,PASS
+small,3072,32768,100663296,"hardware sin/cos, reduced, constant",0.9195,109.4781,5.61e-06,PASS
+large,2048,262144,536870912,"accurate, k-space in global memory",18.3752,29.2171,3.56e-06,PASS
+large,2048,262144,536870912,"accurate, float4 in constant memory",15.2477,35.2100,3.56e-06,PASS
+large,2048,262144,536870912,"hardware sin/cos, reduced, constant",5.4380,98.7266,2.99e-06,PASS

@@ -1,0 +1,26 @@
+==================== MRI F^H d: THREAD MAPPING OPTIONS (NVIDIA GeForce GTX 1650 Ti) ====================
+[book] Option 1: N x M threads, too many; Option 2: M threads, write conflicts, atomics serialise; Option 3: N threads, no conflicts (recommended).
+Problem: 32768 voxels x 4096 samples = 1.34e+08 pairs, accurate sinf/cosf everywhere. Mean of 3 timed runs after a warm-up.
+Error = worst |GPU - double CPU| over 200 sampled voxels / RMS of the reference (atomic order changes float rounding a little).
+
+mapping                                    threads        ms          G pairs/s   vs Option 3 | err      
+Option 1: thread per (m, n) pair           134217728      6.56        20.45       1.7         | 6.1e-06   PASS
+Option 2: thread per sample, atomicAdd     4096           40.78       3.29        10.4        | 6.8e-06   PASS
+Option 2b: same, staggered start           4096           46.41       2.89        11.9        | 4.5e-06   PASS
+Option 3: thread per voxel (no atomics)    32768          3.91        34.35       1.0         | 6.1e-06   PASS
+
+  launch fill of each mapping on this GPU (Option 1 shown for one 16.8M-thread launch):
+    kernel                             regs  smem B  blocks   blocks/SM  SMs busy  warps/SM   of capacity
+    Option 1                         21    0       65536    4          16 of 16   32.0       100.0%
+    Option 2                         28    0       32       8          16 of 16   8.0        25.0%
+    Option 3                         28    0       128      4          16 of 16   32.0       100.0%
+
+What the numbers say [MEASURED]:
+  * Option 1 uses 1.34e+08 threads (in launches of 16777216). Slowdown vs Option 3: 1.7x. Chunked launches of this many threads are cheap on this GPU, so the book's 'too many threads' concern is small here (it also assumed the G80).
+  * Option 2 (M threads, atomics): 10.4x slower than Option 3. Its launch fills only 25 % of the warp capacity (launch fill above).
+  * Staggering Option 2's start voxel changes its time by +14 %: spreading the atomics does not help, so same-voxel contention is not its main cost here (hypothesis, not tested: too few threads to hide latency, and atomic throughput).
+  * Option 3 needs no atomics and keeps every voxel's sum in registers; it is the fastest mapping, as the book recommends.
+
+ALL VARIANTS PASS
+
+[GPU during this run: 1.3 s wall | mean utilisation 17 % | >= 50 % for 0 % of the time, idle (<= 5 %) for 58 % | mean SM clock 1435 MHz | mean power 28.2 W | max temp 72 C | NVML, 100 ms samples]

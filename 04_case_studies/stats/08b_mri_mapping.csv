@@ -1,0 +1,5 @@
+option,threads_launched,ms,gpairs_per_s,vs_option3,err_rel_rms,check
+"Option 1: thread per (m, n) pair",134217728,6.563,20.4522,1.68,6.10e-06,PASS
+"Option 2: thread per sample, atomicAdd",4096,40.779,3.2914,10.44,6.78e-06,PASS
+"Option 2b: same, staggered start",4096,46.409,2.8920,11.88,4.54e-06,PASS
+"Option 3: thread per voxel (no atomics)",32768,3.908,34.3456,1.00,6.10e-06,PASS
