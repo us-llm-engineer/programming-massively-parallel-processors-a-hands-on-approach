@@ -30,9 +30,11 @@ The case-study chapters are numbered as in the edition used here: Chapter 8 is M
 | MRI tuning | joint block/chunk/unroll search is 8.7 % faster than tuning one knob at a time (book: about 20 %) | `04_case_studies/output/08c_mri_accuracy_tuning.txt` |
 | GPU starvation, 256 MB streamed, 1024 FMAs per element | pinned + copy-ahead pipeline 75.3 ms wall vs 232.5 ms pageable synchronous copies | `04_case_studies/stats/09_summary.csv` |
 | Launch overhead, 2000 tiny kernels | 115.9 ms (sync each) vs 41.1 ms (sync once) vs 0.375 ms (fused) | `04_case_studies/stats/09_summary.csv` |
-| MRI reconstruction from radial k-space (2D, 40 CG iterations) | PSNR 14.1 dB (plain adjoint) -> 20.3 dB (density-compensated) -> 24.3 dB (CG) | `04_case_studies/stats/08e_recon_metrics.csv` |
+| Reconstruction of a synthetic phantom from simulated radial k-space (2D, 40 CG iterations) | PSNR 14.1 dB (plain adjoint) -> 20.3 dB (density-compensated) -> 24.3 dB (CG) | `04_case_studies/stats/08e_recon_metrics.csv` |
+| Reconstruction of real measured brain k-space (M4Raw, 4 coils, 3 slices), full data | GPU F^H d agrees with the dataset's own FFT reconstruction to 0.0002 % relative error (PSNR 125-128 dB, the float32 limit) | `04_case_studies/stats/08f_real_metrics.csv` |
+| Same real data, 3.7x fewer phase-encode lines, zero-filled | PSNR 24.6-24.7 dB (25.4-26.5 % relative error); aliasing visible; CG reaches the same image | `04_case_studies/stats/08f_real_metrics.csv` |
 
-Limits worth knowing: the 3D reconstruction (32^3) reaches only 17.9 dB and is too small to be convincing; the book's
+Limits worth knowing: the Parboil inputs contain scan geometry only (no measured signal), so real-data images come from the separate M4Raw dataset, which is Cartesian, not the non-Cartesian trajectories of the book's data; CG without a prior does not remove aliasing (it converges to the zero-filled image in one iteration); the synthetic 3D reconstruction (32^3) (32^3) reaches only 17.9 dB and is too small to be convincing; the book's
 27.6 dB figure comes from a different data set and is not reproduced by these synthetic scans; hardware `__sinf/__cosf`
 made no visible PSNR difference at this size (book: 27.6 vs 27.5 dB).
 
@@ -90,6 +92,8 @@ All figures are regenerated from `04_case_studies/stats/*.csv` by `make figures`
 
 <p><img src="04_case_studies/figures/08_reconstruction_3D.png" alt="3D reconstruction" width="100%"><br><sub>3D phantom (32^3), central slice, same methods; too coarse to be convincing.</sub></p>
 
+<p><img src="04_case_studies/figures/08_real_data.png" alt="Real-data reconstruction" width="100%"><br><sub>Real in-vivo brain k-space (M4Raw, 4 coils), slices 4, 8, 12: dataset reconstruction, our GPU F^H d from full data, zero-filled from 3.7x fewer lines, and CG on the same undersampled data (`stats/08f_real_metrics.csv`).</sub></p>
+
 ### GPU starvation (data pipeline)
 
 <table><tr>
@@ -112,7 +116,7 @@ All figures are regenerated from `04_case_studies/stats/*.csv` by `make figures`
 - NVIDIA GPU with compute capability 7.5 (Turing). Other architectures: change `ARCH` in the Makefiles.
 - CUDA Toolkit 12.x (`nvcc`), a C++14 host compiler (developed with CUDA 12.9 and gcc 11.5), GNU make.
 - NVML (`libnvidia-ml`) for the GPU monitoring built into the case-study programs (ships with the driver).
-- Python 3 with `numpy`, `pandas`, `matplotlib` only to regenerate figures.
+- Python 3 with `numpy`, `pandas`, `matplotlib` only to regenerate figures; plus `h5py` and `requests` for the small real-data fetch/convert scripts.
 - Optional: [Catch2 v3](https://github.com/catchorg/Catch2) (vcpkg: `vcpkg install catch2`) for `make catch2`; `ncu` with GPU
   performance counters enabled for `make profile`.
 
@@ -126,6 +130,7 @@ cd 04_case_studies
 make                 # build every program into bin/
 make test            # 4 unit/invariant suites + check that every result file reports ALL VARIANTS PASS
 make run             # regenerate output/<program>.txt (one file per program)
+scripts/fetch_m4raw.py get multicoil_val/2022061203_T101.h5 && scripts/prepare_m4raw.py   # one 12.6 MB real brain scan (range request, not the 3 GB archive) -> data/m4raw; needed by 08f only
 scripts/fetch_parboil_data.sh   # downloads the two Parboil MRI-Q inputs (size + sha256 verified); needed by 08d only
 make figures         # regenerate figures/*.png from stats/*.csv
 make catch2          # optional Catch2 toolchain check
@@ -147,6 +152,7 @@ The three earlier folders build the same way (`cd 01_architecture_basics && make
 ## Not included
 
 - Multi-GPU execution (Section 9.6 of the book): needs more than one GPU and is not implemented.
+- The raw M4Raw scan is not redistributed (the reconstructed slices in `stats/08f_*.bin` are, with attribution); `scripts/fetch_m4raw.py` fetches it from Zenodo.
 - The Parboil data files are not redistributed (licence not verified); the fetch script downloads them and checks size and
   SHA-256.
 
@@ -155,6 +161,7 @@ The three earlier folders build the same way (`cd 01_architecture_basics && make
 - David B. Kirk and Wen-mei W. Hwu, *Programming Massively Parallel Processors: A Hands-on Approach*, Morgan Kaufmann
   (Elsevier), 2010.
 - Parboil benchmark suite (MRI-Q input data), University of Illinois IMPACT group.
+- M4Raw: a multi-contrast, multi-repetition, multi-channel MRI k-space dataset for low-field MRI research (Zenodo record 8056074, CC-BY 4.0); file `multicoil_val/2022061203_T101.h5`, slices 4, 8 and 12 are used.
 
 ## License
 

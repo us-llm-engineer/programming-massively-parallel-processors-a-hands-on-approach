@@ -22,17 +22,19 @@ temperature sampled through NVML, so an under-fed GPU is visible in the result i
 | `08c_mri_accuracy_tuning` | Ch. 8 | `stats/08c_*.csv` | sin/cos accuracy, image agreement (MSE, PSNR), block x chunk x unroll tuning |
 | `08d_mri_q_parboil` | Ch. 8 | `stats/08d_mri_q.csv` | Parboil MRI-Q on the real small and large inputs |
 | `08e_mri_reconstruction` | Ch. 8 | `stats/08e_recon_metrics.csv`, `stats/08e_*.bin` | phantom -> simulated radial scan -> reconstructions (adjoint, density-compensated, conjugate gradient) |
+| `08f_mri_real_data` | Ch. 8 | `stats/08f_real_metrics.csv`, `stats/08f_*.bin` | reconstruction of REAL measured brain k-space (M4Raw, 4 coils, Cartesian 256x256) with the F^H d kernels; full and undersampled data; CG |
 | `09_gpu_starvation` | Ch. 6-9 (data pipeline) | `stats/09_*.csv` | pageable vs pinned transfers, streams, copy-ahead, host producers, launch overhead |
 
 Shared code: `src/common.cuh` (checks, CSV rows, warm/interleaved timing, occupancy ledger), `src/monitor.cuh` (NVML
-sampler), `src/common_bins.cuh` (cutoff data structures and references), `src/common_mri.cuh` (MRI data, kernels, references).
+sampler), `src/common_bins.cuh` (cutoff data structures and references), `src/common_mri.cuh` (MRI data, kernels, references), `src/recon_kernels.cuh` (forward model F and CG vector helpers).
 
 ## Tests
 
 `make test` builds and runs four suites in `tests/` (33 checks: cutoff gather, scatter, LargeBin, MRI kernels) and then
 `tests/check_outputs.sh`, which requires every result file in `output/` to report `ALL VARIANTS PASS`. The MRI test was
-mutation-checked: a deliberately broken kernel makes it fail. `make catch2` builds `tests/catch2/test_setup.cu`, the Catch2
-v3 toolchain check and template for new tests.
+mutation-checked: a deliberately broken kernel makes it fail. `make catch2` builds and runs the Catch2 v3 tests: `tests/catch2/test_setup.cu` (toolchain check, template) and
+`tests/catch2/test_cartesian_recon.cu` (on a full Cartesian grid F^H d equals the centred inverse DFT in double precision, for accurate and
+hardware trigonometry; F^H F multiplies by the sample count).
 
 ## Selected results
 
@@ -80,7 +82,7 @@ are not directly comparable.
 **Tuning** (`output/08c_mri_accuracy_tuning.txt`): best block 128, chunk 4096, unroll 8 = 21.74 ms; worst combination is 6.9x
 slower; the default (256, 2048, 1) is 94.4 % slower than the best. Joint search beats one-knob-at-a-time by 8.7 % (book: about 20 %).
 
-**Real data** (`output/08d_mri_q_parboil.txt`, large input 2,048 samples x 262,144 voxels): accurate constant-memory kernel
+**Parboil MRI-Q** (`output/08d_mri_q_parboil.txt`; the Parboil files hold scan geometry only, with no measured signal and no image, so these runs check numbers and timing, not images; large input 2,048 samples x 262,144 voxels): accurate constant-memory kernel
 15.27 ms, reduced hardware sin/cos 5.39 ms.
 
 **Reconstruction** (`stats/08e_recon_metrics.csv`, figures `figures/08_reconstruction_*.png`): simulated 128-spoke radial
@@ -95,6 +97,23 @@ scan of a 128x128 head phantom, 1 % complex noise, PSNR against the phantom afte
 
 Hardware and accurate trigonometry gave identical PSNR to 0.1 dB. The 3D case (32^3, 256 spokes) reaches 17.9 dB after
 25 iterations and is too coarse to be a convincing reconstruction. The book's 27.6 dB comes from a different data set.
+
+**Real measured data** (`output/08f_mri_real_data.txt`, `stats/08f_real_metrics.csv`, `figures/08_real_data.png`): three slices of an in-vivo T1
+brain scan (M4Raw, CC-BY 4.0, 4 receive coils, Cartesian 256 x 256). Truth is the dataset's own FFT + root-sum-of-squares reconstruction; no rescaling.
+
+| Reconstruction (per slice) | samples per coil | relative error | PSNR (dB) |
+| --- | --- | --- | --- |
+| GPU F^H d, full data, accurate trigonometry | 65,536 | 0.0002 % | 125.5-126.7 |
+| GPU F^H d, full data, hardware sin/cos | 65,536 | 0.0002 % | 126.3-127.8 |
+| zero-filled F^H d, 70 of 256 lines kept (3.7x fewer) | 17,920 | 25.4-26.5 % | 24.6-24.7 |
+| CG on the undersampled data (1-8 iterations) | 17,920 | same as zero-filled | same |
+
+GPU F^H d matches a double-precision CPU sum on 64 voxels to about 1e-7 (scaled by the sum of |terms|). Full-data agreement with the dataset's
+reconstruction shows the kernels are correct on measured data. CG converges in one iteration (the normal matrix has one non-zero eigenvalue on
+the kept lines), and later iterations are skipped; it returns the zero-filled image, so the aliasing remains. Removing it needs coil-sensitivity
+maps or a sparsity prior, which are not implemented. This dataset is Cartesian, so it does not exercise the non-Cartesian advantage that motivates the
+book's kernels. Timing of the full 4-coil reconstruction (4.3 G voxel-sample pairs per coil): 528.6 ms accurate, 559.1 ms hardware trigonometry on slice 4,
+at a mean SM clock of 1605 MHz (last line of the result file); hardware trigonometry did not help at this size.
 
 **GPU starvation** (`stats/09_summary.csv`): at 1024 FMAs per element streaming 256 MB, pageable synchronous copies take
 232.5 ms with the GPU busy 23.4 % of the time; pinned memory with four streams and copy-ahead issue order takes 75.3 ms
@@ -112,6 +131,10 @@ rendered from the float32 slices in `stats/08e_*.bin`.
 enabled for non-admin users) and summarises them into `output/*_ncu_summary.txt`.
 
 ## Data
+
+`08f_mri_real_data` reads `data/m4raw/slice_NN.bin`. Fetch one 12.6 MB scan from Zenodo (record 8056074, CC-BY 4.0, read with HTTP range requests so the
+3 GB archive is not downloaded) with `scripts/fetch_m4raw.py get multicoil_val/2022061203_T101.h5`, then run `scripts/prepare_m4raw.py`
+(needs `h5py`). SHA-256 of the scan: `d4156466a977a8bef888dff3141f78fbe93b3191c55f2632f2bd6410522399e7`.
 
 `08d_mri_q_parboil` reads the Parboil MRI-Q inputs from `data/parboil_mri_q/{small,large}`. They are not stored here; run
 `scripts/fetch_parboil_data.sh`, which downloads them (454,664 B and 3,186,696 B) and verifies size and SHA-256.
