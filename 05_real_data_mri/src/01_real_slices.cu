@@ -1,7 +1,7 @@
 /*
- * 08f_mri_real_data.cu   -- MRI reconstruction from REAL measured k-space (M4Raw, in-vivo brain, 4 receive coils)
+ * 01_real_slices.cu   -- MRI reconstruction from REAL measured k-space (M4Raw, in-vivo brain, 4 receive coils)
  *
- * The earlier reconstruction (08e) uses a synthetic phantom; the Parboil inputs (08a-08d) hold geometry only and no measured
+ * The earlier reconstruction (04_case_studies/src/08e) uses a synthetic phantom; the Parboil inputs (04_case_studies/src/08a-08d) hold geometry only and no measured
  * signal. This program reconstructs images from a real scan with the book's F^H d kernels:
  *   data:  M4Raw multi-coil brain k-space (0.3 T scanner, Cartesian 256 x 256, 4 coils), one T1-weighted scan; see scripts/fetch_m4raw.py
  *   truth: the dataset's own reconstruction (inverse FFT + root-sum-of-squares over coils), an independent FFT-based reference
@@ -13,60 +13,31 @@
  *   3. Conjugate gradient on (F^H F) x = F^H d for the undersampled data: the book's iterative solver on real data. Without a prior it
  *      solves the same least-squares problem whose minimum-norm solution is the zero-filled image, so it is expected NOT to remove the
  *      aliasing; the program reports this rather than hiding it.
- * Images go to stats/08f_slice<NN>_<tag>.bin (float32 256x256) and metrics to stats/08f_real_metrics.csv; scripts/plot_real.py draws them.
+ * Images go to stats/01_slice<NN>_<tag>.bin (float32 256x256) and metrics to stats/01_real_metrics.csv; scripts/plot_real.py draws them.
  * Metrics against the dataset reconstruction: relative RMS error and PSNR = 20 log10(max(ref) / sqrt(MSE)); no rescaling is applied.
- * Data: data/m4raw/slice_NN.bin from scripts/prepare_m4raw.py (not shipped).
+ * Data: data/m4raw/scan.bin from scripts/prepare_m4raw.py (not shipped).
  */
 #include "common_mri.cuh"
 #include "recon_kernels.cuh"
-#include <cmath>
-#include <string>
+#include "real_data.cuh"
 #include <sys/stat.h>
 
-static double now_ms() { return std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now().time_since_epoch()).count(); }
-
-struct Slice { int C, U, V; std::vector<float> ks, ref; };            // ks[c][u][v][2]
-static bool load_slice(const std::string &path, Slice &s) {
-    FILE *f = fopen(path.c_str(), "rb"); if (!f) return false;
-    int h[3]; if (fread(h, 4, 3, f) != 3) { fclose(f); return false; }
-    s.C = h[0]; s.U = h[1]; s.V = h[2]; s.ks.resize((size_t)s.C * s.U * s.V * 2); s.ref.resize((size_t)s.U * s.V);
-    bool ok = fread(s.ks.data(), 4, s.ks.size(), f) == s.ks.size() && fread(s.ref.data(), 4, s.ref.size(), f) == s.ref.size(); fclose(f); return ok;
-}
-struct Metric { double rel, psnr; };
-static Metric compare(const std::vector<float> &ref, const std::vector<float> &img) {
-    double mse = 0, ss = 0, mx = 0; size_t n = ref.size();
-    for (size_t i = 0; i < n; i++) { double e = (double)img[i] - ref[i]; mse += e * e; ss += (double)ref[i] * ref[i]; mx = std::max(mx, (double)ref[i]); }
-    mse /= n; return { 100.0 * sqrt(mse) / sqrt(ss / n), 20 * log10(mx / sqrt(mse)) };
-}
 static void save(const char *tag, int sl, const std::vector<float> &img) {
-    char f[96]; snprintf(f, sizeof f, "stats/08f_slice%02d_%s.bin", sl, tag); FILE *o = fopen(f, "wb"); fwrite(img.data(), 4, img.size(), o); fclose(o);
-}
-
-// voxels on the pixel grid (row = y, col = x, centred), samples are the chosen (row, col) k-space positions in cycles per pixel
-static Mri make_problem(const Slice &s, const std::vector<char> &keep_row) {
-    Mri p; p.S = s.V; p.N = s.U * s.V; p.x.resize(p.N); p.y.resize(p.N); p.z.assign(p.N, 0.f);
-    for (int r = 0; r < s.U; r++) for (int c = 0; c < s.V; c++) { p.x[r * s.V + c] = (float)(c - s.V / 2); p.y[r * s.V + c] = (float)(r - s.U / 2); }
-    for (int u = 0; u < s.U; u++) if (keep_row[u]) for (int v = 0; v < s.V; v++) { p.ky.push_back((float)(u - s.U / 2) / s.U); p.kx.push_back((float)(v - s.V / 2) / s.V); }
-    p.M = (int)p.kx.size(); p.kz.assign(p.M, 0.f); p.rMu.assign(p.M, 0.f); p.iMu.assign(p.M, 0.f); return p;
-}
-static void gather_data(const Slice &s, int coil, const std::vector<char> &keep_row, float scale, std::vector<float> &re, std::vector<float> &im) {
-    re.clear(); im.clear();
-    for (int u = 0; u < s.U; u++) if (keep_row[u]) for (int v = 0; v < s.V; v++) {
-        size_t i = (((size_t)coil * s.U + u) * s.V + v) * 2; re.push_back(scale * s.ks[i]); im.push_back(scale * s.ks[i + 1]); }
+    char f[96]; snprintf(f, sizeof f, "stats/01_slice%02d_%s.bin", sl, tag); FILE *o = fopen(f, "wb"); fwrite(img.data(), 4, img.size(), o); fclose(o);
 }
 
 int main() {
     RunMonitor mon;
     const cudaDeviceProp &pr = dev_props();
-    mkdir("stats", 0755); remove("stats/08f_real_metrics.csv");
+    mkdir("stats", 0755); remove("stats/01_real_metrics.csv");
     const char *HDR = "slice,method,trig,lines_kept,samples,rel_rms_pct,psnr_db,ms";
     printf("==================== MRI RECONSTRUCTION FROM REAL MEASURED K-SPACE (%s) ====================\n", pr.name);
     printf("data: M4Raw in-vivo brain, T1w, 4 coils, Cartesian 256 x 256 (CC-BY 4.0); truth: the dataset's own FFT + root-sum-of-squares reconstruction.\n\n");
     bool all_ok = true, any = false;
     const int slices[3] = { 4, 8, 12 };
     for (int sl : slices) {
-        char path[96]; snprintf(path, sizeof path, "data/m4raw/slice_%02d.bin", sl);
-        Slice s; if (!load_slice(path, s)) { printf("slice %d: %s not found (run scripts/fetch_m4raw.py and scripts/prepare_m4raw.py)\n", sl, path); continue; }
+        const char *path = "data/m4raw/scan.bin";
+        Slice s; if (!load_slice(path, sl, s)) { printf("slice %d: %s not found (run scripts/fetch_m4raw.py and scripts/prepare_m4raw.py)\n", sl, path); continue; }
         any = true; cooldown();
         int U = s.U, V = s.V, N = U * V; size_t nb = (size_t)N * 4;
         std::vector<char> all(U, 1), under(U, 0); srand(5);
@@ -76,7 +47,7 @@ int main() {
         printf("  %-46s %-9s %-9s %-11s %-10s %-9s\n", "method", "trig", "samples", "rel RMS %", "PSNR (dB)", "time ms");
         auto report = [&](const char *m, const char *trig, int lines, int samples, const Metric &q, double ms) {
             printf("  %-46s %-9s %-9d %-11.4f %-10.1f %-9.1f\n", m, trig, samples, q.rel, q.psnr, ms);
-            csv_row("stats/08f_real_metrics.csv", HDR, "%d,\"%s\",%s,%d,%d,%.4f,%.3f,%.2f", sl, m, trig, lines, samples, q.rel, q.psnr, ms); };
+            csv_row("stats/01_real_metrics.csv", HDR, "%d,\"%s\",%s,%d,%d,%.4f,%.3f,%.2f", sl, m, trig, lines, samples, q.rel, q.psnr, ms); };
         std::vector<float> rss(N), re(N), im(N), dr, di;
         save("reference", sl, s.ref);
         // 1 + 2: adjoint reconstructions
@@ -147,7 +118,7 @@ int main() {
     printf("validates the kernels on real measured data. The undersampled images show aliasing; CG on the same data converges to the same image (no prior),\n");
     printf("which is expected (the normal matrix has a single non-zero eigenvalue on the kept lines, so CG converges in one iteration and later iterations are skipped): removing aliasing needs coil-sensitivity maps or a sparsity prior, not implemented here. Time for the undersampled F^H d\n");
     printf("scales with the number of samples kept. Timings are only meaningful if the mean SM clock on the last line is near the GPU boost clock (this run\n");
-    printf("may have been power-capped; accuracy columns are unaffected). Figure: scripts/plot_real.py -> figures/08_real_data.png.\n");
+    printf("may have been power-capped; accuracy columns are unaffected). Figure: scripts/plot_real.py -> figures/real_slices.png.\n");
     printf("\n%s\n", all_ok ? "ALL VARIANTS PASS" : "SOME VARIANTS FAILED");
     return all_ok ? 0 : 1;
 }

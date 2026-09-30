@@ -1,4 +1,4 @@
-// Catch2 tests for the Cartesian-grid use of F^H d (the setting of the real-data program 08f):
+// Catch2 tests for the Cartesian-grid use of F^H d (the setting of the real-data program 01_real_slices):
 // on a full Cartesian grid, (1/sqrt(UV)) F^H d is the centred orthonormal inverse DFT, and F followed by F^H scales by the sample count.
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
