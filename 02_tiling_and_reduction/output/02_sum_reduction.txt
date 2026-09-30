@@ -1,0 +1,18 @@
+========== PARALLEL SUM REDUCTION (PMPP Chapter 6) ==========
+GPU: NVIDIA GeForce GTX 1650 Ti | N = 16777216 floats (64 MB) | block = 512 threads | reps = 50
+
+---- Correctness (CPU double-precision sum = 8389084.6206) ----
+v1 Fig 6.2  interleaved  (t % (2*stride) == 0)     GPU = 8389084.0000  rel.err = 7.40e-08  PASS
+v2 Fig 6.4  contiguous   (t < stride)              GPU = 8389084.0000  rel.err = 7.40e-08  PASS
+v3 Fig 6.4 + last-warp unroll                      GPU = 8389084.0000  rel.err = 7.40e-08  PASS
+
+---- Timing (warm, 50 reps, full multi-pass reduction of 16777216 floats) ----
+variant                                                avg ms     min ms   GB/s (avg)     vs v1
+v1 Fig 6.2  interleaved  (t % (2*stride) == 0)         2.9478     2.3798         22.8     1.00x
+v2 Fig 6.4  contiguous   (t < stride)                  1.8151     1.4705         37.0     1.62x
+v3 Fig 6.4 + last-warp unroll                          1.3450     1.0977         49.9     2.19x
+
+Reference: theoretical DRAM peak from device properties = 192 GB/s (2 x 6001000 kHz x 128-bit bus).
+A GB/s figure near that peak means the kernel is memory-bound, so warp divergence in shared memory cannot make it much faster.
+
+ALL VARIANTS PASS

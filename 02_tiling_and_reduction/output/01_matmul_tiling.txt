@@ -1,0 +1,33 @@
+========== TILED MATRIX MULTIPLY (PMPP Ch.5) ==========
+GPU: NVIDIA GeForce GTX 1650 Ti | N = 1024 | reps = 20 (after 1 warm-up)
+
+---- (a) THEORY: traffic model (formula, NOT measured) ----
+  FLOPs = 2N^3 = 2.147e+09
+  TILE_WIDTH   DRAM bytes (model)     FLOPs/Byte (model)    
+  naive        8.590e+09              0.250                 
+  8            1.074e+09              2.000                 
+  16           5.369e+08              4.000                 
+  32           2.684e+08              8.000                 
+  (model ignores L1/L2 caching, which is why measured gains differ)
+
+---- Correctness ----
+  naive  block 8x8       max rel.err over 32 sampled rows = 1.84e-06  PASS
+  naive  block 16x16     max rel.err over 32 sampled rows = 1.84e-06  PASS
+  naive  block 32x32     max rel.err over 32 sampled rows = 1.84e-06  PASS
+  tiled  TILE_WIDTH 8    max rel.err over 32 sampled rows = 1.84e-06  PASS
+  tiled  TILE_WIDTH 16   max rel.err over 32 sampled rows = 1.84e-06  PASS
+  tiled  TILE_WIDTH 32   max rel.err over 32 sampled rows = 1.84e-06  PASS
+
+---- (b) MEASURED (warm, 20-run average) ----
+  variant                      avg ms     min ms      GFLOP/s vs naive 32x32
+  naive  block 8x8             15.018     12.278        143.0          0.47x
+  naive  block 16x16            9.749      7.892        220.3          0.72x
+  naive  block 32x32            6.999      5.630        306.8          1.00x
+  tiled  TILE_WIDTH 8           9.377      7.450        229.0          0.75x
+  tiled  TILE_WIDTH 16          6.046      4.878        355.2          1.16x
+  tiled  TILE_WIDTH 32          5.539      4.618        387.7          1.26x
+
+How to read: 'vs naive 32x32' > 1 means faster than the naive kernel launched
+with the same block shape as the tiled TILE_WIDTH 32 kernel.
+
+ALL VARIANTS PASS
