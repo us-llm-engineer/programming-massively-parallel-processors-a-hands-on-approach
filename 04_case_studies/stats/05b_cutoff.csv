@@ -1,0 +1,11 @@
+algorithm,L_angstrom,volume_A3,points,atoms,ms,max_err,check,subvolume_A,launches,mean_candidates_per_point,mean_inside_per_point
+gpu_largebin,10,1000,8000,100,0.082,7.78e-08,PASS,16,1,100.0,70.2
+gpu_largebin,20,8000,64000,800,0.984,1.32e-07,PASS,16,8,620.7,135.5
+gpu_largebin,40,64000,512000,6400,8.933,8.21e-08,PASS,16,27,1678.7,173.9
+gpu_largebin,80,512000,4096000,51200,93.369,7.13e-08,PASS,16,125,2388.1,191.6
+gpu_largebin,120,1728000,13824000,172800,384.718,1.09e-07,PASS,16,512,2663.6,198.4
+gpu_largebin,160,4096000,32768000,409600,970.612,1.01e-07,PASS,16,1000,2810.1,202.8
+gpu_largebin_sweep,40,64000,512000,6400,40.995,8.21e-08,PASS,8,125,902.7,173.9
+gpu_largebin_sweep,40,64000,512000,6400,19.358,8.21e-08,PASS,16,27,1678.7,173.9
+gpu_largebin_sweep,40,64000,512000,6400,12.123,8.21e-08,PASS,24,8,2410.2,173.9
+gpu_largebin_sweep,40,64000,512000,6400,36.312,7.11e-08,PASS,40,2,6400.0,173.9

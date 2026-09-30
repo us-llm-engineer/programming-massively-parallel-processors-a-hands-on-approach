@@ -1,0 +1,14 @@
+algorithm,L_angstrom,volume_A3,points,atoms,ms,max_err,check
+gpu_atom_centric,10,1000,8000,100,1.290,5.41e-08,PASS
+cpu_atom_centric,10,1000,8000,100,1.889,0,PASS
+gpu_directsum,10,1000,8000,100,0.069,6.16e-08,PASS
+gpu_atom_centric,20,8000,64000,800,4.634,1.31e-07,PASS
+cpu_atom_centric,20,8000,64000,800,37.979,0,PASS
+gpu_directsum,20,8000,64000,800,0.517,1.18e-07,PASS
+gpu_atom_centric,40,64000,512000,6400,19.545,1.20e-07,PASS
+cpu_atom_centric,40,64000,512000,6400,360.525,0,PASS
+gpu_directsum,40,64000,512000,6400,23.447,8.90e-08,PASS
+gpu_atom_centric,80,512000,4096000,51200,508.741,7.58e-08,PASS
+cpu_atom_centric,80,512000,4096000,51200,7629.860,0,PASS
+gpu_directsum,80,512000,4096000,51200,1485.456,5.49e-08,PASS
+gpu_atom_centric,120,1728000,13824000,172800,2181.724,8.98e-08,PASS

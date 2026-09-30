@@ -1,0 +1,5 @@
+algorithm,L_angstrom,volume_A3,points,atoms,ms
+cpu_atom_centric,10,1000,8000,100,1.889
+cpu_atom_centric,20,8000,64000,800,37.979
+cpu_atom_centric,40,64000,512000,6400,360.525
+cpu_atom_centric,80,512000,4096000,51200,7629.860

@@ -1,0 +1,30 @@
+==================== CUTOFF DIVERGENCE (NVIDIA GeForce GTX 1650 Ti) ====================
+L = 48 A: 884736 lattice points, 11059 atoms (11051 stored in bins, 8 overflow ignored), cutoff 8 A, bin edge 3 A, 256 threads/block.
+
+  (waited 1 s for the GPU to cool to 74 C before measuring)
+  (waited 3 s for the GPU to cool to 74 C before measuring)
+  (waited 3 s for the GPU to cool to 71 C before measuring)
+---- 1 + 2. Warp shape: how often do the 32 lanes of a warp disagree, and what does it cost? ----
+A warp = 32 consecutive threads (x fastest). Its footprint in lattice points (and Angstrom, spacing 0.5) depends on the tile shape.
+tile        warp footprint   warp extent (A)     | all in  all out MIXED   | lane use    | branchy   branchless  no test   | branchy/
+x*y*z       (lattice pts)    x  y  z             | %       %       %       | in branch % | ms        ms          ms        | branchless
+32x8x1      32x1x1           15.5 0.0 0.0        | 0.0     85.7    14.3    | 44.6        | 18.16     19.64       19.14     | 0.92     PASS
+16x16x1     16x2x1           7.5 0.5 0.0         | 2.4     88.8    8.8     | 58.7        | 17.61     19.04       18.56     | 0.92     PASS
+8x8x4       8x4x1            3.5 1.5 0.0         | 5.2     87.3    7.5     | 68.3        | 13.42     14.43       14.06     | 0.93     PASS
+4x4x16      4x4x2            1.5 1.5 0.5         | 5.7     89.4    4.9     | 75.3        | 14.61     15.69       15.30     | 0.93     PASS
+2x4x32      2x4x4            0.5 1.5 1.5         | 5.0     90.8    4.2     | 75.3        | 16.90     14.01       14.03     | 1.21     PASS
+  MIXED = share of warp-level distance tests where some lanes are inside the sphere and others outside (divergent).
+  lane use = of the lanes in the warp, the average fraction that are inside when the inside branch executes (1 lane of 32 = 3 %).
+  'branchy' skips the rsqrt when outside; 'branchless' always computes it and multiplies by 0 or 1; 'no test' is the arithmetic
+  lower bound (different physics, timing only). branchy/branchless < 1 means the divergent version is still faster.
+  Both physical kernels are checked against a double-precision reference at 200 lattice points.
+
+---- 3. Context: divergence (gather) vs atomics (scatter) [MEASURED, other programs] ----
+  L = 40 A: atom-centric scatter (atomicAdd) 19.5 ms   vs   SmallBin gather with the divergent test 9.0 ms  -> 2.2x
+  L = 80 A: atom-centric scatter (atomicAdd) 508.7 ms   vs   SmallBin gather with the divergent test 80.4 ms  -> 6.3x
+  [book] the divergence of the gather kernel is the smaller evil compared with atomics. The two lines above are the local test
+  of that statement (05c includes host binning and upload, 05a is the kernel only).
+
+ALL VARIANTS PASS
+
+[GPU during this run: 9.8 s wall | mean utilisation 22 % | >= 50 % for 22 % of the time, idle (<= 5 %) for 48 % | mean SM clock 1217 MHz | mean power 18.7 W | max temp 79 C | NVML, 100 ms samples]

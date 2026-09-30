@@ -1,0 +1,45 @@
+==================== CUTOFF SUMMATION v1: ATOM-CENTRIC (NVIDIA GeForce GTX 1650 Ti) ====================
+lattice spacing 0.5 A, cutoff 8 A, atom density 0.1 per A^3 (a solvated-molecule-like density), charges in [-1,1].
+GPU variants: 1 warm-up + 5 timed runs (mean). The sequential CPU baseline is measured once (minimum of repeated runs)
+and cached in stats/cpu_baseline.csv so the run is dominated by GPU work; 'n/a' = not measured (too slow to be useful).
+Error = worst |GPU - double CPU| / sum(|q|/r) over 200 sampled lattice points; PASS if < 1e-4.
+
+L (A)  volume A^3   points     atoms    | CPU ms      GPU scatter ms GPU direct ms | scat/CPU  direct/scat | max err (scatter | direct)
+10     1000         8000       100      | 1.9         1.29           0.07          | 1.5       0.1         | 5.4e-08 | 6.2e-08 PASS
+  launch fill (L = 10, per launch of up to 16384 atoms):   kernel                             regs  smem B  blocks   blocks/SM  SMs busy  warps/SM   of capacity
+    GPU atom-centric                 46    0       1        8           1 of 16   0.2        0.8%
+    GPU DirectSum                    44    4096    32       4          16 of 16   16.0       50.0%
+  atomicAdd calls: about 5.61e+05 (mean 70 atoms inside the cutoff per lattice point x 8000 points) [DERIVED]
+  (waited 1 s for the GPU to cool to 74 C before measuring)
+20     8000         64000      800      | 38.0        4.63           0.52          | 8.2       0.1         | 1.3e-07 | 1.2e-07 PASS
+40     64000        512000     6400     | 360.5       19.55          23.45         | 18.4      1.2         | 1.2e-07 | 8.9e-08 PASS
+80     512000       4096000    51200    | 7629.9      508.74         1485.46       | 15.0      2.9         | 7.6e-08 | 5.5e-08 PASS
+  note: GPU at 82 C, SM clock 1350 MHz right after this row (thermal/power management can slow later rows)
+  (waited 2 s for the GPU to cool to 74 C before measuring)
+120    1728000      13824000   172800   | n/a         2181.72        skipped       | n/a       n/a         | 9.0e-08 | 0.0e+00 PASS
+  launch fill (L = 120, per launch of up to 16384 atoms):   kernel                             regs  smem B  blocks   blocks/SM  SMs busy  warps/SM   of capacity
+    GPU atom-centric                 46    0       129      8          16 of 16   32.0       100.0%
+    GPU DirectSum                    44    4096    54000    4          16 of 16   32.0       100.0%
+  atomicAdd calls: about 2.74e+09 (mean 198 atoms inside the cutoff per lattice point x 13824000 points) [DERIVED]
+  note: GPU at 79 C, SM clock 1350 MHz right after this row (thermal/power management can slow later rows)
+
+Measured growth per volume step, as an exponent e in time ~ volume^e (e = 1 is linear, e = 2 is quadratic) [MEASURED]:
+  step             GPU scatter e  GPU direct e  
+  L 10   -> 20    0.61           0.97          
+  L 20   -> 40    0.69           1.83          
+  L 40   -> 80    1.57           2.00          
+  L 80   -> 120   1.20           n/a           
+
+How to read:
+  * Volume grows per row; atoms and lattice points grow with it (fixed density).
+  * [book] direct summation is O(Volume^2) and cutoff summation O(Volume). The exponents above are what this run shows;
+    small volumes deviate because spheres are clipped by the domain faces (less work per atom) and the GPU is
+    under-filled, so judge the trend on the LAST steps.
+  * 'scat/CPU' is the GPU scatter speedup over the sequential CPU atom-centric code; 'direct/scat' > 1 means DirectSum
+    is slower than scatter at that size.
+  * The atoms are placed at random, so few threads update the same lattice point at the same moment; the book's
+    atomicAdd contention worry is therefore mild in this data. It is judged against the bin versions in 05b-05d.
+
+ALL VARIANTS PASS
+
+[GPU during this run: 46.3 s wall | mean utilisation 55 % | >= 50 % for 53 % of the time, idle (<= 5 %) for 39 % | mean SM clock 1110 MHz | mean power 21.9 W | max temp 82 C | NVML, 100 ms samples]

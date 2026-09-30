@@ -1,0 +1,12 @@
+case                                                  time ms   idc.request_hit_rate.pct l1.5.constant_lookup_hit.s l1.5.constant_lookup_miss. idc_divergent_instruction_      t_sector_hit_rate.pct
+E1 const W512 same                                       2.10                      87.76                  355654.00                     383.00                       0.00                       0.00
+E1 const W512 different                                  4.52                      49.58                 4173936.00                   95353.00                       0.00                       0.00
+E1 global+shared W512 same                               2.09                       0.00                       0.00                     128.00                       0.00                      93.75
+E1 global+shared W512 different                          2.09                       0.00                       0.00                     128.00                       0.00                      80.07
+E1 const W64 same                                        0.27                      99.84                      96.00                     160.00                       0.00                       0.00
+E1 const W64 different                                   0.32                      68.91                  224367.00                    7466.00                       0.00                       0.00
+E2 const 1 addr/warp                                     2.81                      90.60                  367583.00                     384.00                       0.00                       0.00
+E2 const 32 addr/warp                                   64.03                      84.30                54525659.00                     225.00               520093696.00                       0.00
+E3 3 arrays                                              2.04                       0.00                 1186863.00                   92700.00                       0.00                       0.00
+E3 struct12                                              1.92                       0.00                 1237375.00                   90914.00                       0.00                       0.00
+E3 struct16                                              2.25                       0.00                 1800311.00                  106780.00                       0.00                       0.00

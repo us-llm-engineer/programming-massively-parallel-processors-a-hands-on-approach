@@ -1,0 +1,38 @@
+==================== CUTOFF SUMMATION v2: LARGEBIN (NVIDIA GeForce GTX 1650 Ti) ====================
+[book] joint neighbourhood of a large subvolume -> constant memory (<= 64 KB per launch) -> direct-summation kernel with the cutoff test.
+lattice 0.5 A, cutoff 8 A, atom density 0.1 / A^3, bin edge 4 A. Time = host list gathering + constant uploads + kernels
+(all included, as in the real application); mean of 3 runs after 1 warm-up. CPU time is the sequential atom-centric run of 05a.
+
+---- 1. Volume ladder, subvolume edge 16 A (32 x 32 x 32 lattice points) ----
+L (A)  volume A^3  points    atoms     | GPU ms     host gather launches  vs CPU    | candidates   inside/point  useful    | max err
+  (waited 2 s for the GPU to cool to 74 C before measuring)
+10     1000        8000      100       | 0.08       0.00        1         23x       | 100          70            70.2    % | 7.8e-08 PASS
+20     8000        64000     800       | 0.98       0.01        8         38x       | 621          136           21.8    % | 1.3e-07 PASS
+40     64000       512000    6400      | 8.93       0.11        27        40x       | 1679         174           10.4    % | 8.2e-08 PASS
+80     512000      4096000   51200     | 93.37      1.11        125       81x       | 2388         192           8.0     % | 7.1e-08 PASS
+  note: GPU at 78 C, SM clock 1350 MHz right after this row (thermal/power management can slow later rows)
+  (waited 6 s for the GPU to cool to 74 C before measuring)
+120    1728000     13824000  172800    | 384.72     5.33        512       n/a       | 2664         198           7.4     % | 1.1e-07 PASS
+  note: GPU at 80 C, SM clock 1350 MHz right after this row (thermal/power management can slow later rows)
+  (waited 3 s for the GPU to cool to 71 C before measuring)
+160    4096000     32768000  409600    | 970.61     16.97       1000      n/a       | 2810         203           7.2     % | 1.0e-07 PASS
+  note: GPU at 79 C, SM clock 1350 MHz right after this row (thermal/power management can slow later rows)
+  candidates = mean atoms in the joint list a lattice point is tested against; inside/point = mean atoms actually within rc;
+  useful = inside/candidates. The rest is the cost of the coarse neighbourhood (every atom outside the point's own sphere is a wasted test).
+
+---- 2. Subvolume size at L = 40 A (6,400 atoms, 512,000 points) ----
+[book] larger subvolumes give bigger joint lists (more wasted tests); smaller ones give more launches and uploads.
+subvolume A    subvolumes   launches   GPU ms      host gather   candidates useful    | max err
+  (waited 2 s for the GPU to cool to 74 C before measuring)
+8              125          125        40.99       0.38          903        19.3    % | 8.2e-08 PASS
+16             27           27         19.36       0.15          1679       10.4    % | 8.2e-08 PASS
+24             8            8          12.12       0.07          2410       7.2     % | 8.2e-08 PASS
+40             1            2          36.31       0.02          6400       2.7     % | 7.1e-08 PASS
+
+How to read: 'GPU ms' contains everything the host does per subvolume. If 'host gather' is a large share of it, the
+kernel is not the bottleneck; if 'useful' is small the kernel does mostly wasted distance tests. 05c (SmallBin) shrinks
+the candidate list per block, which is the book's reason for preferring it at large volumes.
+
+ALL VARIANTS PASS
+
+[GPU during this run: 20.6 s wall | mean utilisation 31 % | >= 50 % for 21 % of the time, idle (<= 5 %) for 47 % | mean SM clock 1201 MHz | mean power 18.9 W | max temp 81 C | NVML, 100 ms samples]

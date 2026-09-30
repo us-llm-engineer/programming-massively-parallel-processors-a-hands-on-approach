@@ -1,0 +1,40 @@
+==================== CUTOFF SUMMATION v3: SMALLBIN (NVIDIA GeForce GTX 1650 Ti) ====================
+[book] bins in global memory (fixed capacity 8), per-block neighbourhood tiled into shared memory, overflow atoms on the CPU.
+lattice 0.5 A, cutoff 8 A, density 0.1 / A^3. Blocks of 8x8x4 lattice points. 'total' = host binning + bin upload + kernel + serial CPU overflow pass.
+
+---- 1. Volume ladder, bin edge 3 A (mean 2.7 atoms per bin, capacity 8: essentially no overflow) ----
+(edge 4 A would overflow about 7% of the atoms; that overflow-heavy case is the subject of section 2 and of 05d)
+L (A)  volume A^3  points    atoms    | bin host  upload   kernel    overflow   total ms  | vs CPU    vs Large  | candidates useful    | max err
+  (waited 2 s for the GPU to cool to 72 C before measuring)
+10     1000        8000      100      | 0.00      0.28     0.11      0.00       0.39      | 4.8x      0.2x      | 100        70.2    % | 6.5e-08 PASS
+20     8000        64000     800      | 0.01      0.17     0.69      0.00       0.87      | 43.8x     1.1x      | 399        34.0    % | 1.4e-07 PASS
+40     64000       512000    6400     | 0.19      0.81     7.85      0.14       8.99      | 40.1x     1.0x      | 629        27.7    % | 1.2e-07 PASS
+80     512000      4096000   51200    | 1.80      1.17     73.36     4.08       80.40     | 94.9x     1.2x      | 793        24.2    % | 7.9e-08 PASS
+  overflow at L = 80: 39 of 51200 atoms (0.1 %) did not fit in a bin of capacity 8
+  launch fill (L = 80):   kernel                             regs  smem B  blocks   blocks/SM  SMs busy  warps/SM   of capacity
+    SmallBin kernel                  48    512     16000    4          16 of 16   32.0       100.0%
+  note: GPU at 78 C, SM clock 1350 MHz right after this row (thermal/power management can slow later rows)
+  (waited 6 s for the GPU to cool to 73 C before measuring)
+120    1728000     13824000  172800   | 5.92      2.23     258.76    17.59      284.50    | n/a       1.4x      | 846        23.5    % | 9.0e-08 PASS
+  note: GPU at 82 C, SM clock 1350 MHz right after this row (thermal/power management can slow later rows)
+  (waited 2 s for the GPU to cool to 74 C before measuring)
+160    4096000     32768000  409600   | 11.28     5.14     645.19    51.07      712.68    | n/a       1.4x      | 872        23.3    % | 1.0e-07 PASS
+  note: GPU at 81 C, SM clock 1350 MHz right after this row (thermal/power management can slow later rows)
+  'vs Large' = LargeBin total (05b, subvolume 16 A) divided by SmallBin total; > 1 means SmallBin is faster.
+
+---- 2. Bin edge sweep at L = 40 A (fixed capacity 8 atoms per bin) ----
+[book] fixed capacity wastes slots in sparse bins and overflows in dense ones; the overflow list is the CPU's job.
+bin edge  bins     atoms/bin   overflow   kernel    overflow   total ms    useful    | max err
+(A)                (mean)      atoms %    ms        CPU ms                           |
+  (waited 3 s for the GPU to cool to 73 C before measuring)
+2         8000     0.8         0.0      % 18.98     0.00       20.52       34.9    % | 8.1e-08 PASS
+3         2744     2.3         0.0      % 7.79      0.12       8.50        27.7    % | 1.2e-07 PASS
+4         1000     6.4         6.7      % 2.08      45.29      47.69       34.1    % | 1.2e-07 PASS
+5         512      12.5        36.8     % 2.09      284.10     286.48      32.8    % | 1.1e-07 PASS
+
+How to read: a small bin edge gives tight neighbourhoods (high 'useful') but many nearly empty bins and more loop
+iterations; a large edge overflows most atoms to the CPU. The right edge balances GPU time against the CPU overflow pass.
+
+ALL VARIANTS PASS
+
+[GPU during this run: 25.1 s wall | mean utilisation 36 % | >= 50 % for 29 % of the time, idle (<= 5 %) for 36 % | mean SM clock 1216 MHz | mean power 20.1 W | max temp 84 C | NVML, 100 ms samples]

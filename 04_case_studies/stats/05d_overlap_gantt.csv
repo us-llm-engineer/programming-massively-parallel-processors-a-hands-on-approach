@@ -1,0 +1,17 @@
+engine,slab,t_start_ms,t_end_ms
+GPU_kernel,0,0.0916,0.4784
+CPU_overflow,0,0.0440,1.3685
+GPU_kernel,1,1.4246,2.0893
+CPU_overflow,1,1.4225,3.5255
+GPU_kernel,2,3.5750,4.1439
+CPU_overflow,2,3.5611,4.7314
+GPU_kernel,3,4.7772,5.6148
+CPU_overflow,3,4.7600,6.7534
+GPU_kernel,4,6.8006,7.3369
+CPU_overflow,4,6.7833,8.1305
+GPU_kernel,5,8.1801,9.0200
+CPU_overflow,5,8.1586,10.1324
+GPU_kernel,6,10.1757,10.7482
+CPU_overflow,6,10.1631,11.2582
+GPU_kernel,7,11.2971,11.8899
+CPU_overflow,7,11.2736,12.5344

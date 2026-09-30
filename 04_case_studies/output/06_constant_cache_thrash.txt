@@ -1,0 +1,47 @@
+==================== CONSTANT-CACHE BEHAVIOUR (NVIDIA GeForce GTX 1650 Ti) ====================
+Kernels: 4096 blocks x 128 threads; identical arithmetic per atom (no cutoff test). 'ms' = minimum of 9 launches after priming.
+Times below; cache hit rates for the same kernels are in output/06_ncu_summary.txt (Nsight Compute, see scripts/profile_kernels.sh).
+
+---- E1. Same window for every block vs a different window per block (8 blocks resident per SM) ----
+[book] constant memory is efficient when all blocks read the same atoms; blocks reading different atoms overflow the cache.
+W      working set/SM | constant memory (ms)     | global + shared (ms)     | different / same      
+atoms  (different)   | same        different    | same        different    | constant   global    
+16     2.0       KB  | 0.061       0.063        | 0.063       0.067        | 1.03       1.06      
+32     4.0       KB  | 0.115       0.130        | 0.118       0.121        | 1.13       1.03      
+  (waited 1 s for the GPU to cool to 69 C before measuring)
+64     8.0       KB  | 0.208       0.248        | 0.209       0.214        | 1.19       1.02      
+128    16.0      KB  | 0.481       0.721        | 0.483       0.483        | 1.50       1.00      
+256    32.0      KB  | 1.059       2.060        | 1.053       1.057        | 1.95       1.00      
+512    62.5      KB  | 1.871       3.820        | 1.775       1.779        | 2.04       1.00      
+1000   62.5      KB  | 5.095       7.475        | 3.317       3.833        | 1.47       1.16      
+2000   62.5      KB  | 12.696      15.404       | 6.615       7.712        | 1.21       1.17      
+  (waited 1 s for the GPU to cool to 72 C before measuring)
+4000   62.5      KB  | 28.391      27.148       | 15.469      16.255       | 0.96       1.05      
+  Read: 'different / same' well above 1 for constant memory and near 1 for global+shared is the book's picture (thrashing vs
+  immune). Working set = resident blocks x W x 16 B (capped at the 64 KB array). Results of both storage schemes agree: PASS.
+
+---- E2. Distinct addresses within one warp (W = 512 iterations) ----
+[book/hardware] constant memory broadcasts one address to the warp; different addresses in a warp are served one after the other.
+distinct / warp    | constant (ms)  vs 1      | global (ms)    vs 1     
+  (waited 1 s for the GPU to cool to 73 C before measuring)
+1                  | 2.160          1.00      | 2.462          1.00     
+2                  | 4.279          1.98      | 2.963          1.20     
+4                  | 6.058          2.80      | 2.549          1.04     
+8                  | 16.336         7.56      | 3.318          1.35     
+16                 | 31.973         14.80     | 3.480          1.41     
+32                 | 48.625         22.51     | 3.174          1.29     
+  Read: the constant column grows with the number of distinct addresses (serialisation); global memory serves the warp
+  through the normal cache path and grows much less.
+
+---- E3. Layout in constant memory: 1000 samples of (kx, ky, kz) ----
+[book, Ch.8] separate arrays need several cache entries per iteration; a struct keeps a sample's fields together.
+layout                         ms         vs 3 arrays
+3 separate arrays (SoA)        2.013      1.00      
+12-byte struct {x,y,z}         1.693      0.84      
+16-byte struct (float4)        2.163      1.07      
+  Read: a ratio below 1 means the struct layout is faster than three arrays on this GPU. The book's claim is about the
+  G80 constant cache; this GPU's cache behaves differently, so the size of the difference here is what it is.
+
+ALL VARIANTS PASS
+
+[GPU during this run: 9.2 s wall | mean utilisation 59 % | >= 50 % for 53 % of the time, idle (<= 5 %) for 0 % | mean SM clock 1650 MHz | mean power 29.7 W | max temp 76 C | NVML, 100 ms samples]
