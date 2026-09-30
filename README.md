@@ -6,11 +6,6 @@ book, runs it on a real GPU, verifies the result against a double-precision CPU 
 averaged repeats, and states plainly when a claim made for the book's 2008-era G80 does or does not reproduce on a
 modern (Turing) GPU.
 
-![MRI reconstruction from simulated radial k-space](04_case_studies/figures/08_reconstruction_2D.png)
-
-*Central figure: a head phantom reconstructed from simulated non-Cartesian k-space with the book's F^H d kernels
-(plain adjoint, density-compensated adjoint, conjugate gradient). Numbers: [04_case_studies/README.md](04_case_studies/README.md).*
-
 ## Repository map
 
 | Folder | Book topic | What is in it |
@@ -40,6 +35,77 @@ The case-study chapters are numbered as in the edition used here: Chapter 8 is M
 Limits worth knowing: the 3D reconstruction (32^3) reaches only 17.9 dB and is too small to be convincing; the book's
 27.6 dB figure comes from a different data set and is not reproduced by these synthetic scans; hardware `__sinf/__cosf`
 made no visible PSNR difference at this size (book: 27.6 vs 27.5 dB).
+
+## Visualizations
+
+All figures are regenerated from `04_case_studies/stats/*.csv` by `make figures`; the numbers behind each are in the sub-folder README and result files.
+
+### Coulomb summation (Ch. 9)
+
+<table><tr>
+<td width="50%"><img src="04_case_studies/figures/01_dcs_versions.png" alt="DCS kernels"><br><sub>Direct Coulomb summation: the book's three kernels (`stats/01_dcs.csv`).</sub></td>
+<td width="50%"><img src="04_case_studies/figures/04_ch9_pitfalls.png" alt="Chapter 9 pitfalls"><br><sub>GPU-vs-CPU crossover and the 64 KB constant-memory chunk limit (`stats/04_ch9_pitfalls.csv`).</sub></td>
+</tr></table>
+
+### Cutoff summation (Ch. 10)
+
+<table><tr>
+<td width="50%"><img src="04_case_studies/figures/05_scaling.png" alt="Cutoff scaling"><br><sub>Time versus volume for each cutoff version (`stats/05*_cutoff.csv`).</sub></td>
+<td width="50%"><img src="04_case_studies/figures/05_smallbin_binsweep.png" alt="SmallBin bin-edge sweep"><br><sub>SmallBin: bin edge decides how much overflows to the CPU (`stats/05c_cutoff.csv`).</sub></td>
+</tr></table>
+
+<table><tr>
+<td width="50%"><img src="04_case_studies/figures/05_overlap.png" alt="Overlap"><br><sub>SmallBin-Overlap: hiding the CPU overflow pass behind GPU work (`stats/05d_overlap.csv`).</sub></td>
+<td width="50%"><img src="04_case_studies/figures/05_overlap_gantt.png" alt="Overlap timeline"><br><sub>One overlapped run, 8 slabs (`stats/05d_overlap_gantt.csv`).</sub></td>
+</tr></table>
+
+<table><tr>
+<td width="50%"><img src="04_case_studies/figures/07_divergence.png" alt="Divergence"><br><sub>How often a warp disagrees in the cutoff test, and what it costs (`stats/07_divergence.csv`).</sub></td>
+<td width="50%"><img src="04_case_studies/figures/06_hit_rates.png" alt="Constant-cache hit rates"><br><sub>Constant-cache hit rate and time, measured with Nsight Compute (`stats/06_ncu.csv`).</sub></td>
+</tr></table>
+
+<table><tr>
+<td width="50%"><img src="04_case_studies/figures/06_window_ratio.png" alt="Window ratio"><br><sub>Constant cache: blocks reading different atoms vs the same atoms (`stats/06_constant_cache.csv`).</sub></td>
+<td width="50%"><img src="04_case_studies/figures/06_lanes_layout.png" alt="Lane and layout effects"><br><sub>Warp address uniformity and array-vs-struct layout (`stats/06_constant_cache.csv`).</sub></td>
+</tr></table>
+
+### MRI reconstruction (Ch. 8)
+
+<table><tr>
+<td width="50%"><img src="04_case_studies/figures/08_ladder.png" alt="MRI ladder"><br><sub>F^H d optimisation ladder (`stats/08a_mri_ladder.csv`).</sub></td>
+<td width="50%"><img src="04_case_studies/figures/08_thread_mapping.png" alt="Thread mapping"><br><sub>Mapping the two loops to threads (`stats/08b_mri_mapping.csv`).</sub></td>
+</tr></table>
+
+<table><tr>
+<td width="50%"><img src="04_case_studies/figures/08_trig_accuracy.png" alt="Trig accuracy"><br><sub>Hardware trigonometry: accuracy against angle size (`stats/08c_trig_accuracy.csv`).</sub></td>
+<td width="50%"><img src="04_case_studies/figures/08_tuning.png" alt="Tuning"><br><sub>Block x chunk x unroll tuning (`stats/08c_tuning.csv`).</sub></td>
+</tr></table>
+
+<table><tr>
+<td width="50%"><img src="04_case_studies/figures/08_parboil_q.png" alt="Parboil MRI-Q"><br><sub>MRI-Q on the real Parboil inputs (`stats/08d_mri_q.csv`).</sub></td>
+<td width="50%"><img src="04_case_studies/figures/08_reconstruction_psnr.png" alt="PSNR vs CG iteration"><br><sub>PSNR against CG iteration, accurate vs hardware trigonometry (`stats/08e_recon_metrics.csv`).</sub></td>
+</tr></table>
+
+<p><img src="04_case_studies/figures/08_reconstruction_2D.png" alt="2D reconstruction" width="100%"><br><sub>2D head phantom reconstructed from simulated radial k-space: truth, plain adjoint, density-compensated, and CG at 5, 10 and 40 iterations (`stats/08e_*.bin`).</sub></p>
+
+<p><img src="04_case_studies/figures/08_reconstruction_3D.png" alt="3D reconstruction" width="100%"><br><sub>3D phantom (32^3), central slice, same methods; too coarse to be convincing.</sub></p>
+
+### GPU starvation (data pipeline)
+
+<table><tr>
+<td width="50%"><img src="04_case_studies/figures/09_gpu_busy.png" alt="GPU busy"><br><sub>How much of the time the GPU is actually computing (`stats/09_summary.csv`).</sub></td>
+<td width="50%"><img src="04_case_studies/figures/09_pipeline_gantt.png" alt="Pipeline timelines"><br><sub>Copy and compute timelines per transfer strategy (`stats/09_gantt.csv`).</sub></td>
+</tr></table>
+
+<table><tr>
+<td width="50%"><img src="04_case_studies/figures/09_host_prep.png" alt="Host preparation"><br><sub>When the CPU is slow at preparing data (`stats/09_summary.csv`).</sub></td>
+<td width="50%"><img src="04_case_studies/figures/09_launch_overhead.png" alt="Launch overhead"><br><sub>Tiny kernels: the launch costs more than the work (`stats/09_summary.csv`).</sub></td>
+</tr></table>
+
+<table><tr>
+<td width="50%"><img src="04_case_studies/figures/09_copy_compute_overlap.png" alt="Copy/compute overlap"><br><sub>Does the hardware overlap a copy with compute? (`stats/09_summary.csv`).</sub></td>
+<td width="50%"><img src="04_case_studies/figures/09_nvml_timeline.png" alt="NVML timeline"><br><sub>What the GPU reports while starved versus fed (`stats/09_nvml_timeline.csv`).</sub></td>
+</tr></table>
 
 ## Requirements
 
