@@ -1,0 +1,113 @@
+==================== GPU SYSTEM MONITOR: DCS FULL-SCALE RUN ====================
+Workload: 100x100x100 lattice, 100,000 atoms (kernels from 01_dcs_compute.cu)
+
+---- A. Device inventory [API] ----
+  NVIDIA GeForce GTX 1650 Ti | compute capability 7.5 | 16 SMs x 64 FP32 lanes = 1024 CUDA cores | warp 32
+  rated SM clock 1485 MHz (attribute), memory clock 6001 MHz, bus 128 bit
+  theoretical FP32 peak at the rated clock : 3041 GFLOPS [DERIVED: SMs x 64 x 2 x clock]
+  theoretical DRAM bandwidth               : 192 GB/s   [DERIVED: 2 x mem clock x bus/8]
+
+---- B. STORAGE ledger ----
+  level                    capacity               used by this program     note
+  registers (per SM)       65,536 x 4 B = 256 KB  see per-kernel table below [API]
+  shared memory (per SM)   65536                  0                        bytes; kernels use none (atoms come from constant memory) [API]
+  constant memory (GPU)    65536                  64000                    bytes = atominfo[4000] float4; the 64 KB limit forces atom chunking [API]
+  L2 cache (GPU)           1048576                0                        bytes; shared by all SMs, not directly allocated [API]
+  global DRAM (GPU) MB     4095.7                 6.00                     MB = the energy grid (padded) [API cudaMemGetInfo]
+    DRAM free before/after                        3286.75                  MB free after allocation
+  padded grid buffer = 128 x 112 x 100 floats = 5.47 MB (valid 100 x 100 x 100 = 3.81 MB; padding wastes 30%) [COUNT]
+
+---- C. THREAD ledger per kernel (FULL scale) ----
+  kernel                                 grid x block   blocks    threads   warps      launches  total threads launched
+  v1 CUDA-Simple      (1 pt/thread)      8x7 x 16x16    56        14336     448        2500      3.584e+07
+  v2 CUDA-Unroll4x    (4 pt/thread)      2x7 x 16x16    14        3584      112        2500      8.960e+06
+  v3 CUDA-Unroll8clx  (8 pt/thread)      1x7 x 16x16    7         1792      56         2500      4.480e+06
+  (per launch; 8 warps per 256-thread block) [COUNT]
+
+  kernel                                 regs   regs/block  blocks/SM  warps/SM    occup.    waves     limiter
+  v1 CUDA-Simple      (1 pt/thread)      29     7424        4          32           100.0%   0.88      thread slots (model 4, runtime 4)
+  v2 CUDA-Unroll4x    (4 pt/thread)      32     8192        4          32           100.0%   0.22      thread slots (model 4, runtime 4)
+  v3 CUDA-Unroll8clx  (8 pt/thread)      37     9472        4          32           100.0%   0.11      thread slots (model 4, runtime 4)
+
+  LAUNCH FILL: per-SM occupancy above is what one SM CAN hold; a launch (one z-slice x one atom chunk)
+  may not have enough blocks to use every SM. [COUNT]
+  kernel                                 blocks    SMs busy   avg resident warps/SM    of 32-warp capacity
+  v1 CUDA-Simple      (1 pt/thread)      56        16 of 16    28.0                     87.5%
+  v2 CUDA-Unroll4x    (4 pt/thread)      14        14 of 16    7.0                      21.9%
+  v3 CUDA-Unroll8clx  (8 pt/thread)      7          7 of 16    3.5                      10.9%
+  local (spill) memory per thread: v1 0 B, v2 0 B, v3 0 B; static smem: 0/0/0 B; const in kernel: 64000/64000/64000 B [API]
+
+---- D. TRAFFIC ledger (FULL, one complete run per kernel) [COUNT/DERIVED] ----
+  useful atom-point evaluations   : 1.000e+11
+  computed incl. padding          : 1.434e+11  (+43%)
+  host -> device (atom chunks)    : 160.0 MB over 2500 cudaMemcpyToSymbol calls (identical for all kernels)
+  global DRAM read+write of grid  : 286.7 MB (each chunk launch does grid += partial sum)
+  kernel                                 const loads / eval     FP work per byte of DRAM
+  v1 CUDA-Simple      (1 pt/thread)      1.000                  5000 flop/byte (at 10 flops/eval)
+  v2 CUDA-Unroll4x    (4 pt/thread)      0.250                  5000 flop/byte (at 10 flops/eval)
+  v3 CUDA-Unroll8clx  (8 pt/thread)      0.125                  5000 flop/byte (at 10 flops/eval)
+  Read: thousands of flops per DRAM byte means DRAM is not the bottleneck; the constant cache
+  broadcast serves every atom fetch (one float4 per atom shared by the whole warp).
+
+---- E. LIVE monitoring during the full-scale run [NVML, 50 ms sampling] ----
+  idle baseline (300 ms): 7 samples, GPU util avg 37%, SM clock 1905 MHz, power 24.7 W, temp 74 C, 221 MiB in use
+
+  [v1 CUDA-Simple      (1 pt/thread) ] wall 1.675 s [MEASURED]
+    GPU utilisation            min      32.0  avg      45.8  max      89.0  %
+    memory-controller util     min       0.0  avg       0.0  max       0.0  %
+    SM clock                   min    1350.0  avg    1373.7  max    1905.0  MHz
+    memory clock               min    6000.0  avg    6000.0  max    6000.0  MHz
+    power draw                 min      24.7  avg      27.3  max      33.8  W
+    device memory in use       min     221.5  avg     221.5  max     221.5  MiB (whole GPU incl. Windows)
+    temperature 74 -> 76 C, 31 samples
+    timeline (t ms | util% | memctl% | SM MHz | power W | temp C):
+            0 |   37 |     0 |   1905 |    24.7 |    74
+          339 |   37 |     0 |   1350 |    28.4 |    75
+          612 |   32 |     0 |   1350 |    26.9 |    75
+          879 |   32 |     0 |   1350 |    26.8 |    75
+         1148 |   32 |     0 |   1350 |    27.1 |    75
+         1416 |   89 |     0 |   1350 |    26.9 |    76
+         1685 |   89 |     0 |   1350 |    26.9 |    76
+
+  [v2 CUDA-Unroll4x    (4 pt/thread) ] wall 1.190 s [MEASURED]
+    GPU utilisation            min      85.0  avg      87.2  max      89.0  %
+    memory-controller util     min       0.0  avg       0.0  max       0.0  %
+    SM clock                   min    1350.0  avg    1350.0  max    1350.0  MHz
+    memory clock               min    6000.0  avg    6000.0  max    6000.0  MHz
+    power draw                 min      22.8  avg      24.0  max      26.9  W
+    device memory in use       min     221.5  avg     221.5  max     221.5  MiB (whole GPU incl. Windows)
+    temperature 76 -> 75 C, 24 samples
+    timeline (t ms | util% | memctl% | SM MHz | power W | temp C):
+            0 |   89 |     0 |   1350 |    26.9 |    76
+          219 |   89 |     0 |   1350 |    23.9 |    75
+          433 |   89 |     0 |   1350 |    23.8 |    75
+          648 |   89 |     0 |   1350 |    23.8 |    75
+          864 |   85 |     0 |   1350 |    23.9 |    75
+         1084 |   85 |     0 |   1350 |    23.7 |    75
+
+  [v3 CUDA-Unroll8clx  (8 pt/thread) ] wall 1.892 s [MEASURED]
+    GPU utilisation            min      82.0  avg      84.2  max      88.0  %
+    memory-controller util     min       0.0  avg       0.0  max       0.0  %
+    SM clock                   min    1350.0  avg    1375.0  max    1560.0  MHz
+    memory clock               min    6000.0  avg    6000.0  max    6000.0  MHz
+    power draw                 min      19.0  avg      21.2  max      23.6  W
+    device memory in use       min     221.5  avg     221.5  max     221.5  MiB (whole GPU incl. Windows)
+    temperature 75 -> 74 C, 36 samples
+    timeline (t ms | util% | memctl% | SM MHz | power W | temp C):
+            0 |   85 |     0 |   1350 |    23.6 |    75
+          338 |   85 |     0 |   1350 |    20.9 |    74
+          673 |   82 |     0 |   1350 |    21.1 |    74
+         1010 |   82 |     0 |   1350 |    21.1 |    74
+         1343 |   82 |     0 |   1350 |    21.1 |    74
+         1683 |   88 |     0 |   1440 |    21.9 |    74
+
+---- F. Achieved vs theoretical peak [MEASURED / DERIVED] ----
+  kernel                                 seconds    G evals/s    GFLOPS       % of FP32 peak SM clock used
+  v1 CUDA-Simple      (1 pt/thread)      1.675      59.710       597.1        21.2           measured avg (NVML)
+  v2 CUDA-Unroll4x    (4 pt/thread)      1.190      84.048       840.5        30.4           measured avg (NVML)
+  v3 CUDA-Unroll8clx  (8 pt/thread)      1.892      52.857       528.6        18.8           measured avg (NVML)
+  Caveats: GFLOPS assumes 10 flops per evaluation for every kernel (the book's convention). v2/v3 do
+  fewer real flops per evaluation (dy^2+dz^2 is shared), so their % of peak can look inflated; the
+  evaluations/second column is the fair comparison. NVML power/util may be coarse on WSL.
+
+DONE

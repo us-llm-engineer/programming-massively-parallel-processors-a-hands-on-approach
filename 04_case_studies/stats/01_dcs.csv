@@ -1,0 +1,7 @@
+scale,version,ms,g_evals_per_s,gflops_10_per_eval,launches,max_err,check
+reduced,"v1 CUDA-Simple      (1 pt/thread) ",6.7901,58.9092,589.09,10,1.653e-07,PASS
+reduced,"v2 CUDA-Unroll4x    (4 pt/thread) ",4.6408,86.1926,861.93,10,1.653e-07,PASS
+reduced,"v3 CUDA-Unroll8clx  (8 pt/thread) ",7.4017,54.0417,540.42,10,1.653e-07,PASS
+full,"v1 CUDA-Simple      (1 pt/thread) ",1428.6924,69.9941,699.94,2500,1.868e-08,PASS
+full,"v2 CUDA-Unroll4x    (4 pt/thread) ",1000.8002,99.9200,999.20,2500,1.977e-08,PASS
+full,"v3 CUDA-Unroll8clx  (8 pt/thread) ",1564.6941,63.9103,639.10,2500,1.977e-08,PASS

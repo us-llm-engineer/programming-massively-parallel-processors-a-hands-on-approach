@@ -1,0 +1,77 @@
+==================== DIRECT COULOMB SUMMATION: RESULTS ====================
+GPU: NVIDIA GeForce GTX 1650 Ti | book source: PMPP Chapter 9 (in this edition Chapter 8 is MRI)
+
+---- The problem ----
+  potential(j) = sum_i q_i / sqrt((xj-xi)^2 + (yj-yi)^2 + (zj-zi)^2)
+  lattice spacing 1.0 A, atoms uniform in the lattice box, charges uniform in [-1,+1].
+  Padded-lattice cells are computed but not counted as useful work.
+  Error metric: |GPU - double CPU| / sum(|q|/r)  (charges cancel, so plain relative error misleads).
+
+---- Scale ladder ----
+  TINY      32x 32x  4   padded slice 128x 32 (+ 300%)      1000 atoms   1 chunk(s)/slice   4.096e+06 valid evals
+  REDUCED  100x100x 10   padded slice 128x112 (+  43%)      4000 atoms   1 chunk(s)/slice   4.000e+08 valid evals
+  FULL     100x100x100   padded slice 128x112 (+  43%)    100000 atoms   25 chunk(s)/slice   1.000e+11 valid evals
+
+---- TINY: every lattice point vs double-precision CPU ----
+  v1 CUDA-Simple      (1 pt/thread)  all 4096 points: max error 1.66e-07  PASS
+  v2 CUDA-Unroll4x    (4 pt/thread)  all 4096 points: max error 1.66e-07  PASS
+  v3 CUDA-Unroll8clx  (8 pt/thread)  all 4096 points: max error 1.66e-07  PASS
+
+---- REDUCED: 100x100x10 lattice, 4000 atoms ----
+  sequential CPU (Fig 9.3 style, 1 core):     874.8 ms     0.457 G evals/s
+  version                                       ms    G evals/s     GFLOPS       vs CPU max err (200 pts)
+  v1 CUDA-Simple      (1 pt/thread)           6.79       58.909      589.1       128.8x     1.65e-07
+  v2 CUDA-Unroll4x    (4 pt/thread)           4.64       86.193      861.9       188.5x     1.65e-07
+  v3 CUDA-Unroll8clx  (8 pt/thread)           7.40       54.042      540.4       118.2x     1.65e-07
+  (v3 vs float-CPU grid: max abs diff 3.338e-06 over every third slice; both are float, so small differences are expected)
+
+---- FULL: 100x100x100 lattice, 100000 atoms (1.00e+11 valid atom-point evaluations) ----
+  version                                  seconds    G evals/s     GFLOPS     launches     H2D MB    max err
+  v1 CUDA-Simple      (1 pt/thread)          1.429       69.994      699.9         2500      160.0   1.87e-08 PASS
+  v2 CUDA-Unroll4x    (4 pt/thread)          1.001       99.920      999.2         2500      160.0   1.98e-08 PASS
+  v3 CUDA-Unroll8clx  (8 pt/thread)          1.565       63.910      639.1         2500      160.0   1.98e-08 PASS
+  book (G80, 8800 GTX, for scale): v1 18.6, v2 33.4, v3 39.5 G evals/s
+  Sequential CPU at the measured 0.457 G evals/s would need about 219 s (3.6 min) for this size: not run.
+
+  v3 vs CPU rate: 140x (book: 44x on G80 vs its CPU)
+
+---- Potential map (FULL, from v3) ----
+  points: 1000000  min -35.438  max 82.790  mean 2.4635  positive 74.8%  (units: charge/Angstrom)
+  sample points (ix,iy,iz -> GPU value | double CPU reference):
+    (  0,  0,  0)      3.1321 |     3.1321
+    ( 50, 50, 50)      2.0636 |     2.0636
+    ( 99, 99, 99)     -0.3993 |    -0.3993
+    ( 25, 75, 10)      4.6383 |     4.6383
+    ( 80, 20, 90)      0.7843 |     0.7843
+
+  ASCII map of slice z=50 (each cell averages 1.6 x 4 lattice points; ' ' = most negative, '@' = most positive;
+  slice range -7.32 .. 10.27; x to the right, y downward):
+  |++++++++**************#######****+++++*+************####*+++++++|
+  |+++*****************####%%%##***++++++++******######%%##*****+++|
+  |********#####*****####**#####**+++++++++*****#####%%%%%%#*******|
+  |*****###%%%##*#******++++****+++++++++**#######%%#%%%%%%********|
+  |########%%%%%#####**++++++********++***######%%%%%%%####***+****|
+  |#%%%##%%%######%##***++++++++***##**+*#########%%%%%###**+++++++|
+  |######%%###########**++===+++=+++**+****############****++++++++|
+  |**#########**######*++=++======+++++++*****###******+++=========|
+  |*##########****#****+++++++====++++++=+++*********+++++========+|
+  |***#####*####****+**++++*++====+++++++++******##**++++==========|
+  |**++*******##********+++=++++++=++*******+++++****====-----=====|
+  |********+**************++++++++++++++****+++++++++++==-::::-----|
+  |**+++++++++**+++***********++++++++++****++++===++++=-:::::::---|
+  |++++++++++**************++++++++++==+**##**++==++=+=------------|
+  |++====+++++++**+++++++++++=++++++===++****+++==+===------==-----|
+  |==----==========--========--==-===++++++*****+++========---==---|
+  |=-=--=---==----:------=----------=======+++++=-=======-----::::-|
+  |=========---------------::::::::-------======--==------------:::|
+  |===--==-------------==-----:::::----=-======-----:::::::---==---|
+  |++===----::::-:--------------:::::-----------:::::::::::---===+=|
+  |++++==--::::----------==-----:::.:::-----:::::::::::::--=--=====|
+  |**++++=---------==----=------:::::..:::::::::::----------======+|
+  |++++++=======++=============---:::::::---::::::::------======+++|
+  |+++**++======+++++===============--::::-::::::::-----======--===|
+  |++++++++==+==+=++++=====+++++++====-----:::::-----=====++=======|
+
+ALL VARIANTS PASS
+
+[GPU during this run: 5.8 s wall | mean utilisation 48 % | >= 50 % for 54 % of the time, idle (<= 5 %) for 30 % | mean SM clock 1532 MHz | mean power 26.7 W | max temp 75 C | NVML, 100 ms samples]

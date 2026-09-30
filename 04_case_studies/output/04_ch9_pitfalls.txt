@@ -1,0 +1,73 @@
+==================== CHAPTER 9 PITFALLS ON NVIDIA GeForce GTX 1650 Ti ====================
+(book numbers are for the 2008 G80; this GPU is a 2019 Turing part: compare shapes, not absolutes)
+
+---- A. When does the GPU beat the CPU? (one 100x100 slice, warm GPU) ----
+  [book] fixed GPU start-up ~110 ms; CPU faster for <= 400 atoms; GPU fully utilised from ~10,000 atoms.
+  [MEASURED] very first GPU run in this process (1 atom, includes lazy kernel load): 1.446 ms
+  atoms    CPU ms      GPU v1 ms   GPU v2 ms   GPU v3 ms   best GPU   winner (best GPU vs CPU)
+  1        0.024       0.253       0.243       0.243       0.243      CPU (10.0x)
+  10       0.253       0.174       0.167       0.167       0.167      GPU (1.5x)
+  100      2.140       0.131       0.125       0.140       0.125      GPU (17.2x)
+  400      8.217       0.209       0.202       0.212       0.202      GPU (40.7x)
+  1000     20.447      0.235       0.215       0.254       0.215      GPU (95.3x)
+  4000     80.738      0.584       0.439       0.621       0.439      GPU (183.8x)
+  10000    212.783     1.343       0.993       1.471       0.993      GPU (214.3x)
+  40000    847.247     6.942       4.979       7.601       4.979      GPU (170.2x)
+  Read: 'winner' flips from CPU to GPU at the smallest atom count where the GPU column is lower. The warm
+  per-run fixed cost here is one memset + constant upload + launch (about 0.2-0.3 ms). The book's ~110 ms was
+  start-up (context creation); process/context start-up is NOT timed in this program, so that claim is untested.
+
+---- B. Lattice padding: waste and its effect on speed ----
+  [book] slices are padded to whole thread blocks (x to a multiple of 128, y of 16); 100x100 -> 128x112 = +43%;
+         padding the whole 3D lattice (100^3 -> 128x112x112) would waste +60%, hence 2D slices.
+  [DERIVED] padding waste, per-slice (this program's scheme) vs whole-3D (z also to a multiple of 16):
+  lattice        padded slice   2D waste    padded 3D        3D waste   
+  100x100x100     128x112           43%      128x 112x112       61%
+   64x 64x64      128x64           100%      128x  64x64       100%
+  128x112x100     128x112            0%      128x 112x112       12%
+  200x200x200     256x208           33%      256x 208x208       38%
+  333x333x333     384x336           16%      384x 336x336       17%
+  [MEASURED] same 4,000 atoms, 8 slices, kernel v2: useful vs computed evaluation rate
+  lattice      padded slice   ms        useful G ev/s    computed G ev/s 
+  100x100       128x112       3.542     90.33            129.50          
+  128x112       128x112       2.895     158.45           158.45          
+  128x128       128x128       3.116     168.26           168.26          
+   64x64        128x64        3.403     38.51            77.03           
+  Read: run time is nearly the same (~4 ms) for every lattice although padded cell counts differ by 2x, because a
+  single small slice launches few blocks and does not fill the GPU (see the launch-fill note in 02). So padding
+  waste is NOT paid in time here; it only lowers the useful fraction of the work the GPU does in that time.
+
+---- C. Grid-centric gather vs atom-centric scatter (one 64x64 slice) ----
+  [book] atom-centric: each thread = one atom, updating all grid points -> many threads write the same
+         location -> atomicAdd needed -> slow. Grid-centric: accumulate in registers, write once.
+  atoms   gather v1 ms   scatter ms (naive) scatter ms (stagger) naive/gather atomics     max error (gather | scatter)
+  500     0.387          1.133              0.216                2.9         2.05e+06    1.64e-07 | 1.80e-07
+  2000    0.256          3.455              0.524                13.5        8.19e+06    1.52e-07 | 2.14e-07
+  4000    0.478          7.110              1.127                14.9        1.64e+07    1.37e-07 | 1.47e-07
+  Read: 'atomics' = total atomicAdd calls. 'naive' has every thread of a warp updating the same address at the
+  same moment; 'stagger' spreads them, showing how much of the cost is same-address contention.
+  The scatter kernel also launches only N/128 blocks, so it cannot fill the GPU: a second reason it loses.
+
+---- D. Atoms in constant memory vs global memory (kernel v1 body, one 128x112 slice, 4,000 atoms) ----
+  [book] warp reads the same atom -> constant cache broadcast, CGMA > 10:1, >96% hit rate.
+  atom storage               ms / launch  G evals/s (computed)
+  __constant__ (broadcast)   0.5866       97.8          
+  global (const __restrict__) 0.7215       79.5          
+  [MEASURED] global/constant time ratio = 1.23x. Modern GPUs also broadcast a uniform global read through
+  the read-only/L1 path, so a big gap is not guaranteed; the ratio above is what this GPU shows.
+
+---- E. The 64 KB constant limit: chunk size vs launches (kernel v2, 40,000 atoms, 100x100x10 lattice) ----
+  [book] atoms are streamed in chunks (<= 64 KB); each chunk = one memcpy to constant memory + one launch.
+  atoms/chunk  bytes      launches    ms         G evals/s      vs 4000
+  125          2000       3200        308.59     12.96          6.76x
+  250          4000       1600        165.25     24.21          3.62x
+  500          8000       800         100.02     39.99          2.19x
+  1000         16000      400         70.25      56.94          1.54x
+  2000         32000      200         52.78      75.78          1.16x
+  4000         64000      100         45.62      87.68          1.00x
+  Read: smaller chunks add launches and uploads for the same arithmetic; the cost of that overhead is the
+  time ratio in the last column (>1.00x = slower than the largest legal chunk).
+
+ALL VARIANTS PASS
+
+[GPU during this run: 7.6 s wall | mean utilisation 37 % | >= 50 % for 37 % of the time, idle (<= 5 %) for 25 % | mean SM clock 1682 MHz | mean power 25.4 W | max temp 75 C | NVML, 100 ms samples]
