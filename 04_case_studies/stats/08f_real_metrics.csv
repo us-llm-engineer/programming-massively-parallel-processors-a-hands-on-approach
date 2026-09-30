@@ -1,0 +1,22 @@
+slice,method,trig,lines_kept,samples,rel_rms_pct,psnr_db,ms
+4,"F^H d, RSS over coils",accurate,256,65536,0.0002,125.493,587.10
+4,"F^H d, RSS over coils",hardware,256,65536,0.0002,126.275,709.35
+4,"zero-filled F^H d, RSS over coils",accurate,70,17920,25.3796,24.679,172.50
+4,"CG on undersampled data, 1 iteration",accurate,70,17920,25.3796,24.679,595.43
+4,"CG on undersampled data, 2 iterations",accurate,70,17920,25.3796,24.679,595.43
+4,"CG on undersampled data, 4 iterations",accurate,70,17920,25.3796,24.679,595.43
+4,"CG on undersampled data, 8 iterations",accurate,70,17920,25.3796,24.679,595.43
+8,"F^H d, RSS over coils",accurate,256,65536,0.0002,126.311,649.06
+8,"F^H d, RSS over coils",hardware,256,65536,0.0002,127.478,794.32
+8,"zero-filled F^H d, RSS over coils",accurate,70,17920,26.4788,24.641,183.99
+8,"CG on undersampled data, 1 iteration",accurate,70,17920,26.4788,24.641,575.69
+8,"CG on undersampled data, 2 iterations",accurate,70,17920,26.4788,24.641,575.69
+8,"CG on undersampled data, 4 iterations",accurate,70,17920,26.4788,24.641,575.69
+8,"CG on undersampled data, 8 iterations",accurate,70,17920,26.4788,24.641,575.69
+12,"F^H d, RSS over coils",accurate,256,65536,0.0002,126.678,646.68
+12,"F^H d, RSS over coils",hardware,256,65536,0.0002,127.845,784.25
+12,"zero-filled F^H d, RSS over coils",accurate,70,17920,25.9658,24.695,179.35
+12,"CG on undersampled data, 1 iteration",accurate,70,17920,25.9658,24.695,576.72
+12,"CG on undersampled data, 2 iterations",accurate,70,17920,25.9658,24.695,576.72
+12,"CG on undersampled data, 4 iterations",accurate,70,17920,25.9658,24.695,576.72
+12,"CG on undersampled data, 8 iterations",accurate,70,17920,25.9658,24.695,576.72

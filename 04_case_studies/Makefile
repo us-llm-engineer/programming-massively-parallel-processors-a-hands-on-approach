@@ -46,13 +46,13 @@ VCPKG_ROOT ?= $(HOME)/vcpkg
 VCPKG_TRIPLET ?= x64-linux
 CATCH_INC = $(VCPKG_ROOT)/installed/$(VCPKG_TRIPLET)/include
 CATCH_LIB = $(VCPKG_ROOT)/installed/$(VCPKG_TRIPLET)/lib
-$(BINDIR)/catch2_setup: tests/catch2/test_setup.cu
+$(BINDIR)/catch2_%: tests/catch2/test_%.cu $(wildcard $(SRCDIR)/*.cuh)
 	@mkdir -p $(BINDIR)
 	$(NVCC) -O2 -std=c++17 -arch=$(ARCH) -I$(CATCH_INC) -I$(SRCDIR) -o $@ $< -L$(CATCH_LIB)/manual-link -L$(CATCH_LIB) -lCatch2Main -lCatch2
 
 .PHONY: catch2
-catch2: $(BINDIR)/catch2_setup
-	./$(BINDIR)/catch2_setup
+catch2: $(BINDIR)/catch2_setup $(BINDIR)/catch2_cartesian_recon
+	./$(BINDIR)/catch2_setup && ./$(BINDIR)/catch2_cartesian_recon
 
 # hardware-counter measurements (needs GPU performance counters enabled) and figures from stats/*.csv
 .PHONY: profile figures
