@@ -1,0 +1,43 @@
+statistic,value,unit,label
+scans_reconstructed,92.0,scans,MEASURED
+scans_failed,0.0,scans,MEASURED
+slices_reconstructed_full_and_undersampled,1656.0,slices,MEASURED
+coil_images_reconstructed,13248.0,images,DERIVED
+voxel_sample_pairs_computed,36.2291,x1e12,DERIVED
+equivalent_flops,470.9778,TFLOP (13 flops per pair),DERIVED
+run_wall_time,46.0275,min,MEASURED
+gpu_kernel_time,23.7255,min,MEASURED
+mean_scan_wall,29.999,s,MEASURED
+throughput_full_slices,0.5996,slices/s,DERIVED
+median_kernel_rate_full,25.92,Gpairs/s,MEASURED
+median_kernel_rate_zerofilled,25.739,Gpairs/s,MEASURED
+peak_kernel_rate,28.771,Gpairs/s,MEASURED
+median_kernel_gflops,335.8,GFLOP/s (13 flops/pair),DERIVED
+full_rel_error_p50,0.0002,% vs dataset FFT reconstruction,MEASURED
+full_rel_error_p95,0.0003,% vs dataset FFT reconstruction,MEASURED
+full_rel_error_p99,0.0003,% vs dataset FFT reconstruction,MEASURED
+full_rel_error_p100,0.0003,% vs dataset FFT reconstruction,MEASURED
+full_psnr_min,121.017,dB,MEASURED
+zerofilled_psnr_p5,23.851,dB (3.7x fewer lines),MEASURED
+zerofilled_psnr_p50,25.216,dB (3.7x fewer lines),MEASURED
+zerofilled_psnr_p95,26.493,dB (3.7x fewer lines),MEASURED
+T1_scans,35.0,scans,MEASURED
+T1_full_rel_error_max,0.0003,%,MEASURED
+T1_zerofilled_psnr_median,25.0755,dB,MEASURED
+T2_scans,33.0,scans,MEASURED
+T2_full_rel_error_max,0.0003,%,MEASURED
+T2_zerofilled_psnr_median,25.76,dB,MEASURED
+FLAIR_scans,24.0,scans,MEASURED
+FLAIR_full_rel_error_max,0.0003,%,MEASURED
+FLAIR_zerofilled_psnr_median,24.5385,dB,MEASURED
+gpu_util_mean,48.8265,%,MEASURED
+gpu_util_p95,80.0,%,MEASURED
+gpu_util_max,93.0,%,MEASURED
+sm_clock_mean,1305.9515,MHz,MEASURED
+sm_clock_min,300.0,MHz,MEASURED
+power_mean,24.2783,W,MEASURED
+power_max,50.38,W,MEASURED
+temp_mean,80.4816,C,MEASURED
+temp_max,86.0,C,MEASURED
+energy_estimate,18.6245,Wh (mean power x wall time),DERIVED
+energy_per_slice,40.4881,J per slice (full + undersampled),DERIVED

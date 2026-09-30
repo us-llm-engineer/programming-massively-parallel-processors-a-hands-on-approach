@@ -4,43 +4,43 @@ data: M4Raw in-vivo brain, T1w, 4 coils, Cartesian 256 x 256 (CC-BY 4.0); truth:
 ---- slice 4: 4 coils, 256 x 256; full = 65536 samples, undersampled = 70 lines (3.7x fewer) ----
   method                                         trig      samples   rel RMS %   PSNR (dB)  time ms  
   check: GPU F^H d vs double CPU on 64 voxels, error / sum|terms| = 8.02e-08  PASS
-  F^H d, RSS over coils                          accurate  65536     0.0002      125.5      528.6    
-  F^H d, RSS over coils                          hardware  65536     0.0002      126.3      559.1    
-  zero-filled F^H d, RSS over coils              accurate  17920     25.3796     24.7       138.8    
-  CG on undersampled data, 1 iteration           accurate  17920     25.3796     24.7       474.6    
-  CG on undersampled data, 2 iterations          accurate  17920     25.3796     24.7       474.6    
-  CG on undersampled data, 4 iterations          accurate  17920     25.3796     24.7       474.6    
-  CG on undersampled data, 8 iterations          accurate  17920     25.3796     24.7       474.6    
+  F^H d, RSS over coils                          accurate  65536     0.0002      125.5      561.4    
+  F^H d, RSS over coils                          hardware  65536     0.0002      126.3      629.7    
+  zero-filled F^H d, RSS over coils              accurate  17920     25.3796     24.7       170.6    
+  CG on undersampled data, 1 iteration           accurate  17920     25.3796     24.7       564.3    
+  CG on undersampled data, 2 iterations          accurate  17920     25.3796     24.7       564.3    
+  CG on undersampled data, 4 iterations          accurate  17920     25.3796     24.7       564.3    
+  CG on undersampled data, 8 iterations          accurate  17920     25.3796     24.7       564.3    
 
-  (waited 1 s for the GPU to cool to 68 C before measuring)
 ---- slice 8: 4 coils, 256 x 256; full = 65536 samples, undersampled = 70 lines (3.7x fewer) ----
   method                                         trig      samples   rel RMS %   PSNR (dB)  time ms  
   check: GPU F^H d vs double CPU on 64 voxels, error / sum|terms| = 7.16e-08  PASS
-  F^H d, RSS over coils                          accurate  65536     0.0002      126.3      531.6    
-  F^H d, RSS over coils                          hardware  65536     0.0002      127.5      661.1    
-  zero-filled F^H d, RSS over coils              accurate  17920     26.4788     24.6       176.4    
-  CG on undersampled data, 1 iteration           accurate  17920     26.4788     24.6       580.3    
-  CG on undersampled data, 2 iterations          accurate  17920     26.4788     24.6       580.3    
-  CG on undersampled data, 4 iterations          accurate  17920     26.4788     24.6       580.3    
-  CG on undersampled data, 8 iterations          accurate  17920     26.4788     24.6       580.3    
+  F^H d, RSS over coils                          accurate  65536     0.0002      126.3      620.4    
+  F^H d, RSS over coils                          hardware  65536     0.0002      127.5      710.4    
+  zero-filled F^H d, RSS over coils              accurate  17920     26.4788     24.6       165.3    
+  CG on undersampled data, 1 iteration           accurate  17920     26.4788     24.6       560.0    
+  CG on undersampled data, 2 iterations          accurate  17920     26.4788     24.6       560.0    
+  CG on undersampled data, 4 iterations          accurate  17920     26.4788     24.6       560.0    
+  CG on undersampled data, 8 iterations          accurate  17920     26.4788     24.6       560.0    
 
+  (waited 1 s for the GPU to cool to 73 C before measuring)
 ---- slice 12: 4 coils, 256 x 256; full = 65536 samples, undersampled = 70 lines (3.7x fewer) ----
   method                                         trig      samples   rel RMS %   PSNR (dB)  time ms  
   check: GPU F^H d vs double CPU on 64 voxels, error / sum|terms| = 1.15e-07  PASS
-  F^H d, RSS over coils                          accurate  65536     0.0002      126.7      626.1    
-  F^H d, RSS over coils                          hardware  65536     0.0002      127.8      738.4    
-  zero-filled F^H d, RSS over coils              accurate  17920     25.9658     24.7       170.7    
-  CG on undersampled data, 1 iteration           accurate  17920     25.9658     24.7       567.1    
-  CG on undersampled data, 2 iterations          accurate  17920     25.9658     24.7       567.1    
-  CG on undersampled data, 4 iterations          accurate  17920     25.9658     24.7       567.1    
-  CG on undersampled data, 8 iterations          accurate  17920     25.9658     24.7       567.1    
+  F^H d, RSS over coils                          accurate  65536     0.0002      126.7      619.5    
+  F^H d, RSS over coils                          hardware  65536     0.0002      127.8      784.1    
+  zero-filled F^H d, RSS over coils              accurate  17920     25.9658     24.7       177.1    
+  CG on undersampled data, 1 iteration           accurate  17920     25.9658     24.7       577.0    
+  CG on undersampled data, 2 iterations          accurate  17920     25.9658     24.7       577.0    
+  CG on undersampled data, 4 iterations          accurate  17920     25.9658     24.7       577.0    
+  CG on undersampled data, 8 iterations          accurate  17920     25.9658     24.7       577.0    
 
 How to read: with FULL Cartesian data F^H d is the inverse Fourier transform, so agreement with the dataset's FFT reconstruction to well under 1 %
 validates the kernels on real measured data. The undersampled images show aliasing; CG on the same data converges to the same image (no prior),
 which is expected (the normal matrix has a single non-zero eigenvalue on the kept lines, so CG converges in one iteration and later iterations are skipped): removing aliasing needs coil-sensitivity maps or a sparsity prior, not implemented here. Time for the undersampled F^H d
 scales with the number of samples kept. Timings are only meaningful if the mean SM clock on the last line is near the GPU boost clock (this run
-may have been power-capped; accuracy columns are unaffected). Figure: scripts/plot_real.py -> figures/08_real_data.png.
+may have been power-capped; accuracy columns are unaffected). Figure: scripts/plot_real.py -> figures/real_slices.png.
 
 ALL VARIANTS PASS
 
-[GPU during this run: 7.7 s wall | mean utilisation 61 % | >= 50 % for 62 % of the time, idle (<= 5 %) for 12 % | mean SM clock 1605 MHz | mean power 33.6 W | max temp 75 C | NVML, 100 ms samples]
+[GPU during this run: 7.9 s wall | mean utilisation 65 % | >= 50 % for 65 % of the time, idle (<= 5 %) for 9 % | mean SM clock 1444 MHz | mean power 28.2 W | max temp 76 C | NVML, 100 ms samples]
