@@ -1,0 +1,8 @@
+t_ms,label
+0.1,A1 pageable+sync (starved)
+1642.6,A4 pinned+4 streams (fed)
+3222.7,B1 serial CPU prep 4ms
+4738.9,B2 producer overlap 4ms
+6255.5,C1 launch+sync each
+7761.4,C3 fused kernel
+9262.7,end

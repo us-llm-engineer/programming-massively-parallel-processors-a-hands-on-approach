@@ -1,0 +1,1249 @@
+scenario,variant,param,engine,chunk,t_start_ms,t_end_ms
+A,"A1 pageable + sync copies",256.0,H2D,0,0.0620,5.9887
+A,"A1 pageable + sync copies",256.0,KERNEL,0,5.9909,6.5176
+A,"A1 pageable + sync copies",256.0,D2H,0,6.5225,7.0562
+A,"A1 pageable + sync copies",256.0,H2D,1,7.0751,11.8753
+A,"A1 pageable + sync copies",256.0,KERNEL,1,11.8775,12.3835
+A,"A1 pageable + sync copies",256.0,D2H,1,12.3859,12.8139
+A,"A1 pageable + sync copies",256.0,H2D,2,12.8299,19.1712
+A,"A1 pageable + sync copies",256.0,KERNEL,2,19.4116,20.1316
+A,"A1 pageable + sync copies",256.0,D2H,2,20.1348,21.0008
+A,"A1 pageable + sync copies",256.0,H2D,3,21.0217,31.1282
+A,"A1 pageable + sync copies",256.0,KERNEL,3,31.1305,31.6332
+A,"A1 pageable + sync copies",256.0,D2H,3,31.6364,32.1202
+A,"A1 pageable + sync copies",256.0,H2D,4,32.1416,45.4447
+A,"A1 pageable + sync copies",256.0,KERNEL,4,45.4472,45.9916
+A,"A1 pageable + sync copies",256.0,D2H,4,45.9938,46.5413
+A,"A1 pageable + sync copies",256.0,H2D,5,46.5598,53.1013
+A,"A1 pageable + sync copies",256.0,KERNEL,5,53.1045,53.6199
+A,"A1 pageable + sync copies",256.0,D2H,5,53.6242,56.1776
+A,"A1 pageable + sync copies",256.0,H2D,6,56.2306,64.1092
+A,"A1 pageable + sync copies",256.0,KERNEL,6,64.1115,64.6612
+A,"A1 pageable + sync copies",256.0,D2H,6,64.6634,65.8808
+A,"A1 pageable + sync copies",256.0,H2D,7,65.8980,70.0710
+A,"A1 pageable + sync copies",256.0,KERNEL,7,70.0747,70.5985
+A,"A1 pageable + sync copies",256.0,D2H,7,70.6005,71.1137
+A,"A1 pageable + sync copies",256.0,H2D,8,71.1330,76.0399
+A,"A1 pageable + sync copies",256.0,KERNEL,8,76.0421,76.5561
+A,"A1 pageable + sync copies",256.0,D2H,8,76.5581,77.0025
+A,"A1 pageable + sync copies",256.0,H2D,9,77.0219,86.7821
+A,"A1 pageable + sync copies",256.0,KERNEL,9,86.7846,87.2979
+A,"A1 pageable + sync copies",256.0,D2H,9,87.3018,87.9411
+A,"A1 pageable + sync copies",256.0,H2D,10,87.9617,93.5526
+A,"A1 pageable + sync copies",256.0,KERNEL,10,93.5564,94.1068
+A,"A1 pageable + sync copies",256.0,D2H,10,94.1092,94.5717
+A,"A1 pageable + sync copies",256.0,H2D,11,94.5875,107.4725
+A,"A1 pageable + sync copies",256.0,KERNEL,11,107.4747,107.9863
+A,"A1 pageable + sync copies",256.0,D2H,11,107.9888,108.6061
+A,"A1 pageable + sync copies",256.0,H2D,12,108.6981,114.1961
+A,"A1 pageable + sync copies",256.0,KERNEL,12,114.2006,114.7144
+A,"A1 pageable + sync copies",256.0,D2H,12,114.7178,115.5256
+A,"A1 pageable + sync copies",256.0,H2D,13,115.6207,128.7437
+A,"A1 pageable + sync copies",256.0,KERNEL,13,128.7469,129.2796
+A,"A1 pageable + sync copies",256.0,D2H,13,129.2819,129.8676
+A,"A1 pageable + sync copies",256.0,H2D,14,129.8869,134.7130
+A,"A1 pageable + sync copies",256.0,KERNEL,14,134.7326,135.2775
+A,"A1 pageable + sync copies",256.0,D2H,14,135.2799,138.8714
+A,"A1 pageable + sync copies",256.0,H2D,15,138.8794,148.0146
+A,"A1 pageable + sync copies",256.0,KERNEL,15,148.0169,148.5699
+A,"A1 pageable + sync copies",256.0,D2H,15,148.5720,149.0656
+A,"A1 pageable + sync copies",256.0,H2D,16,149.0854,154.1266
+A,"A1 pageable + sync copies",256.0,KERNEL,16,154.1289,154.6442
+A,"A1 pageable + sync copies",256.0,D2H,16,154.6475,155.4624
+A,"A1 pageable + sync copies",256.0,H2D,17,155.5619,164.2913
+A,"A1 pageable + sync copies",256.0,KERNEL,17,164.2939,164.8491
+A,"A1 pageable + sync copies",256.0,D2H,17,164.8515,165.3867
+A,"A1 pageable + sync copies",256.0,H2D,18,165.4893,170.8121
+A,"A1 pageable + sync copies",256.0,KERNEL,18,170.8150,171.3171
+A,"A1 pageable + sync copies",256.0,D2H,18,171.3212,172.0240
+A,"A1 pageable + sync copies",256.0,H2D,19,172.0419,177.8568
+A,"A1 pageable + sync copies",256.0,KERNEL,19,177.8606,178.3776
+A,"A1 pageable + sync copies",256.0,D2H,19,178.3800,178.9992
+A,"A1 pageable + sync copies",256.0,H2D,20,179.0875,186.6143
+A,"A1 pageable + sync copies",256.0,KERNEL,20,186.6182,187.1583
+A,"A1 pageable + sync copies",256.0,D2H,20,187.1604,187.7764
+A,"A1 pageable + sync copies",256.0,H2D,21,187.8593,193.0344
+A,"A1 pageable + sync copies",256.0,KERNEL,21,193.0371,193.5390
+A,"A1 pageable + sync copies",256.0,D2H,21,193.5414,194.0979
+A,"A1 pageable + sync copies",256.0,H2D,22,194.1159,207.4123
+A,"A1 pageable + sync copies",256.0,KERNEL,22,207.4145,207.9721
+A,"A1 pageable + sync copies",256.0,D2H,22,207.9742,208.4176
+A,"A1 pageable + sync copies",256.0,H2D,23,208.4371,212.3953
+A,"A1 pageable + sync copies",256.0,KERNEL,23,212.3976,212.9058
+A,"A1 pageable + sync copies",256.0,D2H,23,212.9078,213.5466
+A,"A1 pageable + sync copies",256.0,H2D,24,213.5626,220.0327
+A,"A1 pageable + sync copies",256.0,KERNEL,24,220.0349,220.5951
+A,"A1 pageable + sync copies",256.0,D2H,24,220.5975,221.3949
+A,"A1 pageable + sync copies",256.0,H2D,25,221.4152,228.9706
+A,"A1 pageable + sync copies",256.0,KERNEL,25,228.9745,229.4823
+A,"A1 pageable + sync copies",256.0,D2H,25,229.4843,230.0142
+A,"A1 pageable + sync copies",256.0,H2D,26,230.0324,235.8560
+A,"A1 pageable + sync copies",256.0,KERNEL,26,235.8585,236.3861
+A,"A1 pageable + sync copies",256.0,D2H,26,236.3893,236.9378
+A,"A1 pageable + sync copies",256.0,H2D,27,236.9527,244.6143
+A,"A1 pageable + sync copies",256.0,KERNEL,27,244.6166,245.1086
+A,"A1 pageable + sync copies",256.0,D2H,27,245.1106,245.6689
+A,"A1 pageable + sync copies",256.0,H2D,28,245.6855,250.3502
+A,"A1 pageable + sync copies",256.0,KERNEL,28,250.3525,250.8798
+A,"A1 pageable + sync copies",256.0,D2H,28,250.8819,251.4525
+A,"A1 pageable + sync copies",256.0,H2D,29,251.4671,257.8384
+A,"A1 pageable + sync copies",256.0,KERNEL,29,257.8561,258.5658
+A,"A1 pageable + sync copies",256.0,D2H,29,258.5680,259.6378
+A,"A1 pageable + sync copies",256.0,H2D,30,259.6559,269.9880
+A,"A1 pageable + sync copies",256.0,KERNEL,30,269.9920,270.5427
+A,"A1 pageable + sync copies",256.0,D2H,30,270.5461,271.3452
+A,"A1 pageable + sync copies",256.0,H2D,31,271.3629,278.7454
+A,"A1 pageable + sync copies",256.0,KERNEL,31,278.7481,279.2560
+A,"A1 pageable + sync copies",256.0,D2H,31,279.2583,279.7981
+A,"A2 pinned + sync copies",256.0,H2D,0,0.0750,2.3522
+A,"A2 pinned + sync copies",256.0,KERNEL,0,2.3586,2.8833
+A,"A2 pinned + sync copies",256.0,D2H,0,2.8868,3.5478
+A,"A2 pinned + sync copies",256.0,H2D,1,3.5970,6.8434
+A,"A2 pinned + sync copies",256.0,KERNEL,1,6.9151,7.3823
+A,"A2 pinned + sync copies",256.0,D2H,1,7.3848,8.0131
+A,"A2 pinned + sync copies",256.0,H2D,2,8.0297,10.8322
+A,"A2 pinned + sync copies",256.0,KERNEL,2,10.8828,11.7163
+A,"A2 pinned + sync copies",256.0,D2H,2,11.7196,12.2823
+A,"A2 pinned + sync copies",256.0,H2D,3,12.2983,15.0340
+A,"A2 pinned + sync copies",256.0,KERNEL,3,15.0581,15.5911
+A,"A2 pinned + sync copies",256.0,D2H,3,15.5952,16.2026
+A,"A2 pinned + sync copies",256.0,H2D,4,16.2230,18.6061
+A,"A2 pinned + sync copies",256.0,KERNEL,4,18.6294,19.1521
+A,"A2 pinned + sync copies",256.0,D2H,4,19.1544,19.7690
+A,"A2 pinned + sync copies",256.0,H2D,5,19.7895,22.7111
+A,"A2 pinned + sync copies",256.0,KERNEL,5,22.7383,23.4227
+A,"A2 pinned + sync copies",256.0,D2H,5,23.4247,24.1189
+A,"A2 pinned + sync copies",256.0,H2D,6,24.2060,27.0794
+A,"A2 pinned + sync copies",256.0,KERNEL,6,27.1054,27.6557
+A,"A2 pinned + sync copies",256.0,D2H,6,27.6590,28.3240
+A,"A2 pinned + sync copies",256.0,H2D,7,28.3474,30.8631
+A,"A2 pinned + sync copies",256.0,KERNEL,7,30.8899,31.4345
+A,"A2 pinned + sync copies",256.0,D2H,7,31.4386,32.1226
+A,"A2 pinned + sync copies",256.0,H2D,8,32.1538,34.8618
+A,"A2 pinned + sync copies",256.0,KERNEL,8,34.8793,35.3924
+A,"A2 pinned + sync copies",256.0,D2H,8,35.3948,35.8741
+A,"A2 pinned + sync copies",256.0,H2D,9,35.8882,38.2825
+A,"A2 pinned + sync copies",256.0,KERNEL,9,38.3027,38.8804
+A,"A2 pinned + sync copies",256.0,D2H,9,38.8862,39.5893
+A,"A2 pinned + sync copies",256.0,H2D,10,39.6095,42.1377
+A,"A2 pinned + sync copies",256.0,KERNEL,10,42.1636,42.6733
+A,"A2 pinned + sync copies",256.0,D2H,10,42.6759,43.2398
+A,"A2 pinned + sync copies",256.0,H2D,11,43.2600,45.7263
+A,"A2 pinned + sync copies",256.0,KERNEL,11,45.7516,46.2863
+A,"A2 pinned + sync copies",256.0,D2H,11,46.2886,46.8654
+A,"A2 pinned + sync copies",256.0,H2D,12,46.8836,48.8228
+A,"A2 pinned + sync copies",256.0,KERNEL,12,48.8610,49.3970
+A,"A2 pinned + sync copies",256.0,D2H,12,49.3995,50.0819
+A,"A2 pinned + sync copies",256.0,H2D,13,50.1796,53.0647
+A,"A2 pinned + sync copies",256.0,KERNEL,13,53.0853,53.5979
+A,"A2 pinned + sync copies",256.0,D2H,13,53.6000,54.3356
+A,"A2 pinned + sync copies",256.0,H2D,14,54.3542,56.5505
+A,"A2 pinned + sync copies",256.0,KERNEL,14,56.5770,57.1037
+A,"A2 pinned + sync copies",256.0,D2H,14,57.1061,57.7479
+A,"A2 pinned + sync copies",256.0,H2D,15,57.7683,60.1096
+A,"A2 pinned + sync copies",256.0,KERNEL,15,60.1628,60.7637
+A,"A2 pinned + sync copies",256.0,D2H,15,60.7659,61.2858
+A,"A2 pinned + sync copies",256.0,H2D,16,61.3019,63.6190
+A,"A2 pinned + sync copies",256.0,KERNEL,16,64.0681,64.6141
+A,"A2 pinned + sync copies",256.0,D2H,16,64.6162,65.2896
+A,"A2 pinned + sync copies",256.0,H2D,17,65.3092,67.5912
+A,"A2 pinned + sync copies",256.0,KERNEL,17,67.6241,68.1180
+A,"A2 pinned + sync copies",256.0,D2H,17,68.1203,68.6011
+A,"A2 pinned + sync copies",256.0,H2D,18,68.6202,70.6318
+A,"A2 pinned + sync copies",256.0,KERNEL,18,70.7439,71.3070
+A,"A2 pinned + sync copies",256.0,D2H,18,71.3103,71.9221
+A,"A2 pinned + sync copies",256.0,H2D,19,71.9429,74.3345
+A,"A2 pinned + sync copies",256.0,KERNEL,19,74.3567,74.8802
+A,"A2 pinned + sync copies",256.0,D2H,19,74.8825,75.4285
+A,"A2 pinned + sync copies",256.0,H2D,20,75.4745,77.5414
+A,"A2 pinned + sync copies",256.0,KERNEL,20,77.5706,78.0818
+A,"A2 pinned + sync copies",256.0,D2H,20,78.0838,78.6321
+A,"A2 pinned + sync copies",256.0,H2D,21,78.6540,81.0439
+A,"A2 pinned + sync copies",256.0,KERNEL,21,81.0763,81.5900
+A,"A2 pinned + sync copies",256.0,D2H,21,81.5937,82.3744
+A,"A2 pinned + sync copies",256.0,H2D,22,82.4767,85.4452
+A,"A2 pinned + sync copies",256.0,KERNEL,22,85.8520,87.4759
+A,"A2 pinned + sync copies",256.0,D2H,22,87.9834,90.7981
+A,"A2 pinned + sync copies",256.0,H2D,23,90.8046,92.9620
+A,"A2 pinned + sync copies",256.0,KERNEL,23,92.9858,93.4494
+A,"A2 pinned + sync copies",256.0,D2H,23,93.4519,94.3754
+A,"A2 pinned + sync copies",256.0,H2D,24,94.4266,96.9648
+A,"A2 pinned + sync copies",256.0,KERNEL,24,96.9867,97.4743
+A,"A2 pinned + sync copies",256.0,D2H,24,97.4897,98.4622
+A,"A2 pinned + sync copies",256.0,H2D,25,98.4797,100.3926
+A,"A2 pinned + sync copies",256.0,KERNEL,25,100.4201,100.9067
+A,"A2 pinned + sync copies",256.0,D2H,25,100.9101,108.2751
+A,"A2 pinned + sync copies",256.0,H2D,26,108.3670,112.5492
+A,"A2 pinned + sync copies",256.0,KERNEL,26,112.5583,113.1043
+A,"A2 pinned + sync copies",256.0,D2H,26,113.1066,113.6122
+A,"A2 pinned + sync copies",256.0,H2D,27,113.6450,115.7853
+A,"A2 pinned + sync copies",256.0,KERNEL,27,115.8215,116.2726
+A,"A2 pinned + sync copies",256.0,D2H,27,116.2749,116.8240
+A,"A2 pinned + sync copies",256.0,H2D,28,116.8439,118.5847
+A,"A2 pinned + sync copies",256.0,KERNEL,28,118.6044,119.1149
+A,"A2 pinned + sync copies",256.0,D2H,28,119.1173,119.5726
+A,"A2 pinned + sync copies",256.0,H2D,29,119.6624,122.0945
+A,"A2 pinned + sync copies",256.0,KERNEL,29,122.1219,122.9207
+A,"A2 pinned + sync copies",256.0,D2H,29,122.9239,123.4727
+A,"A2 pinned + sync copies",256.0,H2D,30,123.8500,126.6302
+A,"A2 pinned + sync copies",256.0,KERNEL,30,126.6587,127.2091
+A,"A2 pinned + sync copies",256.0,D2H,30,127.2112,128.2633
+A,"A2 pinned + sync copies",256.0,H2D,31,128.2722,131.6135
+A,"A2 pinned + sync copies",256.0,KERNEL,31,131.6426,132.1360
+A,"A2 pinned + sync copies",256.0,D2H,31,132.1383,133.0860
+A,"A3 pinned + 2 streams",256.0,H2D,0,0.0597,2.1310
+A,"A3 pinned + 2 streams",256.0,KERNEL,0,2.1340,2.7597
+A,"A3 pinned + 2 streams",256.0,D2H,0,2.7618,3.3026
+A,"A3 pinned + 2 streams",256.0,H2D,1,3.3049,5.4017
+A,"A3 pinned + 2 streams",256.0,KERNEL,1,5.4039,5.9521
+A,"A3 pinned + 2 streams",256.0,D2H,1,5.9544,6.3656
+A,"A3 pinned + 2 streams",256.0,H2D,2,6.3691,9.0504
+A,"A3 pinned + 2 streams",256.0,KERNEL,2,9.0531,10.0240
+A,"A3 pinned + 2 streams",256.0,D2H,2,10.0271,10.6301
+A,"A3 pinned + 2 streams",256.0,H2D,3,10.6340,13.2287
+A,"A3 pinned + 2 streams",256.0,KERNEL,3,13.2313,13.7881
+A,"A3 pinned + 2 streams",256.0,D2H,3,13.7903,14.1482
+A,"A3 pinned + 2 streams",256.0,H2D,4,14.1505,15.8164
+A,"A3 pinned + 2 streams",256.0,KERNEL,4,15.8186,16.3438
+A,"A3 pinned + 2 streams",256.0,D2H,4,16.3462,16.6691
+A,"A3 pinned + 2 streams",256.0,H2D,5,16.6715,18.1736
+A,"A3 pinned + 2 streams",256.0,KERNEL,5,18.1759,18.6930
+A,"A3 pinned + 2 streams",256.0,D2H,5,18.6953,19.1539
+A,"A3 pinned + 2 streams",256.0,H2D,6,19.1572,21.0097
+A,"A3 pinned + 2 streams",256.0,KERNEL,6,21.0124,21.5686
+A,"A3 pinned + 2 streams",256.0,D2H,6,21.5707,21.9789
+A,"A3 pinned + 2 streams",256.0,H2D,7,21.9812,23.9928
+A,"A3 pinned + 2 streams",256.0,KERNEL,7,23.9964,24.6690
+A,"A3 pinned + 2 streams",256.0,D2H,7,24.6713,25.2043
+A,"A3 pinned + 2 streams",256.0,H2D,8,25.2080,27.1161
+A,"A3 pinned + 2 streams",256.0,KERNEL,8,27.1191,27.6880
+A,"A3 pinned + 2 streams",256.0,D2H,8,27.6901,28.1498
+A,"A3 pinned + 2 streams",256.0,H2D,9,28.1557,30.5179
+A,"A3 pinned + 2 streams",256.0,KERNEL,9,30.5225,31.1840
+A,"A3 pinned + 2 streams",256.0,D2H,9,31.1860,31.7287
+A,"A3 pinned + 2 streams",256.0,H2D,10,31.7324,33.6027
+A,"A3 pinned + 2 streams",256.0,KERNEL,10,33.6050,34.1618
+A,"A3 pinned + 2 streams",256.0,D2H,10,34.1638,34.5494
+A,"A3 pinned + 2 streams",256.0,H2D,11,34.5517,36.6497
+A,"A3 pinned + 2 streams",256.0,KERNEL,11,36.6520,37.2542
+A,"A3 pinned + 2 streams",256.0,D2H,11,37.2575,37.7107
+A,"A3 pinned + 2 streams",256.0,H2D,12,37.7131,39.6255
+A,"A3 pinned + 2 streams",256.0,KERNEL,12,39.6277,40.2054
+A,"A3 pinned + 2 streams",256.0,D2H,12,40.2075,40.6169
+A,"A3 pinned + 2 streams",256.0,H2D,13,40.6193,42.2464
+A,"A3 pinned + 2 streams",256.0,KERNEL,13,42.2486,42.7913
+A,"A3 pinned + 2 streams",256.0,D2H,13,42.7937,43.1475
+A,"A3 pinned + 2 streams",256.0,H2D,14,43.1502,45.1969
+A,"A3 pinned + 2 streams",256.0,KERNEL,14,45.1996,45.7575
+A,"A3 pinned + 2 streams",256.0,D2H,14,45.7596,46.1522
+A,"A3 pinned + 2 streams",256.0,H2D,15,46.1545,47.9240
+A,"A3 pinned + 2 streams",256.0,KERNEL,15,47.9263,48.4978
+A,"A3 pinned + 2 streams",256.0,D2H,15,48.4998,48.8538
+A,"A3 pinned + 2 streams",256.0,H2D,16,48.8582,50.6313
+A,"A3 pinned + 2 streams",256.0,KERNEL,16,50.6336,51.2667
+A,"A3 pinned + 2 streams",256.0,D2H,16,51.2687,51.6137
+A,"A3 pinned + 2 streams",256.0,H2D,17,51.6160,53.4960
+A,"A3 pinned + 2 streams",256.0,KERNEL,17,53.5001,54.0780
+A,"A3 pinned + 2 streams",256.0,D2H,17,54.0806,54.4795
+A,"A3 pinned + 2 streams",256.0,H2D,18,54.4818,56.7637
+A,"A3 pinned + 2 streams",256.0,KERNEL,18,56.7661,57.4261
+A,"A3 pinned + 2 streams",256.0,D2H,18,57.4285,57.7256
+A,"A3 pinned + 2 streams",256.0,H2D,19,57.7279,59.6947
+A,"A3 pinned + 2 streams",256.0,KERNEL,19,59.6973,60.3045
+A,"A3 pinned + 2 streams",256.0,D2H,19,60.3084,60.6754
+A,"A3 pinned + 2 streams",256.0,H2D,20,60.6781,62.2974
+A,"A3 pinned + 2 streams",256.0,KERNEL,20,62.3004,62.8583
+A,"A3 pinned + 2 streams",256.0,D2H,20,62.8620,63.2870
+A,"A3 pinned + 2 streams",256.0,H2D,21,63.2897,64.9931
+A,"A3 pinned + 2 streams",256.0,KERNEL,21,64.9956,65.5555
+A,"A3 pinned + 2 streams",256.0,D2H,21,65.5591,65.9496
+A,"A3 pinned + 2 streams",256.0,H2D,22,65.9521,68.2458
+A,"A3 pinned + 2 streams",256.0,KERNEL,22,68.2480,68.8771
+A,"A3 pinned + 2 streams",256.0,D2H,22,68.8795,69.3827
+A,"A3 pinned + 2 streams",256.0,H2D,23,69.3850,71.8067
+A,"A3 pinned + 2 streams",256.0,KERNEL,23,71.8101,72.4450
+A,"A3 pinned + 2 streams",256.0,D2H,23,72.4471,72.9624
+A,"A3 pinned + 2 streams",256.0,H2D,24,72.9649,75.7384
+A,"A3 pinned + 2 streams",256.0,KERNEL,24,75.7408,76.2968
+A,"A3 pinned + 2 streams",256.0,D2H,24,76.2994,76.8133
+A,"A3 pinned + 2 streams",256.0,H2D,25,76.8166,79.1840
+A,"A3 pinned + 2 streams",256.0,KERNEL,25,79.1869,79.8231
+A,"A3 pinned + 2 streams",256.0,D2H,25,79.8255,80.3464
+A,"A3 pinned + 2 streams",256.0,H2D,26,80.3492,82.7298
+A,"A3 pinned + 2 streams",256.0,KERNEL,26,82.7328,83.3281
+A,"A3 pinned + 2 streams",256.0,D2H,26,83.3301,83.7428
+A,"A3 pinned + 2 streams",256.0,H2D,27,83.7453,86.1726
+A,"A3 pinned + 2 streams",256.0,KERNEL,27,86.1750,86.7684
+A,"A3 pinned + 2 streams",256.0,D2H,27,86.7708,87.4222
+A,"A3 pinned + 2 streams",256.0,H2D,28,87.4246,89.8834
+A,"A3 pinned + 2 streams",256.0,KERNEL,28,89.8860,90.5227
+A,"A3 pinned + 2 streams",256.0,D2H,28,90.5248,91.0189
+A,"A3 pinned + 2 streams",256.0,H2D,29,91.0212,93.6572
+A,"A3 pinned + 2 streams",256.0,KERNEL,29,93.6608,94.2639
+A,"A3 pinned + 2 streams",256.0,D2H,29,94.2662,94.7625
+A,"A3 pinned + 2 streams",256.0,H2D,30,94.7677,96.9582
+A,"A3 pinned + 2 streams",256.0,KERNEL,30,96.9604,97.5023
+A,"A3 pinned + 2 streams",256.0,D2H,30,97.5043,97.9657
+A,"A3 pinned + 2 streams",256.0,H2D,31,97.9681,100.2173
+A,"A3 pinned + 2 streams",256.0,KERNEL,31,100.2202,100.7750
+A,"A3 pinned + 2 streams",256.0,D2H,31,100.7783,101.2680
+A,"A4 pinned + 4 streams",256.0,H2D,0,0.0852,2.7070
+A,"A4 pinned + 4 streams",256.0,KERNEL,0,2.7094,3.5634
+A,"A4 pinned + 4 streams",256.0,D2H,0,3.5666,4.1621
+A,"A4 pinned + 4 streams",256.0,H2D,1,4.1652,6.4877
+A,"A4 pinned + 4 streams",256.0,KERNEL,1,6.4899,7.0382
+A,"A4 pinned + 4 streams",256.0,D2H,1,7.0405,7.5300
+A,"A4 pinned + 4 streams",256.0,H2D,2,7.5333,10.0419
+A,"A4 pinned + 4 streams",256.0,KERNEL,2,10.0448,10.6535
+A,"A4 pinned + 4 streams",256.0,D2H,2,10.6569,11.1300
+A,"A4 pinned + 4 streams",256.0,H2D,3,11.1323,13.3517
+A,"A4 pinned + 4 streams",256.0,KERNEL,3,13.3540,13.9117
+A,"A4 pinned + 4 streams",256.0,D2H,3,13.9140,14.1939
+A,"A4 pinned + 4 streams",256.0,H2D,4,14.1964,15.8216
+A,"A4 pinned + 4 streams",256.0,KERNEL,4,15.8238,16.3449
+A,"A4 pinned + 4 streams",256.0,D2H,4,16.3483,16.8524
+A,"A4 pinned + 4 streams",256.0,H2D,5,16.8552,18.8590
+A,"A4 pinned + 4 streams",256.0,KERNEL,5,18.8618,19.3976
+A,"A4 pinned + 4 streams",256.0,D2H,5,19.3999,19.8127
+A,"A4 pinned + 4 streams",256.0,H2D,6,19.8153,21.5562
+A,"A4 pinned + 4 streams",256.0,KERNEL,6,21.5584,22.0579
+A,"A4 pinned + 4 streams",256.0,D2H,6,22.0603,22.3416
+A,"A4 pinned + 4 streams",256.0,H2D,7,22.3440,23.7804
+A,"A4 pinned + 4 streams",256.0,KERNEL,7,23.7827,24.3052
+A,"A4 pinned + 4 streams",256.0,D2H,7,24.3076,24.6527
+A,"A4 pinned + 4 streams",256.0,H2D,8,24.6553,26.3535
+A,"A4 pinned + 4 streams",256.0,KERNEL,8,26.3557,26.8793
+A,"A4 pinned + 4 streams",256.0,D2H,8,26.8817,27.2013
+A,"A4 pinned + 4 streams",256.0,H2D,9,27.2042,29.0956
+A,"A4 pinned + 4 streams",256.0,KERNEL,9,29.0978,29.6405
+A,"A4 pinned + 4 streams",256.0,D2H,9,29.6426,29.9663
+A,"A4 pinned + 4 streams",256.0,H2D,10,29.9690,31.5277
+A,"A4 pinned + 4 streams",256.0,KERNEL,10,31.5303,32.1794
+A,"A4 pinned + 4 streams",256.0,D2H,10,32.1818,32.7558
+A,"A4 pinned + 4 streams",256.0,H2D,11,32.7604,34.9600
+A,"A4 pinned + 4 streams",256.0,KERNEL,11,34.9622,35.5634
+A,"A4 pinned + 4 streams",256.0,D2H,11,35.5654,36.0371
+A,"A4 pinned + 4 streams",256.0,H2D,12,36.0402,38.1997
+A,"A4 pinned + 4 streams",256.0,KERNEL,12,38.2044,38.8934
+A,"A4 pinned + 4 streams",256.0,D2H,12,38.8965,39.4438
+A,"A4 pinned + 4 streams",256.0,H2D,13,39.4462,41.3152
+A,"A4 pinned + 4 streams",256.0,KERNEL,13,41.3174,41.8487
+A,"A4 pinned + 4 streams",256.0,D2H,13,41.8519,42.2797
+A,"A4 pinned + 4 streams",256.0,H2D,14,42.2820,43.8763
+A,"A4 pinned + 4 streams",256.0,KERNEL,14,43.8788,44.4271
+A,"A4 pinned + 4 streams",256.0,D2H,14,44.4292,44.8152
+A,"A4 pinned + 4 streams",256.0,H2D,15,44.8183,46.6072
+A,"A4 pinned + 4 streams",256.0,KERNEL,15,46.6098,47.1305
+A,"A4 pinned + 4 streams",256.0,D2H,15,47.1325,47.6238
+A,"A4 pinned + 4 streams",256.0,H2D,16,47.6263,49.5959
+A,"A4 pinned + 4 streams",256.0,KERNEL,16,49.5983,50.1697
+A,"A4 pinned + 4 streams",256.0,D2H,16,50.1717,50.5797
+A,"A4 pinned + 4 streams",256.0,H2D,17,50.5827,52.7022
+A,"A4 pinned + 4 streams",256.0,KERNEL,17,52.7056,53.3707
+A,"A4 pinned + 4 streams",256.0,D2H,17,53.3740,53.9596
+A,"A4 pinned + 4 streams",256.0,H2D,18,53.9626,55.9340
+A,"A4 pinned + 4 streams",256.0,KERNEL,18,55.9362,56.6124
+A,"A4 pinned + 4 streams",256.0,D2H,18,56.6147,57.0420
+A,"A4 pinned + 4 streams",256.0,H2D,19,57.0448,58.9230
+A,"A4 pinned + 4 streams",256.0,KERNEL,19,58.9253,59.4430
+A,"A4 pinned + 4 streams",256.0,D2H,19,59.4451,59.7589
+A,"A4 pinned + 4 streams",256.0,H2D,20,59.7615,61.6881
+A,"A4 pinned + 4 streams",256.0,KERNEL,20,61.6904,62.2304
+A,"A4 pinned + 4 streams",256.0,D2H,20,62.2324,62.6464
+A,"A4 pinned + 4 streams",256.0,H2D,21,62.6493,64.7897
+A,"A4 pinned + 4 streams",256.0,KERNEL,21,64.7920,65.3740
+A,"A4 pinned + 4 streams",256.0,D2H,21,65.3761,65.7765
+A,"A4 pinned + 4 streams",256.0,H2D,22,65.7811,68.2429
+A,"A4 pinned + 4 streams",256.0,KERNEL,22,68.2463,68.8270
+A,"A4 pinned + 4 streams",256.0,D2H,22,68.8290,69.4422
+A,"A4 pinned + 4 streams",256.0,H2D,23,69.4447,71.7722
+A,"A4 pinned + 4 streams",256.0,KERNEL,23,71.7747,72.3055
+A,"A4 pinned + 4 streams",256.0,D2H,23,72.3079,72.6027
+A,"A4 pinned + 4 streams",256.0,H2D,24,72.6051,74.1939
+A,"A4 pinned + 4 streams",256.0,KERNEL,24,74.1967,74.7119
+A,"A4 pinned + 4 streams",256.0,D2H,24,74.7143,75.1915
+A,"A4 pinned + 4 streams",256.0,H2D,25,75.1938,77.1813
+A,"A4 pinned + 4 streams",256.0,KERNEL,25,77.1836,77.6856
+A,"A4 pinned + 4 streams",256.0,D2H,25,77.6879,77.9306
+A,"A4 pinned + 4 streams",256.0,H2D,26,77.9330,79.7188
+A,"A4 pinned + 4 streams",256.0,KERNEL,26,79.7213,80.2294
+A,"A4 pinned + 4 streams",256.0,D2H,26,80.2318,80.5051
+A,"A4 pinned + 4 streams",256.0,H2D,27,80.5074,82.0147
+A,"A4 pinned + 4 streams",256.0,KERNEL,27,82.0170,82.5027
+A,"A4 pinned + 4 streams",256.0,D2H,27,82.5051,82.9707
+A,"A4 pinned + 4 streams",256.0,H2D,28,82.9743,84.8434
+A,"A4 pinned + 4 streams",256.0,KERNEL,28,84.8459,85.3625
+A,"A4 pinned + 4 streams",256.0,D2H,28,85.3657,85.6274
+A,"A4 pinned + 4 streams",256.0,H2D,29,85.6301,87.2087
+A,"A4 pinned + 4 streams",256.0,KERNEL,29,87.2110,87.7275
+A,"A4 pinned + 4 streams",256.0,D2H,29,87.7298,87.9995
+A,"A4 pinned + 4 streams",256.0,H2D,30,88.0020,89.5452
+A,"A4 pinned + 4 streams",256.0,KERNEL,30,89.5475,90.1856
+A,"A4 pinned + 4 streams",256.0,D2H,30,90.1887,90.5035
+A,"A4 pinned + 4 streams",256.0,H2D,31,90.5058,92.1645
+A,"A4 pinned + 4 streams",256.0,KERNEL,31,92.1667,92.6698
+A,"A4 pinned + 4 streams",256.0,D2H,31,92.6729,92.9326
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,0,0.0445,1.4544
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,0,1.4568,1.9694
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,0,1.9835,2.3112
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,1,0.1583,3.0162
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,1,3.0185,3.5300
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,1,3.5442,3.9404
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,2,2.3252,4.7606
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,2,4.7643,5.2806
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,2,5.2994,6.0529
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,3,3.9575,7.1324
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,3,7.1347,7.6646
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,3,7.6833,8.1410
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,4,6.0724,9.2561
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,4,9.2583,9.8051
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,4,9.8231,10.2380
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,5,8.1604,11.3120
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,5,11.3146,11.9237
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,5,11.9391,12.2642
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,6,10.2621,12.9829
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,6,12.9852,13.4710
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,6,13.4845,13.7905
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,7,12.2780,14.5710
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,7,14.5733,15.0949
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,7,15.1217,15.6086
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,8,13.8052,16.4964
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,8,16.4986,16.9976
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,8,17.0116,17.4380
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,9,15.6245,18.2365
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,9,18.2390,18.7589
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,9,18.7792,19.2893
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,10,17.4541,20.2575
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,10,20.2597,20.7578
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,10,20.7718,21.0937
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,11,19.3084,21.7048
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,11,21.7072,22.2172
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,11,22.2342,22.7976
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,12,21.1073,23.6774
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,12,23.6801,24.2078
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,12,24.2291,24.7570
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,13,22.8203,25.8407
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,13,25.8429,26.4942
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,13,26.5167,26.9798
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,14,24.7739,27.9850
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,14,27.9873,28.8822
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,14,28.9017,29.4367
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,15,27.0046,30.0008
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,15,30.0036,30.6000
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,15,30.6186,31.1441
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,16,29.4558,32.1202
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,16,32.1236,32.7795
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,16,32.8038,33.4138
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,17,31.1603,34.2824
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,17,34.2846,34.8041
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,17,34.8193,35.2606
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,18,33.4354,36.0504
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,18,36.0530,36.6769
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,18,36.6953,37.0326
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,19,35.2765,37.6475
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,19,37.6500,38.1371
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,19,38.1524,38.5240
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,20,37.0460,39.3706
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,20,39.3733,39.8984
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,20,39.9148,40.3115
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,21,38.5401,41.2084
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,21,41.2106,41.7495
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,21,41.7702,42.2825
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,22,40.3251,43.6668
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,22,43.6719,44.3752
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,22,44.4019,45.1548
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,23,42.2979,46.2890
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,23,46.2917,46.8104
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,23,46.8258,47.3258
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,24,45.1807,48.3136
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,24,48.3160,48.8247
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,24,48.8391,49.1788
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,25,47.3408,49.8736
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,25,49.8758,50.3821
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,25,50.3964,50.7034
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,26,49.1925,51.3545
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,26,51.3568,51.8689
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,26,51.8833,52.2643
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,27,50.7173,52.8036
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,27,52.8059,53.2974
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,27,53.3148,53.7525
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,28,52.2788,54.4819
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,28,54.4843,54.9901
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,28,55.0147,55.2839
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,29,53.7688,56.0801
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,29,56.0825,56.6070
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,29,56.6244,57.1525
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,30,55.2974,57.8428
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,30,57.8450,58.3365
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,30,58.3524,58.6444
+A,"A5 pinned + 4 streams, copy-ahead",256.0,H2D,31,57.1695,59.3615
+A,"A5 pinned + 4 streams, copy-ahead",256.0,KERNEL,31,59.3639,59.8397
+A,"A5 pinned + 4 streams, copy-ahead",256.0,D2H,31,59.8418,60.0823
+A,"A1 pageable + sync copies",1024.0,H2D,0,0.1981,5.6075
+A,"A1 pageable + sync copies",1024.0,KERNEL,0,5.6099,7.3546
+A,"A1 pageable + sync copies",1024.0,D2H,0,7.3628,8.0542
+A,"A1 pageable + sync copies",1024.0,H2D,1,8.0802,13.5458
+A,"A1 pageable + sync copies",1024.0,KERNEL,1,13.5480,15.2263
+A,"A1 pageable + sync copies",1024.0,D2H,1,15.2290,15.7990
+A,"A1 pageable + sync copies",1024.0,H2D,2,15.8679,20.2364
+A,"A1 pageable + sync copies",1024.0,KERNEL,2,20.2387,21.8884
+A,"A1 pageable + sync copies",1024.0,D2H,2,21.8908,22.3022
+A,"A1 pageable + sync copies",1024.0,H2D,3,22.3655,26.2828
+A,"A1 pageable + sync copies",1024.0,KERNEL,3,26.2851,28.0451
+A,"A1 pageable + sync copies",1024.0,D2H,3,28.0474,28.8569
+A,"A1 pageable + sync copies",1024.0,H2D,4,28.8725,34.3158
+A,"A1 pageable + sync copies",1024.0,KERNEL,4,34.3194,35.9795
+A,"A1 pageable + sync copies",1024.0,D2H,4,35.9815,36.5746
+A,"A1 pageable + sync copies",1024.0,H2D,5,36.5900,41.8981
+A,"A1 pageable + sync copies",1024.0,KERNEL,5,42.1124,43.7598
+A,"A1 pageable + sync copies",1024.0,D2H,5,43.7619,44.4148
+A,"A1 pageable + sync copies",1024.0,H2D,6,44.4262,49.0208
+A,"A1 pageable + sync copies",1024.0,KERNEL,6,49.0230,50.6596
+A,"A1 pageable + sync copies",1024.0,D2H,6,50.6616,51.3410
+A,"A1 pageable + sync copies",1024.0,H2D,7,51.3632,55.1452
+A,"A1 pageable + sync copies",1024.0,KERNEL,7,55.1475,56.7892
+A,"A1 pageable + sync copies",1024.0,D2H,7,56.7913,57.1857
+A,"A1 pageable + sync copies",1024.0,H2D,8,57.1967,61.0356
+A,"A1 pageable + sync copies",1024.0,KERNEL,8,61.0380,62.8042
+A,"A1 pageable + sync copies",1024.0,D2H,8,62.8062,63.1027
+A,"A1 pageable + sync copies",1024.0,H2D,9,63.1133,66.2127
+A,"A1 pageable + sync copies",1024.0,KERNEL,9,66.2150,67.8628
+A,"A1 pageable + sync copies",1024.0,D2H,9,67.8661,68.4661
+A,"A1 pageable + sync copies",1024.0,H2D,10,68.5302,71.5614
+A,"A1 pageable + sync copies",1024.0,KERNEL,10,71.5636,73.2183
+A,"A1 pageable + sync copies",1024.0,D2H,10,73.2219,73.7084
+A,"A1 pageable + sync copies",1024.0,H2D,11,73.7227,77.7658
+A,"A1 pageable + sync copies",1024.0,KERNEL,11,77.7687,79.4886
+A,"A1 pageable + sync copies",1024.0,D2H,11,79.4910,79.8507
+A,"A1 pageable + sync copies",1024.0,H2D,12,79.8620,82.5181
+A,"A1 pageable + sync copies",1024.0,KERNEL,12,82.5203,84.1914
+A,"A1 pageable + sync copies",1024.0,D2H,12,84.1935,84.5431
+A,"A1 pageable + sync copies",1024.0,H2D,13,84.5588,87.2151
+A,"A1 pageable + sync copies",1024.0,KERNEL,13,87.2173,88.8527
+A,"A1 pageable + sync copies",1024.0,D2H,13,88.8548,89.1836
+A,"A1 pageable + sync copies",1024.0,H2D,14,89.1968,92.4652
+A,"A1 pageable + sync copies",1024.0,KERNEL,14,92.4676,94.1243
+A,"A1 pageable + sync copies",1024.0,D2H,14,94.1273,94.5920
+A,"A1 pageable + sync copies",1024.0,H2D,15,94.6090,97.8309
+A,"A1 pageable + sync copies",1024.0,KERNEL,15,97.8332,99.5054
+A,"A1 pageable + sync copies",1024.0,D2H,15,99.5078,99.7809
+A,"A1 pageable + sync copies",1024.0,H2D,16,99.7925,102.1985
+A,"A1 pageable + sync copies",1024.0,KERNEL,16,102.2014,103.8310
+A,"A1 pageable + sync copies",1024.0,D2H,16,103.8337,104.1437
+A,"A1 pageable + sync copies",1024.0,H2D,17,104.1546,106.6130
+A,"A1 pageable + sync copies",1024.0,KERNEL,17,106.6152,108.2505
+A,"A1 pageable + sync copies",1024.0,D2H,17,108.2533,108.5581
+A,"A1 pageable + sync copies",1024.0,H2D,18,108.5687,110.9466
+A,"A1 pageable + sync copies",1024.0,KERNEL,18,110.9488,112.5808
+A,"A1 pageable + sync copies",1024.0,D2H,18,112.5829,112.8376
+A,"A1 pageable + sync copies",1024.0,H2D,19,112.8494,115.8711
+A,"A1 pageable + sync copies",1024.0,KERNEL,19,115.8735,117.5124
+A,"A1 pageable + sync copies",1024.0,D2H,19,117.5145,117.8554
+A,"A1 pageable + sync copies",1024.0,H2D,20,117.8696,120.6795
+A,"A1 pageable + sync copies",1024.0,KERNEL,20,120.6817,122.3150
+A,"A1 pageable + sync copies",1024.0,D2H,20,122.3170,122.5862
+A,"A1 pageable + sync copies",1024.0,H2D,21,122.6005,127.5146
+A,"A1 pageable + sync copies",1024.0,KERNEL,21,127.5168,129.1573
+A,"A1 pageable + sync copies",1024.0,D2H,21,129.1594,129.6371
+A,"A1 pageable + sync copies",1024.0,H2D,22,129.6480,133.6117
+A,"A1 pageable + sync copies",1024.0,KERNEL,22,133.6140,135.2841
+A,"A1 pageable + sync copies",1024.0,D2H,22,135.2870,136.0938
+A,"A1 pageable + sync copies",1024.0,H2D,23,136.1132,141.2076
+A,"A1 pageable + sync copies",1024.0,KERNEL,23,141.2100,142.8769
+A,"A1 pageable + sync copies",1024.0,D2H,23,142.8801,143.3591
+A,"A1 pageable + sync copies",1024.0,H2D,24,143.3727,148.4743
+A,"A1 pageable + sync copies",1024.0,KERNEL,24,148.4784,150.1514
+A,"A1 pageable + sync copies",1024.0,D2H,24,150.1555,151.6798
+A,"A1 pageable + sync copies",1024.0,H2D,25,151.7088,157.1674
+A,"A1 pageable + sync copies",1024.0,KERNEL,25,157.1696,158.8548
+A,"A1 pageable + sync copies",1024.0,D2H,25,158.8572,159.2259
+A,"A1 pageable + sync copies",1024.0,H2D,26,159.2402,162.8081
+A,"A1 pageable + sync copies",1024.0,KERNEL,26,162.8103,164.4865
+A,"A1 pageable + sync copies",1024.0,D2H,26,164.4892,165.6170
+A,"A1 pageable + sync copies",1024.0,H2D,27,165.6389,170.4193
+A,"A1 pageable + sync copies",1024.0,KERNEL,27,170.4215,172.1296
+A,"A1 pageable + sync copies",1024.0,D2H,27,172.1326,172.7219
+A,"A1 pageable + sync copies",1024.0,H2D,28,172.7409,178.5493
+A,"A1 pageable + sync copies",1024.0,KERNEL,28,178.5516,180.2406
+A,"A1 pageable + sync copies",1024.0,D2H,28,180.2441,181.0104
+A,"A1 pageable + sync copies",1024.0,H2D,29,181.0371,185.4982
+A,"A1 pageable + sync copies",1024.0,KERNEL,29,185.5005,187.1604
+A,"A1 pageable + sync copies",1024.0,D2H,29,187.1627,187.6100
+A,"A1 pageable + sync copies",1024.0,H2D,30,187.6221,190.5185
+A,"A1 pageable + sync copies",1024.0,KERNEL,30,190.5207,192.1538
+A,"A1 pageable + sync copies",1024.0,D2H,30,192.1573,192.5684
+A,"A1 pageable + sync copies",1024.0,H2D,31,192.5837,196.3930
+A,"A1 pageable + sync copies",1024.0,KERNEL,31,196.3953,198.0618
+A,"A1 pageable + sync copies",1024.0,D2H,31,198.0642,198.4555
+A,"A2 pinned + sync copies",1024.0,H2D,0,0.0348,1.5964
+A,"A2 pinned + sync copies",1024.0,KERNEL,0,1.5985,3.2319
+A,"A2 pinned + sync copies",1024.0,D2H,0,3.2352,3.6055
+A,"A2 pinned + sync copies",1024.0,H2D,1,3.6205,5.1031
+A,"A2 pinned + sync copies",1024.0,KERNEL,1,5.1340,6.7647
+A,"A2 pinned + sync copies",1024.0,D2H,1,6.7681,7.0520
+A,"A2 pinned + sync copies",1024.0,H2D,2,7.0653,8.5890
+A,"A2 pinned + sync copies",1024.0,KERNEL,2,8.6162,10.2435
+A,"A2 pinned + sync copies",1024.0,D2H,2,10.2459,10.5726
+A,"A2 pinned + sync copies",1024.0,H2D,3,10.5865,12.7632
+A,"A2 pinned + sync copies",1024.0,KERNEL,3,12.7912,14.4588
+A,"A2 pinned + sync copies",1024.0,D2H,3,14.4611,15.0709
+A,"A2 pinned + sync copies",1024.0,H2D,4,15.0857,17.2363
+A,"A2 pinned + sync copies",1024.0,KERNEL,4,17.2449,18.8909
+A,"A2 pinned + sync copies",1024.0,D2H,4,18.8930,19.4666
+A,"A2 pinned + sync copies",1024.0,H2D,5,19.4902,21.6496
+A,"A2 pinned + sync copies",1024.0,KERNEL,5,21.6553,23.2859
+A,"A2 pinned + sync copies",1024.0,D2H,5,23.2880,23.7124
+A,"A2 pinned + sync copies",1024.0,H2D,6,23.7262,26.1020
+A,"A2 pinned + sync copies",1024.0,KERNEL,6,26.1225,27.7936
+A,"A2 pinned + sync copies",1024.0,D2H,6,27.7956,28.8764
+A,"A2 pinned + sync copies",1024.0,H2D,7,29.0932,32.0633
+A,"A2 pinned + sync copies",1024.0,KERNEL,7,32.0924,33.8740
+A,"A2 pinned + sync copies",1024.0,D2H,7,33.8761,34.5940
+A,"A2 pinned + sync copies",1024.0,H2D,8,34.6151,37.5417
+A,"A2 pinned + sync copies",1024.0,KERNEL,8,37.5483,39.2907
+A,"A2 pinned + sync copies",1024.0,D2H,8,39.2931,39.8653
+A,"A2 pinned + sync copies",1024.0,H2D,9,39.8847,42.5181
+A,"A2 pinned + sync copies",1024.0,KERNEL,9,42.5261,44.1462
+A,"A2 pinned + sync copies",1024.0,D2H,9,44.1489,45.0014
+A,"A2 pinned + sync copies",1024.0,H2D,10,45.0290,47.1326
+A,"A2 pinned + sync copies",1024.0,KERNEL,10,47.1729,48.8368
+A,"A2 pinned + sync copies",1024.0,D2H,10,48.8405,49.4717
+A,"A2 pinned + sync copies",1024.0,H2D,11,49.4959,52.7417
+A,"A2 pinned + sync copies",1024.0,KERNEL,11,52.7722,54.5353
+A,"A2 pinned + sync copies",1024.0,D2H,11,54.5377,54.8647
+A,"A2 pinned + sync copies",1024.0,H2D,12,54.8794,56.3699
+A,"A2 pinned + sync copies",1024.0,KERNEL,12,56.4067,58.0458
+A,"A2 pinned + sync copies",1024.0,D2H,12,58.0522,58.7321
+A,"A2 pinned + sync copies",1024.0,H2D,13,58.7473,61.3486
+A,"A2 pinned + sync copies",1024.0,KERNEL,13,61.3703,63.0786
+A,"A2 pinned + sync copies",1024.0,D2H,13,63.0806,63.4948
+A,"A2 pinned + sync copies",1024.0,H2D,14,63.5418,66.3034
+A,"A2 pinned + sync copies",1024.0,KERNEL,14,66.4011,68.1381
+A,"A2 pinned + sync copies",1024.0,D2H,14,68.1405,68.8548
+A,"A2 pinned + sync copies",1024.0,H2D,15,68.8714,70.8191
+A,"A2 pinned + sync copies",1024.0,KERNEL,15,70.8211,72.5342
+A,"A2 pinned + sync copies",1024.0,D2H,15,72.5362,72.9358
+A,"A2 pinned + sync copies",1024.0,H2D,16,72.9513,74.6874
+A,"A2 pinned + sync copies",1024.0,KERNEL,16,74.6924,76.3310
+A,"A2 pinned + sync copies",1024.0,D2H,16,76.3332,76.7715
+A,"A2 pinned + sync copies",1024.0,H2D,17,76.7905,78.2830
+A,"A2 pinned + sync copies",1024.0,KERNEL,17,78.2983,79.9165
+A,"A2 pinned + sync copies",1024.0,D2H,17,79.9193,80.4193
+A,"A2 pinned + sync copies",1024.0,H2D,18,80.4557,82.1238
+A,"A2 pinned + sync copies",1024.0,KERNEL,18,82.1704,83.8309
+A,"A2 pinned + sync copies",1024.0,D2H,18,83.8330,84.2248
+A,"A2 pinned + sync copies",1024.0,H2D,19,84.2405,85.6443
+A,"A2 pinned + sync copies",1024.0,KERNEL,19,85.6839,87.3260
+A,"A2 pinned + sync copies",1024.0,D2H,19,87.3284,87.6184
+A,"A2 pinned + sync copies",1024.0,H2D,20,87.6319,89.0722
+A,"A2 pinned + sync copies",1024.0,KERNEL,20,89.0924,90.6979
+A,"A2 pinned + sync copies",1024.0,D2H,20,90.6999,91.1029
+A,"A2 pinned + sync copies",1024.0,H2D,21,91.1273,92.6401
+A,"A2 pinned + sync copies",1024.0,KERNEL,21,92.6640,94.2737
+A,"A2 pinned + sync copies",1024.0,D2H,21,94.2757,94.5536
+A,"A2 pinned + sync copies",1024.0,H2D,22,94.6017,96.0648
+A,"A2 pinned + sync copies",1024.0,KERNEL,22,96.0804,97.6857
+A,"A2 pinned + sync copies",1024.0,D2H,22,97.6877,98.1777
+A,"A2 pinned + sync copies",1024.0,H2D,23,98.1964,100.1840
+A,"A2 pinned + sync copies",1024.0,KERNEL,23,100.2040,101.8206
+A,"A2 pinned + sync copies",1024.0,D2H,23,101.8226,102.3045
+A,"A2 pinned + sync copies",1024.0,H2D,24,102.3170,104.2328
+A,"A2 pinned + sync copies",1024.0,KERNEL,24,104.2479,105.8869
+A,"A2 pinned + sync copies",1024.0,D2H,24,105.8893,106.2233
+A,"A2 pinned + sync copies",1024.0,H2D,25,106.2372,107.6922
+A,"A2 pinned + sync copies",1024.0,KERNEL,25,107.7077,109.3593
+A,"A2 pinned + sync copies",1024.0,D2H,25,109.3628,109.7856
+A,"A2 pinned + sync copies",1024.0,H2D,26,109.8019,111.3434
+A,"A2 pinned + sync copies",1024.0,KERNEL,26,111.3585,112.9637
+A,"A2 pinned + sync copies",1024.0,D2H,26,112.9658,113.3153
+A,"A2 pinned + sync copies",1024.0,H2D,27,113.3280,114.9243
+A,"A2 pinned + sync copies",1024.0,KERNEL,27,114.9400,116.5867
+A,"A2 pinned + sync copies",1024.0,D2H,27,116.5887,117.0435
+A,"A2 pinned + sync copies",1024.0,H2D,28,117.0629,118.5297
+A,"A2 pinned + sync copies",1024.0,KERNEL,28,118.5726,120.2279
+A,"A2 pinned + sync copies",1024.0,D2H,28,120.2300,120.6351
+A,"A2 pinned + sync copies",1024.0,H2D,29,120.6499,122.0739
+A,"A2 pinned + sync copies",1024.0,KERNEL,29,122.1253,123.7465
+A,"A2 pinned + sync copies",1024.0,D2H,29,123.7497,124.0605
+A,"A2 pinned + sync copies",1024.0,H2D,30,124.0720,125.6405
+A,"A2 pinned + sync copies",1024.0,KERNEL,30,125.6850,127.2854
+A,"A2 pinned + sync copies",1024.0,D2H,30,127.2875,127.5867
+A,"A2 pinned + sync copies",1024.0,H2D,31,127.6020,129.0628
+A,"A2 pinned + sync copies",1024.0,KERNEL,31,129.0836,130.7169
+A,"A2 pinned + sync copies",1024.0,D2H,31,130.7193,131.0758
+A,"A3 pinned + 2 streams",1024.0,H2D,0,0.0821,1.5245
+A,"A3 pinned + 2 streams",1024.0,KERNEL,0,1.5268,3.2128
+A,"A3 pinned + 2 streams",1024.0,D2H,0,3.2148,3.5140
+A,"A3 pinned + 2 streams",1024.0,H2D,1,3.5167,4.9416
+A,"A3 pinned + 2 streams",1024.0,KERNEL,1,4.9440,6.5920
+A,"A3 pinned + 2 streams",1024.0,D2H,1,6.5940,6.9601
+A,"A3 pinned + 2 streams",1024.0,H2D,2,6.9631,9.1212
+A,"A3 pinned + 2 streams",1024.0,KERNEL,2,9.1238,10.8314
+A,"A3 pinned + 2 streams",1024.0,D2H,2,10.8349,11.3115
+A,"A3 pinned + 2 streams",1024.0,H2D,3,11.3144,13.3039
+A,"A3 pinned + 2 streams",1024.0,KERNEL,3,13.3066,14.9663
+A,"A3 pinned + 2 streams",1024.0,D2H,3,14.9701,15.6178
+A,"A3 pinned + 2 streams",1024.0,H2D,4,15.6231,17.9387
+A,"A3 pinned + 2 streams",1024.0,KERNEL,4,17.9416,19.6745
+A,"A3 pinned + 2 streams",1024.0,D2H,4,19.6767,20.1827
+A,"A3 pinned + 2 streams",1024.0,H2D,5,20.1855,22.3487
+A,"A3 pinned + 2 streams",1024.0,KERNEL,5,22.3516,24.0593
+A,"A3 pinned + 2 streams",1024.0,D2H,5,24.0614,24.4069
+A,"A3 pinned + 2 streams",1024.0,H2D,6,24.4092,26.0750
+A,"A3 pinned + 2 streams",1024.0,KERNEL,6,26.0772,27.7536
+A,"A3 pinned + 2 streams",1024.0,D2H,6,27.7559,27.9904
+A,"A3 pinned + 2 streams",1024.0,H2D,7,27.9929,29.3857
+A,"A3 pinned + 2 streams",1024.0,KERNEL,7,29.3880,31.0349
+A,"A3 pinned + 2 streams",1024.0,D2H,7,31.0369,31.3587
+A,"A3 pinned + 2 streams",1024.0,H2D,8,31.3610,33.5264
+A,"A3 pinned + 2 streams",1024.0,KERNEL,8,33.5290,35.2517
+A,"A3 pinned + 2 streams",1024.0,D2H,8,35.2558,35.8757
+A,"A3 pinned + 2 streams",1024.0,H2D,9,35.8785,37.4699
+A,"A3 pinned + 2 streams",1024.0,KERNEL,9,37.4722,39.2042
+A,"A3 pinned + 2 streams",1024.0,D2H,9,39.2064,39.7334
+A,"A3 pinned + 2 streams",1024.0,H2D,10,39.7362,41.6005
+A,"A3 pinned + 2 streams",1024.0,KERNEL,10,41.6041,43.2853
+A,"A3 pinned + 2 streams",1024.0,D2H,10,43.2877,43.7429
+A,"A3 pinned + 2 streams",1024.0,H2D,11,43.7454,45.6941
+A,"A3 pinned + 2 streams",1024.0,KERNEL,11,45.6969,47.4312
+A,"A3 pinned + 2 streams",1024.0,D2H,11,47.4332,47.8822
+A,"A3 pinned + 2 streams",1024.0,H2D,12,47.8855,49.8269
+A,"A3 pinned + 2 streams",1024.0,KERNEL,12,49.8294,51.5515
+A,"A3 pinned + 2 streams",1024.0,D2H,12,51.5538,51.8832
+A,"A3 pinned + 2 streams",1024.0,H2D,13,51.8859,53.3468
+A,"A3 pinned + 2 streams",1024.0,KERNEL,13,53.3491,55.0518
+A,"A3 pinned + 2 streams",1024.0,D2H,13,55.0550,55.4444
+A,"A3 pinned + 2 streams",1024.0,H2D,14,55.4467,56.9167
+A,"A3 pinned + 2 streams",1024.0,KERNEL,14,56.9196,58.6291
+A,"A3 pinned + 2 streams",1024.0,D2H,14,58.6315,59.1128
+A,"A3 pinned + 2 streams",1024.0,H2D,15,59.1154,61.2488
+A,"A3 pinned + 2 streams",1024.0,KERNEL,15,61.2510,63.0878
+A,"A3 pinned + 2 streams",1024.0,D2H,15,63.0902,63.6486
+A,"A3 pinned + 2 streams",1024.0,H2D,16,63.6512,66.3918
+A,"A3 pinned + 2 streams",1024.0,KERNEL,16,66.3942,68.1692
+A,"A3 pinned + 2 streams",1024.0,D2H,16,68.1731,68.6685
+A,"A3 pinned + 2 streams",1024.0,H2D,17,68.6733,71.2577
+A,"A3 pinned + 2 streams",1024.0,KERNEL,17,71.2609,73.3768
+A,"A3 pinned + 2 streams",1024.0,D2H,17,73.3792,73.7457
+A,"A3 pinned + 2 streams",1024.0,H2D,18,73.7482,75.6427
+A,"A3 pinned + 2 streams",1024.0,KERNEL,18,75.6450,77.3359
+A,"A3 pinned + 2 streams",1024.0,D2H,18,77.3397,77.8807
+A,"A3 pinned + 2 streams",1024.0,H2D,19,77.8833,80.2337
+A,"A3 pinned + 2 streams",1024.0,KERNEL,19,80.2360,81.9370
+A,"A3 pinned + 2 streams",1024.0,D2H,19,81.9416,82.4772
+A,"A3 pinned + 2 streams",1024.0,H2D,20,82.4798,84.3784
+A,"A3 pinned + 2 streams",1024.0,KERNEL,20,84.3810,86.1117
+A,"A3 pinned + 2 streams",1024.0,D2H,20,86.1138,86.4577
+A,"A3 pinned + 2 streams",1024.0,H2D,21,86.4601,88.2991
+A,"A3 pinned + 2 streams",1024.0,KERNEL,21,88.3017,89.9866
+A,"A3 pinned + 2 streams",1024.0,D2H,21,89.9886,90.3545
+A,"A3 pinned + 2 streams",1024.0,H2D,22,90.3568,92.8261
+A,"A3 pinned + 2 streams",1024.0,KERNEL,22,92.8284,94.5577
+A,"A3 pinned + 2 streams",1024.0,D2H,22,94.5613,95.1358
+A,"A3 pinned + 2 streams",1024.0,H2D,23,95.1385,97.9888
+A,"A3 pinned + 2 streams",1024.0,KERNEL,23,97.9937,99.8006
+A,"A3 pinned + 2 streams",1024.0,D2H,23,99.8058,100.3525
+A,"A3 pinned + 2 streams",1024.0,H2D,24,100.3561,103.4364
+A,"A3 pinned + 2 streams",1024.0,KERNEL,24,103.4389,105.2069
+A,"A3 pinned + 2 streams",1024.0,D2H,24,105.2093,105.6698
+A,"A3 pinned + 2 streams",1024.0,H2D,25,105.6730,107.7795
+A,"A3 pinned + 2 streams",1024.0,KERNEL,25,107.7818,109.4812
+A,"A3 pinned + 2 streams",1024.0,D2H,25,109.4850,110.3340
+A,"A3 pinned + 2 streams",1024.0,H2D,26,110.3401,112.3923
+A,"A3 pinned + 2 streams",1024.0,KERNEL,26,112.3945,114.0997
+A,"A3 pinned + 2 streams",1024.0,D2H,26,114.1018,114.4958
+A,"A3 pinned + 2 streams",1024.0,H2D,27,114.4980,116.2732
+A,"A3 pinned + 2 streams",1024.0,KERNEL,27,116.2755,117.9602
+A,"A3 pinned + 2 streams",1024.0,D2H,27,117.9622,118.3892
+A,"A3 pinned + 2 streams",1024.0,H2D,28,118.3934,120.2113
+A,"A3 pinned + 2 streams",1024.0,KERNEL,28,120.2135,121.9046
+A,"A3 pinned + 2 streams",1024.0,D2H,28,121.9080,122.4733
+A,"A3 pinned + 2 streams",1024.0,H2D,29,122.4756,124.0769
+A,"A3 pinned + 2 streams",1024.0,KERNEL,29,124.0791,125.7708
+A,"A3 pinned + 2 streams",1024.0,D2H,29,125.7731,126.1536
+A,"A3 pinned + 2 streams",1024.0,H2D,30,126.1561,127.8942
+A,"A3 pinned + 2 streams",1024.0,KERNEL,30,127.8965,129.6338
+A,"A3 pinned + 2 streams",1024.0,D2H,30,129.6358,130.0159
+A,"A3 pinned + 2 streams",1024.0,H2D,31,130.0182,131.9326
+A,"A3 pinned + 2 streams",1024.0,KERNEL,31,131.9349,133.7093
+A,"A3 pinned + 2 streams",1024.0,D2H,31,133.7114,133.9850
+A,"A4 pinned + 4 streams",1024.0,H2D,0,0.0892,1.5273
+A,"A4 pinned + 4 streams",1024.0,KERNEL,0,1.5296,3.2252
+A,"A4 pinned + 4 streams",1024.0,D2H,0,3.2272,3.5566
+A,"A4 pinned + 4 streams",1024.0,H2D,1,3.5589,5.1347
+A,"A4 pinned + 4 streams",1024.0,KERNEL,1,5.1369,6.8092
+A,"A4 pinned + 4 streams",1024.0,D2H,1,6.8112,7.2935
+A,"A4 pinned + 4 streams",1024.0,H2D,2,7.2965,9.1079
+A,"A4 pinned + 4 streams",1024.0,KERNEL,2,9.1102,10.8663
+A,"A4 pinned + 4 streams",1024.0,D2H,2,10.8683,11.3358
+A,"A4 pinned + 4 streams",1024.0,H2D,3,11.3382,13.8011
+A,"A4 pinned + 4 streams",1024.0,KERNEL,3,13.8048,15.5886
+A,"A4 pinned + 4 streams",1024.0,D2H,3,15.5910,16.0678
+A,"A4 pinned + 4 streams",1024.0,H2D,4,16.0708,17.9183
+A,"A4 pinned + 4 streams",1024.0,KERNEL,4,17.9210,19.6064
+A,"A4 pinned + 4 streams",1024.0,D2H,4,19.6088,20.0696
+A,"A4 pinned + 4 streams",1024.0,H2D,5,20.0725,22.0436
+A,"A4 pinned + 4 streams",1024.0,KERNEL,5,22.0459,23.7420
+A,"A4 pinned + 4 streams",1024.0,D2H,5,23.7453,24.2467
+A,"A4 pinned + 4 streams",1024.0,H2D,6,24.2497,26.2560
+A,"A4 pinned + 4 streams",1024.0,KERNEL,6,26.2583,27.9896
+A,"A4 pinned + 4 streams",1024.0,D2H,6,27.9930,28.3774
+A,"A4 pinned + 4 streams",1024.0,H2D,7,28.3798,30.5213
+A,"A4 pinned + 4 streams",1024.0,KERNEL,7,30.5252,32.2617
+A,"A4 pinned + 4 streams",1024.0,D2H,7,32.2638,32.6544
+A,"A4 pinned + 4 streams",1024.0,H2D,8,32.6567,34.2416
+A,"A4 pinned + 4 streams",1024.0,KERNEL,8,34.2438,35.9174
+A,"A4 pinned + 4 streams",1024.0,D2H,8,35.9205,36.2022
+A,"A4 pinned + 4 streams",1024.0,H2D,9,36.2045,37.6882
+A,"A4 pinned + 4 streams",1024.0,KERNEL,9,37.6904,39.3700
+A,"A4 pinned + 4 streams",1024.0,D2H,9,39.3724,39.7683
+A,"A4 pinned + 4 streams",1024.0,H2D,10,39.7706,41.4786
+A,"A4 pinned + 4 streams",1024.0,KERNEL,10,41.4808,43.1653
+A,"A4 pinned + 4 streams",1024.0,D2H,10,43.1673,43.5350
+A,"A4 pinned + 4 streams",1024.0,H2D,11,43.5373,45.0084
+A,"A4 pinned + 4 streams",1024.0,KERNEL,11,45.0109,46.6812
+A,"A4 pinned + 4 streams",1024.0,D2H,11,46.6837,47.1497
+A,"A4 pinned + 4 streams",1024.0,H2D,12,47.1521,48.9428
+A,"A4 pinned + 4 streams",1024.0,KERNEL,12,48.9450,50.6766
+A,"A4 pinned + 4 streams",1024.0,D2H,12,50.6790,51.0436
+A,"A4 pinned + 4 streams",1024.0,H2D,13,51.0458,52.5918
+A,"A4 pinned + 4 streams",1024.0,KERNEL,13,52.5940,54.2982
+A,"A4 pinned + 4 streams",1024.0,D2H,13,54.3003,54.8071
+A,"A4 pinned + 4 streams",1024.0,H2D,14,54.8095,56.9664
+A,"A4 pinned + 4 streams",1024.0,KERNEL,14,56.9693,58.7259
+A,"A4 pinned + 4 streams",1024.0,D2H,14,58.7280,59.2303
+A,"A4 pinned + 4 streams",1024.0,H2D,15,59.2325,60.8838
+A,"A4 pinned + 4 streams",1024.0,KERNEL,15,60.8862,62.5824
+A,"A4 pinned + 4 streams",1024.0,D2H,15,62.5858,63.1618
+A,"A4 pinned + 4 streams",1024.0,H2D,16,63.1649,65.6571
+A,"A4 pinned + 4 streams",1024.0,KERNEL,16,65.6603,67.3726
+A,"A4 pinned + 4 streams",1024.0,D2H,16,67.3760,67.7771
+A,"A4 pinned + 4 streams",1024.0,H2D,17,67.7800,69.2676
+A,"A4 pinned + 4 streams",1024.0,KERNEL,17,69.2702,70.9935
+A,"A4 pinned + 4 streams",1024.0,D2H,17,70.9956,71.3934
+A,"A4 pinned + 4 streams",1024.0,H2D,18,71.3962,73.2417
+A,"A4 pinned + 4 streams",1024.0,KERNEL,18,73.2450,74.9810
+A,"A4 pinned + 4 streams",1024.0,D2H,18,74.9830,75.3595
+A,"A4 pinned + 4 streams",1024.0,H2D,19,75.3620,77.0831
+A,"A4 pinned + 4 streams",1024.0,KERNEL,19,77.0853,78.7528
+A,"A4 pinned + 4 streams",1024.0,D2H,19,78.7552,79.2002
+A,"A4 pinned + 4 streams",1024.0,H2D,20,79.2026,81.5379
+A,"A4 pinned + 4 streams",1024.0,KERNEL,20,81.5402,83.2831
+A,"A4 pinned + 4 streams",1024.0,D2H,20,83.2855,83.6017
+A,"A4 pinned + 4 streams",1024.0,H2D,21,83.6040,85.1646
+A,"A4 pinned + 4 streams",1024.0,KERNEL,21,85.1668,86.8348
+A,"A4 pinned + 4 streams",1024.0,D2H,21,86.8368,87.1798
+A,"A4 pinned + 4 streams",1024.0,H2D,22,87.1822,89.0485
+A,"A4 pinned + 4 streams",1024.0,KERNEL,22,89.0512,90.7772
+A,"A4 pinned + 4 streams",1024.0,D2H,22,90.7803,91.2193
+A,"A4 pinned + 4 streams",1024.0,H2D,23,91.2216,93.0195
+A,"A4 pinned + 4 streams",1024.0,KERNEL,23,93.0220,94.7052
+A,"A4 pinned + 4 streams",1024.0,D2H,23,94.7085,95.2942
+A,"A4 pinned + 4 streams",1024.0,H2D,24,95.2991,98.0411
+A,"A4 pinned + 4 streams",1024.0,KERNEL,24,98.0439,99.7794
+A,"A4 pinned + 4 streams",1024.0,D2H,24,99.7822,100.2493
+A,"A4 pinned + 4 streams",1024.0,H2D,25,100.2529,102.4836
+A,"A4 pinned + 4 streams",1024.0,KERNEL,25,102.4858,104.2259
+A,"A4 pinned + 4 streams",1024.0,D2H,25,104.2284,104.7472
+A,"A4 pinned + 4 streams",1024.0,H2D,26,104.7528,107.1422
+A,"A4 pinned + 4 streams",1024.0,KERNEL,26,107.1445,108.8651
+A,"A4 pinned + 4 streams",1024.0,D2H,26,108.8688,109.2937
+A,"A4 pinned + 4 streams",1024.0,H2D,27,109.2962,111.7668
+A,"A4 pinned + 4 streams",1024.0,KERNEL,27,111.7695,113.5545
+A,"A4 pinned + 4 streams",1024.0,D2H,27,113.5570,114.4737
+A,"A4 pinned + 4 streams",1024.0,H2D,28,114.4771,117.1170
+A,"A4 pinned + 4 streams",1024.0,KERNEL,28,117.1193,118.8450
+A,"A4 pinned + 4 streams",1024.0,D2H,28,118.8471,119.3894
+A,"A4 pinned + 4 streams",1024.0,H2D,29,119.3928,121.5981
+A,"A4 pinned + 4 streams",1024.0,KERNEL,29,121.6004,123.2892
+A,"A4 pinned + 4 streams",1024.0,D2H,29,123.2912,123.7304
+A,"A4 pinned + 4 streams",1024.0,H2D,30,123.7343,125.8908
+A,"A4 pinned + 4 streams",1024.0,KERNEL,30,125.8931,127.5768
+A,"A4 pinned + 4 streams",1024.0,D2H,30,127.5791,128.0412
+A,"A4 pinned + 4 streams",1024.0,H2D,31,128.0435,130.0724
+A,"A4 pinned + 4 streams",1024.0,KERNEL,31,130.0750,131.7778
+A,"A4 pinned + 4 streams",1024.0,D2H,31,131.7802,132.4448
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,0,0.0681,1.9623
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,0,1.9645,3.6796
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,0,3.6960,4.1734
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,1,0.4762,3.7170
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,1,3.7194,5.4306
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,1,5.4528,6.0046
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,2,4.1759,6.6398
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,2,6.6420,8.3607
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,2,8.3756,8.8919
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,3,6.0228,8.7935
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,3,8.8100,10.6039
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,3,10.6200,11.1142
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,4,8.8946,10.9830
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,4,11.0081,12.7070
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,4,12.7256,13.2396
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,5,11.1190,13.4235
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,5,13.4258,15.0947
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,5,15.1148,15.5473
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,6,13.2565,15.4182
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,6,15.4305,17.1165
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,6,17.1390,17.7180
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,7,15.5496,17.9201
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,7,17.9242,19.6294
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,7,19.6478,20.1388
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,8,17.7408,20.0872
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,8,20.1068,21.8720
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,8,21.8924,22.4094
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,9,20.1413,22.2504
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,9,22.2685,24.0058
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,9,24.0237,24.5487
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,10,22.4119,24.5567
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,10,24.5617,26.3141
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,10,26.3305,26.7845
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,11,24.5578,26.6764
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,11,26.6951,28.4460
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,11,28.4664,29.0049
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,12,26.7869,29.1527
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,12,29.1554,30.8422
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,12,30.8647,31.6993
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,13,29.0318,31.5140
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,13,31.5383,33.3419
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,13,33.3633,33.8964
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,14,31.7019,34.0761
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,14,34.0789,35.7779
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,14,35.7937,36.1948
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,15,33.9176,35.9712
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,15,35.9887,37.6928
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,15,37.7070,38.1940
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,16,36.1972,38.2056
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,16,38.2117,39.9271
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,16,39.9497,40.5029
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,17,38.2067,40.5397
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,17,40.5434,42.2147
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,17,42.2291,42.7431
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,18,40.5235,42.8734
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,18,42.8757,44.7113
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,18,44.7268,45.1208
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,19,42.7588,44.8580
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,19,44.8695,46.5973
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,19,46.6118,47.3850
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,20,45.1240,46.8715
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,20,46.8740,48.7110
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,20,48.7307,49.2678
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,21,47.3876,49.6744
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,21,49.6771,51.3755
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,21,51.3959,51.9203
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,22,49.2892,52.0412
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,22,52.0435,53.8385
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,22,53.8408,54.1939
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,23,51.9379,53.7294
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,23,53.7320,55.5227
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,23,55.5452,56.0873
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,24,54.1962,56.9090
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,24,56.9124,58.6418
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,24,58.6658,59.2802
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,25,56.1179,59.5090
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,25,59.5116,61.1977
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,25,61.2140,61.7524
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,26,59.3009,61.7733
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,26,61.7782,63.5160
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,26,63.5426,64.2554
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,27,61.7712,64.2554
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,27,64.2589,66.0105
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,27,66.0289,66.5560
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,28,64.2608,66.6518
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,28,66.6541,68.3268
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,28,68.3425,68.8456
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,29,66.5755,68.3848
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,29,68.3880,70.1269
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,29,70.1429,70.5912
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,30,68.8498,70.6374
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,30,70.6394,72.4043
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,30,72.4268,72.9064
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,H2D,31,70.6058,73.0276
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,KERNEL,31,73.0304,74.6850
+A,"A5 pinned + 4 streams, copy-ahead",1024.0,D2H,31,74.6874,75.2530
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,0,0.0006,4.0012
+B,"B1 prepare then compute (serial)",4.0,H2D,0,4.0845,5.5706
+B,"B1 prepare then compute (serial)",4.0,KERNEL,0,5.5729,7.2732
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,1,7.6942,11.6954
+B,"B1 prepare then compute (serial)",4.0,H2D,1,11.8910,13.5265
+B,"B1 prepare then compute (serial)",4.0,KERNEL,1,13.5288,15.2052
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,2,15.4740,19.4749
+B,"B1 prepare then compute (serial)",4.0,H2D,2,19.5586,21.0406
+B,"B1 prepare then compute (serial)",4.0,KERNEL,2,21.0428,22.7193
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,3,23.0251,27.0262
+B,"B1 prepare then compute (serial)",4.0,H2D,3,27.1971,28.9468
+B,"B1 prepare then compute (serial)",4.0,KERNEL,3,28.9491,30.6820
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,4,30.9575,34.9584
+B,"B1 prepare then compute (serial)",4.0,H2D,4,35.0673,36.4980
+B,"B1 prepare then compute (serial)",4.0,KERNEL,4,36.5008,38.1712
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,5,38.4858,42.4874
+B,"B1 prepare then compute (serial)",4.0,H2D,5,42.9623,44.8849
+B,"B1 prepare then compute (serial)",4.0,KERNEL,5,44.8871,46.5653
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,6,46.8659,50.8666
+B,"B1 prepare then compute (serial)",4.0,H2D,6,50.9923,52.3824
+B,"B1 prepare then compute (serial)",4.0,KERNEL,6,52.3853,54.0537
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,7,54.3461,58.3476
+B,"B1 prepare then compute (serial)",4.0,H2D,7,58.5386,60.3458
+B,"B1 prepare then compute (serial)",4.0,KERNEL,7,60.3481,62.0408
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,8,62.5784,67.7328
+B,"B1 prepare then compute (serial)",4.0,H2D,8,67.9521,69.5623
+B,"B1 prepare then compute (serial)",4.0,KERNEL,8,69.5646,71.2405
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,9,71.5163,75.5175
+B,"B1 prepare then compute (serial)",4.0,H2D,9,75.8107,77.8135
+B,"B1 prepare then compute (serial)",4.0,KERNEL,9,77.8157,79.4980
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,10,79.7626,83.7634
+B,"B1 prepare then compute (serial)",4.0,H2D,10,83.8553,85.4191
+B,"B1 prepare then compute (serial)",4.0,KERNEL,10,85.4213,87.1003
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,11,87.3568,91.3573
+B,"B1 prepare then compute (serial)",4.0,H2D,11,91.5543,93.0827
+B,"B1 prepare then compute (serial)",4.0,KERNEL,11,93.0850,94.7536
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,12,95.0326,99.0337
+B,"B1 prepare then compute (serial)",4.0,H2D,12,99.1372,100.5609
+B,"B1 prepare then compute (serial)",4.0,KERNEL,12,100.5636,102.2411
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,13,102.5199,106.5203
+B,"B1 prepare then compute (serial)",4.0,H2D,13,106.7078,108.4094
+B,"B1 prepare then compute (serial)",4.0,KERNEL,13,108.4117,110.0870
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,14,110.3807,114.3815
+B,"B1 prepare then compute (serial)",4.0,H2D,14,114.5521,116.1191
+B,"B1 prepare then compute (serial)",4.0,KERNEL,14,116.1214,117.8304
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,15,118.1114,122.1122
+B,"B1 prepare then compute (serial)",4.0,H2D,15,122.2039,123.7505
+B,"B1 prepare then compute (serial)",4.0,KERNEL,15,123.7530,125.4238
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,16,126.0198,130.0204
+B,"B1 prepare then compute (serial)",4.0,H2D,16,130.1624,131.6011
+B,"B1 prepare then compute (serial)",4.0,KERNEL,16,131.6035,133.2827
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,17,133.5698,137.5702
+B,"B1 prepare then compute (serial)",4.0,H2D,17,137.7152,139.1024
+B,"B1 prepare then compute (serial)",4.0,KERNEL,17,139.1050,140.7960
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,18,141.1806,145.1829
+B,"B1 prepare then compute (serial)",4.0,H2D,18,145.6924,147.9582
+B,"B1 prepare then compute (serial)",4.0,KERNEL,18,147.9605,149.6380
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,19,149.8866,153.8874
+B,"B1 prepare then compute (serial)",4.0,H2D,19,153.9970,155.4290
+B,"B1 prepare then compute (serial)",4.0,KERNEL,19,155.4313,157.0740
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,20,157.3573,161.3587
+B,"B1 prepare then compute (serial)",4.0,H2D,20,161.6393,163.2754
+B,"B1 prepare then compute (serial)",4.0,KERNEL,20,163.2785,165.1311
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,21,165.4746,169.5726
+B,"B1 prepare then compute (serial)",4.0,H2D,21,169.6893,171.1212
+B,"B1 prepare then compute (serial)",4.0,KERNEL,21,171.1237,172.7968
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,22,173.0634,177.6777
+B,"B1 prepare then compute (serial)",4.0,H2D,22,178.0395,180.0026
+B,"B1 prepare then compute (serial)",4.0,KERNEL,22,180.0055,181.6849
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,23,181.9886,185.9901
+B,"B1 prepare then compute (serial)",4.0,H2D,23,186.1175,187.5513
+B,"B1 prepare then compute (serial)",4.0,KERNEL,23,187.5544,189.2299
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,24,189.6037,193.9196
+B,"B1 prepare then compute (serial)",4.0,H2D,24,194.8801,196.4271
+B,"B1 prepare then compute (serial)",4.0,KERNEL,24,196.4293,198.0974
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,25,198.6691,202.6703
+B,"B1 prepare then compute (serial)",4.0,H2D,25,202.7833,204.2232
+B,"B1 prepare then compute (serial)",4.0,KERNEL,25,204.2258,205.8800
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,26,206.1352,211.2312
+B,"B1 prepare then compute (serial)",4.0,H2D,26,211.5667,213.1659
+B,"B1 prepare then compute (serial)",4.0,KERNEL,26,213.1682,214.8745
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,27,215.1185,219.1409
+B,"B1 prepare then compute (serial)",4.0,H2D,27,219.2348,220.6861
+B,"B1 prepare then compute (serial)",4.0,KERNEL,27,220.6886,222.3461
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,28,222.6183,226.6188
+B,"B1 prepare then compute (serial)",4.0,H2D,28,226.7432,228.3276
+B,"B1 prepare then compute (serial)",4.0,KERNEL,28,228.3298,230.0444
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,29,230.3602,234.3614
+B,"B1 prepare then compute (serial)",4.0,H2D,29,234.5147,235.9376
+B,"B1 prepare then compute (serial)",4.0,KERNEL,29,235.9401,237.5832
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,30,237.9012,241.9027
+B,"B1 prepare then compute (serial)",4.0,H2D,30,242.1704,244.3633
+B,"B1 prepare then compute (serial)",4.0,KERNEL,30,244.3665,246.2770
+B,"B1 prepare then compute (serial)",4.0,CPU_PREP,31,246.7318,250.7331
+B,"B1 prepare then compute (serial)",4.0,H2D,31,250.8347,252.2595
+B,"B1 prepare then compute (serial)",4.0,KERNEL,31,252.2621,253.9078
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,0,0.1111,4.1141
+B,"B2 1 producer thread (overlap)",4.0,H2D,0,4.7438,6.8109
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,0,6.8132,8.4927
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,1,4.1993,8.2004
+B,"B2 1 producer thread (overlap)",4.0,H2D,1,8.9117,10.8262
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,1,10.8285,12.5218
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,2,8.2302,12.2307
+B,"B2 1 producer thread (overlap)",4.0,H2D,2,12.9406,14.5842
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,2,14.5870,16.2697
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,3,12.2570,16.2573
+B,"B2 1 producer thread (overlap)",4.0,H2D,3,16.6006,18.7022
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,3,18.7047,20.4104
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,4,16.2819,20.2826
+B,"B2 1 producer thread (overlap)",4.0,H2D,4,20.9063,23.3250
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,4,23.3272,25.0188
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,5,20.3397,24.3406
+B,"B2 1 producer thread (overlap)",4.0,H2D,5,25.4829,28.0757
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,5,28.0780,29.7845
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,6,24.3640,29.1716
+B,"B2 1 producer thread (overlap)",4.0,H2D,6,30.1254,32.1974
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,6,32.1996,33.8846
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,7,29.2046,33.2052
+B,"B2 1 producer thread (overlap)",4.0,H2D,7,34.2286,37.0230
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,7,37.0254,38.7117
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,8,33.2347,37.2355
+B,"B2 1 producer thread (overlap)",4.0,H2D,8,39.4327,41.2929
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,8,41.2951,43.0021
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,9,37.2835,41.4930
+B,"B2 1 producer thread (overlap)",4.0,H2D,9,43.4274,45.7553
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,9,45.7597,47.4586
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,10,41.5285,45.5296
+B,"B2 1 producer thread (overlap)",4.0,H2D,10,48.0342,49.5288
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,10,49.5314,51.1984
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,11,45.5308,49.5316
+B,"B2 1 producer thread (overlap)",4.0,H2D,11,51.8418,53.7743
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,11,53.7788,55.4738
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,12,49.5333,53.5340
+B,"B2 1 producer thread (overlap)",4.0,H2D,12,56.3024,59.0793
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,12,59.0852,60.8336
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,13,53.5385,57.6332
+B,"B2 1 producer thread (overlap)",4.0,H2D,13,61.3849,64.2143
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,13,64.2170,65.9788
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,14,57.6405,65.2094
+B,"B2 1 producer thread (overlap)",4.0,H2D,14,66.5613,68.7988
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,14,68.8035,70.4762
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,15,65.2506,69.2511
+B,"B2 1 producer thread (overlap)",4.0,H2D,15,71.0888,73.4299
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,15,73.4321,75.1477
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,16,69.2904,73.2910
+B,"B2 1 producer thread (overlap)",4.0,H2D,16,75.6813,77.5644
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,16,77.5666,79.2304
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,17,73.2927,77.2944
+B,"B2 1 producer thread (overlap)",4.0,H2D,17,79.6726,81.2700
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,17,81.2731,82.9586
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,18,77.2975,81.2982
+B,"B2 1 producer thread (overlap)",4.0,H2D,18,83.2665,85.6502
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,18,85.6525,87.3456
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,19,81.3379,85.5187
+B,"B2 1 producer thread (overlap)",4.0,H2D,19,87.9028,90.1454
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,19,90.1477,91.8983
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,20,85.5218,90.4503
+B,"B2 1 producer thread (overlap)",4.0,H2D,20,92.5538,94.9685
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,20,94.9711,96.6760
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,21,90.4945,94.8990
+B,"B2 1 producer thread (overlap)",4.0,H2D,21,97.3480,99.5412
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,21,99.5438,101.3969
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,22,94.9014,98.9023
+B,"B2 1 producer thread (overlap)",4.0,H2D,22,101.9870,103.5680
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,22,103.5703,105.2859
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,23,98.9057,102.9068
+B,"B2 1 producer thread (overlap)",4.0,H2D,23,105.6666,107.1448
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,23,107.1470,108.8508
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,24,102.9082,106.9088
+B,"B2 1 producer thread (overlap)",4.0,H2D,24,109.3422,111.5357
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,24,111.5380,113.2463
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,25,106.9098,110.9104
+B,"B2 1 producer thread (overlap)",4.0,H2D,25,113.6977,116.2740
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,25,116.2762,117.9461
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,26,110.9162,116.9402
+B,"B2 1 producer thread (overlap)",4.0,H2D,26,118.5359,120.9167
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,26,120.9193,122.5976
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,27,116.9882,120.9892
+B,"B2 1 producer thread (overlap)",4.0,H2D,27,123.4119,125.4514
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,27,125.4537,127.0967
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,28,121.0286,125.0291
+B,"B2 1 producer thread (overlap)",4.0,H2D,28,127.4466,128.9420
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,28,128.9442,130.5868
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,29,125.0299,129.0306
+B,"B2 1 producer thread (overlap)",4.0,H2D,29,130.8997,132.3138
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,29,132.3163,133.9539
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,30,129.0360,133.0364
+B,"B2 1 producer thread (overlap)",4.0,H2D,30,134.5496,137.0110
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,30,137.0134,138.6828
+B,"B2 1 producer thread (overlap)",4.0,CPU_PREP,31,133.0633,137.0644
+B,"B2 1 producer thread (overlap)",4.0,H2D,31,139.1906,141.6853
+B,"B2 1 producer thread (overlap)",4.0,KERNEL,31,141.6884,143.4767
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,0,0.1795,4.1801
+B,"B3 2 producer threads (overlap)",4.0,H2D,0,4.5732,8.5491
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,0,8.5548,10.4170
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,1,0.2348,4.2353
+B,"B3 2 producer threads (overlap)",4.0,H2D,1,10.9466,13.6862
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,1,13.6885,15.6005
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,2,4.2087,9.2506
+B,"B3 2 producer threads (overlap)",4.0,H2D,2,16.1411,18.2270
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,2,18.2292,19.9136
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,3,4.2364,10.0247
+B,"B3 2 producer threads (overlap)",4.0,H2D,3,20.4707,22.7508
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,3,22.7531,24.4798
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,4,9.2528,14.7427
+B,"B3 2 producer threads (overlap)",4.0,H2D,4,25.0440,27.4272
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,4,27.4303,29.1412
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,5,14.0440,18.0478
+B,"B3 2 producer threads (overlap)",4.0,H2D,5,29.6965,31.4011
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,5,31.4033,33.0656
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,6,18.3510,22.3530
+B,"B3 2 producer threads (overlap)",4.0,H2D,6,33.7467,36.6333
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,6,36.6356,39.3081
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,7,22.8520,27.6430
+B,"B3 2 producer threads (overlap)",4.0,H2D,7,40.1615,43.1419
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,7,43.1444,45.0603
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,8,27.5414,31.5433
+B,"B3 2 producer threads (overlap)",4.0,H2D,8,45.7736,48.6827
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,8,48.6851,50.4878
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,9,31.5111,35.6430
+B,"B3 2 producer threads (overlap)",4.0,H2D,9,51.1891,54.2227
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,9,54.2258,56.0782
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,10,37.1081,46.1046
+B,"B3 2 producer threads (overlap)",4.0,H2D,10,56.7666,59.8571
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,10,59.8606,61.7153
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,11,43.3840,48.6017
+B,"B3 2 producer threads (overlap)",4.0,H2D,11,62.4340,65.2002
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,11,65.2024,67.3141
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,12,48.7716,57.5218
+B,"B3 2 producer threads (overlap)",4.0,H2D,12,68.6574,71.2832
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,12,71.2868,73.3428
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,13,54.5617,60.1373
+B,"B3 2 producer threads (overlap)",4.0,H2D,13,74.0373,77.2662
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,13,77.2702,79.1540
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,14,60.0651,71.9304
+B,"B3 2 producer threads (overlap)",4.0,H2D,14,79.9147,82.8143
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,14,82.8167,85.6105
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,15,65.6150,76.3943
+B,"B3 2 producer threads (overlap)",4.0,H2D,15,86.4130,89.7346
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,15,89.7380,91.5342
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,16,71.9343,78.9414
+B,"B3 2 producer threads (overlap)",4.0,H2D,16,92.1328,94.8538
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,16,94.8560,96.6234
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,17,77.4482,88.1700
+B,"B3 2 producer threads (overlap)",4.0,H2D,17,97.2259,100.5375
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,17,100.5407,102.4582
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,18,83.0458,91.0417
+B,"B3 2 producer threads (overlap)",4.0,H2D,18,103.0569,106.1995
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,18,106.2042,108.0674
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,19,89.9285,95.9976
+B,"B3 2 producer threads (overlap)",4.0,H2D,19,108.8536,111.9123
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,19,111.9147,113.8410
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,20,94.9903,104.1663
+B,"B3 2 producer threads (overlap)",4.0,H2D,20,114.7480,117.8979
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,20,117.9003,119.9127
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,21,101.0203,110.1744
+B,"B3 2 producer threads (overlap)",4.0,H2D,21,120.6617,123.4510
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,21,123.4586,125.3010
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,22,106.3386,117.0920
+B,"B3 2 producer threads (overlap)",4.0,H2D,22,126.1416,129.7859
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,22,129.7905,131.9965
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,23,112.1623,124.5659
+B,"B3 2 producer threads (overlap)",4.0,H2D,23,132.6549,135.4540
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,23,135.4563,137.3087
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,24,118.6794,128.7322
+B,"B3 2 producer threads (overlap)",4.0,H2D,24,137.9639,140.6833
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,24,140.6867,142.5724
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,25,124.5694,130.5063
+B,"B3 2 producer threads (overlap)",4.0,H2D,25,143.2137,146.3730
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,25,146.3752,148.5054
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,26,130.0121,139.7964
+B,"B3 2 producer threads (overlap)",4.0,H2D,26,149.3951,151.8051
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,26,151.8092,153.5943
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,27,135.9224,147.0090
+B,"B3 2 producer threads (overlap)",4.0,H2D,27,154.1154,157.2329
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,27,157.2355,159.1038
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,28,140.8961,149.4852
+B,"B3 2 producer threads (overlap)",4.0,H2D,28,159.9035,163.1367
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,28,163.1391,164.8833
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,29,147.0129,160.1301
+B,"B3 2 producer threads (overlap)",4.0,H2D,29,165.5096,167.7702
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,29,167.7725,169.6060
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,30,151.9564,160.9806
+B,"B3 2 producer threads (overlap)",4.0,H2D,30,170.1121,172.2129
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,30,172.2152,173.9454
+B,"B3 2 producer threads (overlap)",4.0,CPU_PREP,31,160.1347,165.0996
+B,"B3 2 producer threads (overlap)",4.0,H2D,31,174.5516,176.8412
+B,"B3 2 producer threads (overlap)",4.0,KERNEL,31,176.8435,178.5250

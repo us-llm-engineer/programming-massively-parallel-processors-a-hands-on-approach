@@ -1,0 +1,119 @@
+==================== GPU STARVATION ON NVIDIA GeForce GTX 1650 Ti ====================
+streamed data per run: 32 chunks x 8 MB = 256 MB.
+Method: GPU clocks primed before each group; variants interleaved; 1 warm-up round + 5 timed rounds;
+the run with the MEDIAN wall time is shown whole, and 'spread' is the min-max wall time of the 5 runs.
+This machine is noisy (WSL, shared with Windows, GPU power states): trust ratios that exceed the spread.
+
+---- Link speed: host <-> device copy of 64 MB (10 copies, warm) [MEASURED] ----
+  [book] PCIe is roughly an order of magnitude slower than on-card DRAM (G80: 8 GB/s PCIe total vs 86.4 GB/s DRAM).
+  copy           GB/s      
+  H2D pageable   1.49      
+  H2D pinned     4.49      
+  D2H pageable   1.66      
+  D2H pinned     4.98      
+  theoretical on-card DRAM bandwidth of this GPU: 192 GB/s [DERIVED]
+
+---- A0. Can this GPU overlap a host copy with a kernel? (direct test, two streams) [MEASURED] ----
+  [book] the DMA copy engine and the SMs are independent hardware, so a copy in one stream can run under a kernel in another.
+  copy engines reported by the driver (asyncEngineCount): 2
+  operation                  median ms 
+  kernel alone               18.77     
+  H2D 64 MB alone            12.68     
+  D2H 64 MB alone            13.65     
+  concurrent pair            both ms    sum ms       overlap of the shorter
+  kernel + H2D               18.88      31.45        99%
+  kernel + D2H               18.83      32.42        100%
+  H2D + D2H (full duplex)    18.84      26.33        59%
+  Read: overlap = (sum - both) / shorter. 100% = fully hidden, 0% = the two operations ran one after the other.
+  kernel + H2D near 100% means the hardware CAN hide a copy under compute here, so a pipeline that shows no
+  overlap is an issue-order problem, not a hardware limit (see A3/A4 vs A5 below). H2D + D2H near 0% although the
+  driver reports two copy engines means the two directions did not run concurrently here (cause not investigated).
+
+---- A. TRANSFER starvation: stream 256 MB through the GPU ----
+  [book] fix = pinned host memory + streams: while chunk i computes, chunk i+1 is copied in.
+  K = FMAs per element (compute intensity). 'GPU busy' = share of wall time a kernel is executing.
+  K     variant                     wall ms   GPU busy%  GB/s in    H2D sum ms  kernel ms   H2D&kernel   speedup   spread ms   check
+  1     A1 pageable + sync copies   127.0     4.2        2.11       109.1       5.3         0.0          1.00      112-155     PASS
+  1     A2 pinned + sync copies     68.4      6.5        3.93       50.6        4.4         0.0          1.86      66-78       PASS
+  1     A3 pinned + 2 streams       64.6      9.2        4.16       49.7        5.9         0.0          1.97      62-68       PASS
+  1     A4 pinned + 4 streams       61.7      7.9        4.35       48.5        4.9         0.0          2.06      61-68       PASS
+  1     A5 pinned + 4 streams, copy-ahead 50.5      10.6       5.31       82.5        5.3         5.1          2.51      48-54       PASS
+
+  256   A1 pageable + sync copies   241.5     7.0        1.11       206.2       16.9        0.0          1.00      153-360     PASS
+  256   A2 pinned + sync copies     108.9     15.8       2.46       72.0        17.2        0.0          2.22      99-153      PASS
+  256   A3 pinned + 2 streams       96.3      20.2       2.79       63.1        19.5        0.0          2.51      78-101      PASS
+  256   A4 pinned + 4 streams       92.8      19.5       2.89       61.6        18.1        0.0          2.60      87-110      PASS
+  256   A5 pinned + 4 streams, copy-ahead 66.5      27.4       4.03       95.2        18.2        17.7         3.63      58-77       PASS
+
+  1024  A1 pageable + sync copies   232.5     23.4       1.15       156.5       54.5        0.0          1.00      198-351     PASS
+  1024  A2 pinned + sync copies     130.6     40.5       2.06       55.9        52.9        0.0          1.78      116-148     PASS
+  1024  A3 pinned + 2 streams       134.0     41.3       2.00       63.8        55.3        0.0          1.74      115-142     PASS
+  1024  A4 pinned + 4 streams       131.5     42.8       2.04       55.8        56.3        0.0          1.77      113-148     PASS
+  1024  A5 pinned + 4 streams, copy-ahead 75.3      73.5       3.57       74.1        55.3        50.5         3.09      61-85       PASS
+
+  4096  A1 pageable + sync copies   352.1     57.5       0.76       133.3       202.4       0.0          1.00      311-361     PASS
+  4096  A2 pinned + sync copies     270.4     74.7       0.99       51.1        201.9       0.0          1.30      268-292     PASS
+  4096  A3 pinned + 2 streams       268.6     75.6       1.00       51.2        203.0       0.0          1.31      260-272     PASS
+  4096  A4 pinned + 4 streams       268.7     75.6       1.00       51.9        203.0       0.0          1.31      263-286     PASS
+  4096  A5 pinned + 4 streams, copy-ahead 202.3     98.7       1.33       50.6        199.7       47.3         1.74      202-202     PASS
+
+  Read: 'GPU busy%' well below 100 with a large 'H2D sum' = the GPU waits on the transfer (transfer-bound).
+  'H2D&kernel' is the time a copy and a kernel were active together (0 = no overlap; a good pipeline overlaps
+  most of the shorter of the two). 'speedup' is relative to A1 at the same K.
+  A3/A4 queue each chunk's D2H right after its kernel: H2D&kernel stays 0 and they barely beat A2 although they
+  use streams. A5 queues chunk c-1's D2H AFTER chunk c's H2D + kernel ('copy-ahead'): the overlap appears, wall
+  time falls to about the transfer time, and GPU busy% rises toward 100% once compute >= transfer.
+  Hypothesis for A3/A4 (not verified beyond the A5 result): copies run in queue order, so a D2H waiting for its
+  kernel holds up the next chunk's H2D. Rule: with streams, issue the NEXT input copy before the previous output copy.
+
+---- B. HOST-SIDE starvation: the CPU prepares each chunk (K = 1024: GPU kernel about 1.7 ms per chunk, from A) ----
+  [book] SmallBin-Overlap / task pools: keep the CPU producing while the GPU consumes, so neither waits.
+  CPU ms    variant                            wall ms   GPU busy%  prep ms/chunk GB/s in      spread ms   check
+  0.0       B1 prepare then compute (serial)   213.5     25.5       2.72          1.26         199-278     PASS
+  0.0       B2 1 producer thread (overlap)     142.7     38.1       3.69          1.88         136-175     PASS
+  0.0       B3 2 producer threads (overlap)    150.6     36.5       4.19          1.78         137-155     PASS
+
+  1.0       B1 prepare then compute (serial)   207.9     25.8       2.71          1.29         198-230     PASS
+  1.0       B2 1 producer thread (overlap)     146.0     38.2       3.75          1.84         138-155     PASS
+  1.0       B3 2 producer threads (overlap)    146.3     37.5       4.08          1.84         133-149     PASS
+
+  2.0       B1 prepare then compute (serial)   223.6     24.4       3.00          1.20         215-238     PASS
+  2.0       B2 1 producer thread (overlap)     145.3     38.5       3.70          1.85         135-158     PASS
+  2.0       B3 2 producer threads (overlap)    144.8     37.6       3.95          1.85         136-170     PASS
+
+  4.0       B1 prepare then compute (serial)   256.8     21.0       4.09          1.05         254-264     PASS
+  4.0       B2 1 producer thread (overlap)     149.0     37.4       4.37          1.80         142-158     PASS
+  4.0       B3 2 producer threads (overlap)    153.1     36.7       5.04          1.75         138-182     PASS
+
+  8.0       B1 prepare then compute (serial)   386.4     14.1       8.00          0.69         376-395     PASS
+  8.0       B2 1 producer thread (overlap)     262.0     21.0       8.02          1.02         261-263     PASS
+  8.0       B3 2 producer threads (overlap)    147.6     37.2       8.03          1.82         143-169     PASS
+
+  Read: in B1 the GPU-busy share falls as preparation time rises (the GPU waits for the host). B2/B3 hide
+  preparation behind GPU work until preparation per chunk exceeds GPU time per chunk; past that point the
+  producer is the bottleneck (still starved, but no longer because of serial hand-off).
+  'CPU ms' is the target preparation time added on top of the real fill of the 8 MB chunk.
+
+---- C. LAUNCH-OVERHEAD starvation: 2000 kernels, each only 4096 elements x 16 FMAs ----
+  [book] for small workloads the fixed start-up cost dominates and the GPU stays underused.
+  variant                      wall ms    us / kernel    vs fused    
+  C1 launch + sync each        115.87     57.94          308.9       x
+  C2 launch all, sync once     41.11      20.56          109.6       x
+  C3 one fused kernel          0.38       0.19           1.0         x
+  Read: 'GPU busy%' for C in the CSV = fused time / wall time (the share of wall time doing useful work if the
+  fused kernel is the ideal). Per-kernel launch + synchronize cost is the 'us / kernel' figure.
+
+---- D. Live GPU statistics while starved vs fed (NVML, 20 ms samples, ~1.2 s per variant) [MEASURED] ----
+  variant                        samples   util avg %  util max %  power W    SM MHz   
+  A1 pageable+sync (starved)     53        34.5        50          22.1       1350     
+  A4 pinned+4 streams (fed)      50        74.0        77          23.5       1350     
+  B1 serial CPU prep 4ms         49        55.1        69          20.1       1350     
+  B2 producer overlap 4ms        48        48.7        62          22.3       1350     
+  C1 launch+sync each            47        45.4        62          17.5       1350     
+  C3 fused kernel                40        27.6        62          26.8       1194     
+  Caveat: NVML utilisation is a windowed average that can lag short phases. Compare it with the event-based
+  GPU busy% above: where they disagree (e.g. B and C here) trust the event-based figure. Clock and power are still
+  informative: a starved GPU is not pushed to its top clock.
+
+stats written: stats/09_summary.csv (45 rows), stats/09_gantt.csv (1248 spans), stats/09_nvml_timeline.csv, stats/09_nvml_marks.csv
+ALL VARIANTS PASS
