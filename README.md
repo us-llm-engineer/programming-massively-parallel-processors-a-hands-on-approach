@@ -13,43 +13,78 @@ modern (Turing) GPU.
 | [`01_architecture_basics`](01_architecture_basics/README.md) | GPU architecture (Ch. 1-4) | device query, block/warp scheduling, vector add with transfer timing |
 | [`02_tiling_and_reduction`](02_tiling_and_reduction/README.md) | Memory and reduction (Ch. 5-6) | naive vs tiled matrix multiply, three sum-reduction kernels |
 | [`03_resource_partitioning`](03_resource_partitioning/README.md) | Performance tuning (Ch. 6-7) | occupancy model, register / shared-memory cliffs, loop unrolling |
-| [`04_case_studies`](04_case_studies/README.md) | Application case studies (Ch. 8-10) | MRI reconstruction, Coulomb summation, cutoff binning, constant-cache behaviour, GPU starvation; tests, figures, statistics |
+| [`04_case_studies`](04_case_studies/README.md) | Application case studies (Ch. 8-10) | MRI F^H d kernels and synthetic-phantom reconstruction, Coulomb summation, cutoff binning, constant-cache behaviour, GPU starvation; tests, figures, statistics |
+| [`05_real_data_mri`](05_real_data_mri/README.md) | Ch. 8 on real data | reconstruction of real measured brain k-space (M4Raw): 1,656 slices from 92 scans, with GPU utilisation, throughput, accuracy and energy statistics |
 
 The case-study chapters are numbered as in the edition used here: Chapter 8 is MRI, Chapter 9 is electrostatic
 (Coulomb) potential, Chapter 10 is cutoff binning.
 
-## What the case studies show (all numbers are [MEASURED] on the test GPU unless marked)
+## Results on real datasets
 
-| Study | Result | Result file |
+The table below covers only real data: the M4Raw in-vivo brain scans (reconstructed images, the main result) and the Parboil MRI-Q
+inputs (timing only: they hold scan geometry, no measured signal). Kernel benchmarks on synthetic inputs and the synthetic-phantom reconstruction are in
+[`04_case_studies`](04_case_studies/README.md) and in the figures below. All numbers are [MEASURED] on the test GPU unless marked.
+
+| Dataset and study | Result | Result file |
 | --- | --- | --- |
-| Direct Coulomb summation, 100^3 lattice x 100k atoms | 4 points/thread kernel is fastest: 99.9 G evals/s vs 70.0 (1 point/thread) and 63.9 (8 points/thread) | `04_case_studies/stats/01_dcs.csv` |
-| MRI F^H d ladder, 262,144 voxels x 8,192 samples | naive 99.3 ms -> hardware sin/cos + constant memory 51.2 ms | `04_case_studies/stats/08a_mri_ladder.csv` |
-| MRI F^H d, full 128^3 x 284,592 samples | 8.99 s, 66.4 G pairs/s | `04_case_studies/stats/08a_mri_ladder.csv` |
-| Constant cache, 512-atom windows | data-cache hit rate 87.8 % when all blocks read the same window, 49.6 % when each reads its own | `04_case_studies/output/06_ncu_summary.txt` |
-| Constant cache, 32 distinct addresses per warp | 64.0 ms vs 2.8 ms for one address per warp | `04_case_studies/output/06_ncu_summary.txt` |
-| MRI tuning | joint block/chunk/unroll search is 8.7 % faster than tuning one knob at a time (book: about 20 %) | `04_case_studies/output/08c_mri_accuracy_tuning.txt` |
-| GPU starvation, 256 MB streamed, 1024 FMAs per element | pinned + copy-ahead pipeline 75.3 ms wall vs 232.5 ms pageable synchronous copies | `04_case_studies/stats/09_summary.csv` |
-| Launch overhead, 2000 tiny kernels | 115.9 ms (sync each) vs 41.1 ms (sync once) vs 0.375 ms (fused) | `04_case_studies/stats/09_summary.csv` |
-| Reconstruction of a synthetic phantom from simulated radial k-space (2D, 40 CG iterations) | PSNR 14.1 dB (plain adjoint) -> 20.3 dB (density-compensated) -> 24.3 dB (CG) | `04_case_studies/stats/08e_recon_metrics.csv` |
-| Reconstruction of real measured brain k-space (M4Raw, 4 coils, 3 slices), full data | GPU F^H d agrees with the dataset's own FFT reconstruction to 0.0002 % relative error (PSNR 125-128 dB, the float32 limit) | `04_case_studies/stats/08f_real_metrics.csv` |
-| Same real data, 3.7x fewer phase-encode lines, zero-filled | PSNR 24.6-24.7 dB (25.4-26.5 % relative error); aliasing visible; CG reaches the same image | `04_case_studies/stats/08f_real_metrics.csv` |
+| M4Raw brain k-space, every slice of 92 scans (1,656 slices x 4 coils), GPU F^H d vs the dataset's own FFT reconstruction | relative error p50 0.0002 %, max 0.0003 %; PSNR at least 121 dB (float32 floor); 0 of 92 scans failed | `05_real_data_mri/stats/archive_summary.csv` |
+| Same run, throughput and cost | 36.2e12 voxel-sample pairs in 46.0 min, median kernel rate 25.9 G pairs/s; mean GPU utilisation 48.8 %, mean 24.3 W, about 18.6 Wh (derived) | `05_real_data_mri/stats/archive_summary.csv` |
+| Same data, 3.7x fewer phase-encode lines, zero-filled | PSNR median 25.2 dB (p5 23.9, p95 26.5); aliasing visible; CG reaches the same image | `05_real_data_mri/stats/archive_summary.csv` |
+| Same 92 scans, re-run that also writes the images | identical accuracy; 84.2 min instead of 46.0 because the GPU ran at a mean 848 MHz (89 C max) instead of 1,306 MHz; the cause of the lower clock was not isolated | `05_real_data_mri/stats/archive_png_run_summary.csv` |
+| Parboil MRI-Q large input (2,048 samples x 262,144 voxels) | accurate constant-memory kernel 15.27 ms; hardware sin/cos 5.39 ms (timing and agreement with a CPU reference; no image exists in this dataset) | `04_case_studies/output/08d_mri_q_parboil.txt` |
 
-Limits worth knowing: the Parboil inputs contain scan geometry only (no measured signal), so real-data images come from the separate M4Raw dataset, which is Cartesian, not the non-Cartesian trajectories of the book's data; CG without a prior does not remove aliasing (it converges to the zero-filled image in one iteration); the synthetic 3D reconstruction (32^3) (32^3) reaches only 17.9 dB and is too small to be convincing; the book's
-27.6 dB figure comes from a different data set and is not reproduced by these synthetic scans; hardware `__sinf/__cosf`
-made no visible PSNR difference at this size (book: 27.6 vs 27.5 dB).
+Limits worth knowing: M4Raw is Cartesian, not the non-Cartesian trajectories of the book's data; only the first 92 of its 240 validation scans were reconstructed;
+undersampled reconstructions are zero-filled and alias (CG without a prior converges to the same image); hardware `__sinf/__cosf` gave no speedup at this problem size.
+
+## Reconstructed images of all 92 scans
+
+The repository ships 6 of the 92 contact sheets (below). All 92 sheets, one PNG per scan with the 18 GPU-reconstructed slices of that scan, plus the full-size slice-8 images
+(dataset reconstruction, GPU full-data, GPU zero-filled) for one T1, one T2 and one FLAIR scan, are in a shared Google Drive folder:
+
+**https://drive.google.com/drive/folders/17ZoYSozMR2q2s46q1vX1IcMIC56efkEh?usp=sharing**
+
+Contents of `gpu-mri-png/`: 92 files named `<scan>.png` (about 0.4 MB each, 38 MB in total; 35 T1, 33 T2, 24 FLAIR scans; tiles downscaled to 192 px) and `showcase/` with 9 full-size 256 px images.
+The sheets are produced by `05_real_data_mri/scripts/run_real_archive.sh`; they are not in this repository to keep it small.
 
 ## Visualizations
 
-All figures are regenerated from `04_case_studies/stats/*.csv` by `make figures`; the numbers behind each are in the sub-folder README and result files.
+All 33 figures, two per row. Figures from real datasets come first; the rest use synthetic inputs and are labelled. Every figure is regenerated from the CSV files named in its caption (`make figures` in each folder).
 
-### Coulomb summation (Ch. 9)
+### Real datasets: M4Raw brain scans and Parboil MRI-Q
+
+<table><tr>
+<td width="50%"><img src="05_real_data_mri/figures/sheets/2022061203_T101.png" alt="2022061203_T101"><br><sub>2022061203_T101 (T1): all 18 slices reconstructed on the GPU from full k-space (slice number in each tile).</sub></td>
+<td width="50%"><img src="05_real_data_mri/figures/sheets/2022062303_T101.png" alt="2022062303_T101"><br><sub>2022062303_T101 (T1): all 18 slices reconstructed on the GPU from full k-space (slice number in each tile).</sub></td>
+</tr></table>
+
+<table><tr>
+<td width="50%"><img src="05_real_data_mri/figures/sheets/2022061203_T201.png" alt="2022061203_T201"><br><sub>2022061203_T201 (T2): all 18 slices reconstructed on the GPU from full k-space (slice number in each tile).</sub></td>
+<td width="50%"><img src="05_real_data_mri/figures/sheets/2022062303_T201.png" alt="2022062303_T201"><br><sub>2022062303_T201 (T2): all 18 slices reconstructed on the GPU from full k-space (slice number in each tile).</sub></td>
+</tr></table>
+
+<table><tr>
+<td width="50%"><img src="05_real_data_mri/figures/sheets/2022061203_FLAIR01.png" alt="2022061203_FLAIR01"><br><sub>2022061203_FLAIR01 (FLAIR): all 18 slices reconstructed on the GPU from full k-space (slice number in each tile).</sub></td>
+<td width="50%"><img src="05_real_data_mri/figures/sheets/2022062303_FLAIR01.png" alt="2022062303_FLAIR01"><br><sub>2022062303_FLAIR01 (FLAIR): all 18 slices reconstructed on the GPU from full k-space (slice number in each tile).</sub></td>
+</tr></table>
+
+<table><tr>
+<td width="50%"><img src="05_real_data_mri/figures/real_slices.png" alt="Real-data reconstruction"><br><sub>Slices 4, 8, 12 of one scan: dataset reconstruction, our GPU F^H d from full data, zero-filled from 3.7x fewer lines, and CG on the same undersampled data (`05_real_data_mri/stats/01_real_metrics.csv`).</sub></td>
+<td width="50%"><img src="05_real_data_mri/figures/real_archive_dist.png" alt="Archive distributions"><br><sub>All 1,656 slices: error against the dataset reconstruction, PSNR, zero-filled PSNR by contrast, kernel throughput (`05_real_data_mri/stats/archive/metrics.csv`).</sub></td>
+</tr></table>
+
+<table><tr>
+<td width="50%"><img src="05_real_data_mri/figures/real_archive_timeline.png" alt="GPU timeline"><br><sub>GPU utilisation, SM clock, temperature and power over the 46-minute run (`05_real_data_mri/stats/archive/gpu_timeline.csv`).</sub></td>
+<td width="50%"><img src="04_case_studies/figures/08_parboil_q.png" alt="Parboil MRI-Q"><br><sub>MRI-Q on the real Parboil inputs (`stats/08d_mri_q.csv`).</sub></td>
+</tr></table>
+
+### Coulomb summation (Ch. 9), synthetic inputs
 
 <table><tr>
 <td width="50%"><img src="04_case_studies/figures/01_dcs_versions.png" alt="DCS kernels"><br><sub>Direct Coulomb summation: the book's three kernels (`stats/01_dcs.csv`).</sub></td>
 <td width="50%"><img src="04_case_studies/figures/04_ch9_pitfalls.png" alt="Chapter 9 pitfalls"><br><sub>GPU-vs-CPU crossover and the 64 KB constant-memory chunk limit (`stats/04_ch9_pitfalls.csv`).</sub></td>
 </tr></table>
 
-### Cutoff summation (Ch. 10)
+### Cutoff summation and the constant cache (Ch. 10), synthetic inputs
 
 <table><tr>
 <td width="50%"><img src="04_case_studies/figures/05_scaling.png" alt="Cutoff scaling"><br><sub>Time versus volume for each cutoff version (`stats/05*_cutoff.csv`).</sub></td>
@@ -71,7 +106,7 @@ All figures are regenerated from `04_case_studies/stats/*.csv` by `make figures`
 <td width="50%"><img src="04_case_studies/figures/06_lanes_layout.png" alt="Lane and layout effects"><br><sub>Warp address uniformity and array-vs-struct layout (`stats/06_constant_cache.csv`).</sub></td>
 </tr></table>
 
-### MRI reconstruction (Ch. 8)
+### MRI F^H d kernels and the synthetic-phantom reconstruction (Ch. 8)
 
 <table><tr>
 <td width="50%"><img src="04_case_studies/figures/08_ladder.png" alt="MRI ladder"><br><sub>F^H d optimisation ladder (`stats/08a_mri_ladder.csv`).</sub></td>
@@ -84,17 +119,15 @@ All figures are regenerated from `04_case_studies/stats/*.csv` by `make figures`
 </tr></table>
 
 <table><tr>
-<td width="50%"><img src="04_case_studies/figures/08_parboil_q.png" alt="Parboil MRI-Q"><br><sub>MRI-Q on the real Parboil inputs (`stats/08d_mri_q.csv`).</sub></td>
+<td width="50%"><img src="04_case_studies/figures/08_reconstruction_2D.png" alt="2D reconstruction"><br><sub>2D head phantom reconstructed from simulated radial k-space: truth, plain adjoint, density-compensated, and CG at 5, 10 and 40 iterations (`stats/08e_*.bin`).</sub></td>
+<td width="50%"><img src="04_case_studies/figures/08_reconstruction_3D.png" alt="3D reconstruction"><br><sub>3D phantom (32^3), central slice, same methods; too coarse to be convincing.</sub></td>
+</tr></table>
+
+<table><tr>
 <td width="50%"><img src="04_case_studies/figures/08_reconstruction_psnr.png" alt="PSNR vs CG iteration"><br><sub>PSNR against CG iteration, accurate vs hardware trigonometry (`stats/08e_recon_metrics.csv`).</sub></td>
 </tr></table>
 
-<p><img src="04_case_studies/figures/08_reconstruction_2D.png" alt="2D reconstruction" width="100%"><br><sub>2D head phantom reconstructed from simulated radial k-space: truth, plain adjoint, density-compensated, and CG at 5, 10 and 40 iterations (`stats/08e_*.bin`).</sub></p>
-
-<p><img src="04_case_studies/figures/08_reconstruction_3D.png" alt="3D reconstruction" width="100%"><br><sub>3D phantom (32^3), central slice, same methods; too coarse to be convincing.</sub></p>
-
-<p><img src="04_case_studies/figures/08_real_data.png" alt="Real-data reconstruction" width="100%"><br><sub>Real in-vivo brain k-space (M4Raw, 4 coils), slices 4, 8, 12: dataset reconstruction, our GPU F^H d from full data, zero-filled from 3.7x fewer lines, and CG on the same undersampled data (`stats/08f_real_metrics.csv`).</sub></p>
-
-### GPU starvation (data pipeline)
+### GPU starvation (data pipeline), synthetic inputs
 
 <table><tr>
 <td width="50%"><img src="04_case_studies/figures/09_gpu_busy.png" alt="GPU busy"><br><sub>How much of the time the GPU is actually computing (`stats/09_summary.csv`).</sub></td>
@@ -130,13 +163,12 @@ cd 04_case_studies
 make                 # build every program into bin/
 make test            # 4 unit/invariant suites + check that every result file reports ALL VARIANTS PASS
 make run             # regenerate output/<program>.txt (one file per program)
-scripts/fetch_m4raw.py get multicoil_val/2022061203_T101.h5 && scripts/prepare_m4raw.py   # one 12.6 MB real brain scan (range request, not the 3 GB archive) -> data/m4raw; needed by 08f only
 scripts/fetch_parboil_data.sh   # downloads the two Parboil MRI-Q inputs (size + sha256 verified); needed by 08d only
 make figures         # regenerate figures/*.png from stats/*.csv
 make catch2          # optional Catch2 toolchain check
 ```
 
-The three earlier folders build the same way (`cd 01_architecture_basics && make run`).
+The three earlier folders build the same way (`cd 01_architecture_basics && make run`). Real-data reconstruction: see [`05_real_data_mri`](05_real_data_mri/README.md) (`make`, fetch one 12.6 MB scan, `make run`, `make archive`).
 
 ## Method
 
@@ -152,7 +184,7 @@ The three earlier folders build the same way (`cd 01_architecture_basics && make
 ## Not included
 
 - Multi-GPU execution (Section 9.6 of the book): needs more than one GPU and is not implemented.
-- The raw M4Raw scan is not redistributed (the reconstructed slices in `stats/08f_*.bin` are, with attribution); `scripts/fetch_m4raw.py` fetches it from Zenodo.
+- The raw M4Raw scan is not redistributed (reconstructed slices in `05_real_data_mri/stats/01_slice*.bin` are, with attribution); `05_real_data_mri/scripts/fetch_m4raw.py` fetches a scan from Zenodo, and the runner accepts the full archive or any prefix of it.
 - The Parboil data files are not redistributed (licence not verified); the fetch script downloads them and checks size and
   SHA-256.
 
@@ -161,7 +193,7 @@ The three earlier folders build the same way (`cd 01_architecture_basics && make
 - David B. Kirk and Wen-mei W. Hwu, *Programming Massively Parallel Processors: A Hands-on Approach*, Morgan Kaufmann
   (Elsevier), 2010.
 - Parboil benchmark suite (MRI-Q input data), University of Illinois IMPACT group.
-- M4Raw: a multi-contrast, multi-repetition, multi-channel MRI k-space dataset for low-field MRI research (Zenodo record 8056074, CC-BY 4.0); file `multicoil_val/2022061203_T101.h5`, slices 4, 8 and 12 are used.
+- M4Raw: a multi-contrast, multi-repetition, multi-channel MRI k-space dataset for low-field MRI research (Zenodo record 8056074, CC-BY 4.0); file `multicoil_val/2022061203_T101.h5`, slices 4, 8 and 12 are shown; the first 92 scans of `M4RawV1.5_multicoil_val.zip` are reconstructed in full.
 
 ## License
 

@@ -22,7 +22,6 @@ temperature sampled through NVML, so an under-fed GPU is visible in the result i
 | `08c_mri_accuracy_tuning` | Ch. 8 | `stats/08c_*.csv` | sin/cos accuracy, image agreement (MSE, PSNR), block x chunk x unroll tuning |
 | `08d_mri_q_parboil` | Ch. 8 | `stats/08d_mri_q.csv` | Parboil MRI-Q on the real small and large inputs |
 | `08e_mri_reconstruction` | Ch. 8 | `stats/08e_recon_metrics.csv`, `stats/08e_*.bin` | phantom -> simulated radial scan -> reconstructions (adjoint, density-compensated, conjugate gradient) |
-| `08f_mri_real_data` | Ch. 8 | `stats/08f_real_metrics.csv`, `stats/08f_*.bin` | reconstruction of REAL measured brain k-space (M4Raw, 4 coils, Cartesian 256x256) with the F^H d kernels; full and undersampled data; CG |
 | `09_gpu_starvation` | Ch. 6-9 (data pipeline) | `stats/09_*.csv` | pageable vs pinned transfers, streams, copy-ahead, host producers, launch overhead |
 
 Shared code: `src/common.cuh` (checks, CSV rows, warm/interleaved timing, occupancy ledger), `src/monitor.cuh` (NVML
@@ -32,9 +31,8 @@ sampler), `src/common_bins.cuh` (cutoff data structures and references), `src/co
 
 `make test` builds and runs four suites in `tests/` (33 checks: cutoff gather, scatter, LargeBin, MRI kernels) and then
 `tests/check_outputs.sh`, which requires every result file in `output/` to report `ALL VARIANTS PASS`. The MRI test was
-mutation-checked: a deliberately broken kernel makes it fail. `make catch2` builds and runs the Catch2 v3 tests: `tests/catch2/test_setup.cu` (toolchain check, template) and
-`tests/catch2/test_cartesian_recon.cu` (on a full Cartesian grid F^H d equals the centred inverse DFT in double precision, for accurate and
-hardware trigonometry; F^H F multiplies by the sample count).
+mutation-checked: a deliberately broken kernel makes it fail. `make catch2` builds `tests/catch2/test_setup.cu`, the Catch2
+v3 toolchain check and template for new tests.
 
 ## Selected results
 
@@ -98,22 +96,7 @@ scan of a 128x128 head phantom, 1 % complex noise, PSNR against the phantom afte
 Hardware and accurate trigonometry gave identical PSNR to 0.1 dB. The 3D case (32^3, 256 spokes) reaches 17.9 dB after
 25 iterations and is too coarse to be a convincing reconstruction. The book's 27.6 dB comes from a different data set.
 
-**Real measured data** (`output/08f_mri_real_data.txt`, `stats/08f_real_metrics.csv`, `figures/08_real_data.png`): three slices of an in-vivo T1
-brain scan (M4Raw, CC-BY 4.0, 4 receive coils, Cartesian 256 x 256). Truth is the dataset's own FFT + root-sum-of-squares reconstruction; no rescaling.
-
-| Reconstruction (per slice) | samples per coil | relative error | PSNR (dB) |
-| --- | --- | --- | --- |
-| GPU F^H d, full data, accurate trigonometry | 65,536 | 0.0002 % | 125.5-126.7 |
-| GPU F^H d, full data, hardware sin/cos | 65,536 | 0.0002 % | 126.3-127.8 |
-| zero-filled F^H d, 70 of 256 lines kept (3.7x fewer) | 17,920 | 25.4-26.5 % | 24.6-24.7 |
-| CG on the undersampled data (1-8 iterations) | 17,920 | same as zero-filled | same |
-
-GPU F^H d matches a double-precision CPU sum on 64 voxels to about 1e-7 (scaled by the sum of |terms|). Full-data agreement with the dataset's
-reconstruction shows the kernels are correct on measured data. CG converges in one iteration (the normal matrix has one non-zero eigenvalue on
-the kept lines), and later iterations are skipped; it returns the zero-filled image, so the aliasing remains. Removing it needs coil-sensitivity
-maps or a sparsity prior, which are not implemented. This dataset is Cartesian, so it does not exercise the non-Cartesian advantage that motivates the
-book's kernels. Timing of the full 4-coil reconstruction (4.3 G voxel-sample pairs per coil): 528.6 ms accurate, 559.1 ms hardware trigonometry on slice 4,
-at a mean SM clock of 1605 MHz (last line of the result file); hardware trigonometry did not help at this size.
+**Real measured data:** see [`../05_real_data_mri`](../05_real_data_mri/README.md).
 
 **GPU starvation** (`stats/09_summary.csv`): at 1024 FMAs per element streaming 256 MB, pageable synchronous copies take
 232.5 ms with the GPU busy 23.4 % of the time; pinned memory with four streams and copy-ahead issue order takes 75.3 ms
@@ -125,6 +108,87 @@ each takes 115.9 ms; one fused kernel does the same work in 0.375 ms.
 `make figures` runs `scripts/plot_*.py` on `stats/*.csv` and writes `figures/*.png`. The `08_reconstruction_*` images are
 rendered from the float32 slices in `stats/08e_*.bin`.
 
+Kernel benchmarks and the synthetic-phantom reconstruction. Real-data figures are in [`../05_real_data_mri`](../05_real_data_mri/README.md).
+
+### Coulomb summation (Ch. 9)
+
+
+<table><tr>
+<td width="50%"><img src="figures/01_dcs_versions.png" alt="DCS kernels"><br><sub>Direct Coulomb summation: the book's three kernels (`stats/01_dcs.csv`).</sub></td>
+<td width="50%"><img src="figures/04_ch9_pitfalls.png" alt="Chapter 9 pitfalls"><br><sub>GPU-vs-CPU crossover and the 64 KB constant-memory chunk limit (`stats/04_ch9_pitfalls.csv`).</sub></td>
+</tr></table>
+
+### Cutoff summation (Ch. 10)
+
+
+<table><tr>
+<td width="50%"><img src="figures/05_scaling.png" alt="Cutoff scaling"><br><sub>Time versus volume for each cutoff version (`stats/05*_cutoff.csv`).</sub></td>
+<td width="50%"><img src="figures/05_smallbin_binsweep.png" alt="SmallBin bin-edge sweep"><br><sub>SmallBin: bin edge decides how much overflows to the CPU (`stats/05c_cutoff.csv`).</sub></td>
+</tr></table>
+
+
+<table><tr>
+<td width="50%"><img src="figures/05_overlap.png" alt="Overlap"><br><sub>SmallBin-Overlap: hiding the CPU overflow pass behind GPU work (`stats/05d_overlap.csv`).</sub></td>
+<td width="50%"><img src="figures/05_overlap_gantt.png" alt="Overlap timeline"><br><sub>One overlapped run, 8 slabs (`stats/05d_overlap_gantt.csv`).</sub></td>
+</tr></table>
+
+
+<table><tr>
+<td width="50%"><img src="figures/07_divergence.png" alt="Divergence"><br><sub>How often a warp disagrees in the cutoff test, and what it costs (`stats/07_divergence.csv`).</sub></td>
+<td width="50%"><img src="figures/06_hit_rates.png" alt="Constant-cache hit rates"><br><sub>Constant-cache hit rate and time, measured with Nsight Compute (`stats/06_ncu.csv`).</sub></td>
+</tr></table>
+
+
+<table><tr>
+<td width="50%"><img src="figures/06_window_ratio.png" alt="Window ratio"><br><sub>Constant cache: blocks reading different atoms vs the same atoms (`stats/06_constant_cache.csv`).</sub></td>
+<td width="50%"><img src="figures/06_lanes_layout.png" alt="Lane and layout effects"><br><sub>Warp address uniformity and array-vs-struct layout (`stats/06_constant_cache.csv`).</sub></td>
+</tr></table>
+
+### MRI reconstruction (Ch. 8)
+
+
+<table><tr>
+<td width="50%"><img src="figures/08_ladder.png" alt="MRI ladder"><br><sub>F^H d optimisation ladder (`stats/08a_mri_ladder.csv`).</sub></td>
+<td width="50%"><img src="figures/08_thread_mapping.png" alt="Thread mapping"><br><sub>Mapping the two loops to threads (`stats/08b_mri_mapping.csv`).</sub></td>
+</tr></table>
+
+
+<table><tr>
+<td width="50%"><img src="figures/08_trig_accuracy.png" alt="Trig accuracy"><br><sub>Hardware trigonometry: accuracy against angle size (`stats/08c_trig_accuracy.csv`).</sub></td>
+<td width="50%"><img src="figures/08_tuning.png" alt="Tuning"><br><sub>Block x chunk x unroll tuning (`stats/08c_tuning.csv`).</sub></td>
+</tr></table>
+
+
+<table><tr>
+<td width="50%"><img src="figures/08_parboil_q.png" alt="Parboil MRI-Q"><br><sub>MRI-Q on the real Parboil inputs (`stats/08d_mri_q.csv`).</sub></td>
+<td width="50%"><img src="figures/08_reconstruction_psnr.png" alt="PSNR vs CG iteration"><br><sub>PSNR against CG iteration, accurate vs hardware trigonometry (`stats/08e_recon_metrics.csv`).</sub></td>
+</tr></table>
+
+
+<p><img src="figures/08_reconstruction_2D.png" alt="2D reconstruction" width="100%"><br><sub>2D head phantom reconstructed from simulated radial k-space: truth, plain adjoint, density-compensated, and CG at 5, 10 and 40 iterations (`stats/08e_*.bin`).</sub></p>
+
+
+<p><img src="figures/08_reconstruction_3D.png" alt="3D reconstruction" width="100%"><br><sub>3D phantom (32^3), central slice, same methods; too coarse to be convincing.</sub></p>
+
+
+<table><tr>
+<td width="50%"><img src="figures/09_gpu_busy.png" alt="GPU busy"><br><sub>How much of the time the GPU is actually computing (`stats/09_summary.csv`).</sub></td>
+<td width="50%"><img src="figures/09_pipeline_gantt.png" alt="Pipeline timelines"><br><sub>Copy and compute timelines per transfer strategy (`stats/09_gantt.csv`).</sub></td>
+</tr></table>
+
+
+<table><tr>
+<td width="50%"><img src="figures/09_host_prep.png" alt="Host preparation"><br><sub>When the CPU is slow at preparing data (`stats/09_summary.csv`).</sub></td>
+<td width="50%"><img src="figures/09_launch_overhead.png" alt="Launch overhead"><br><sub>Tiny kernels: the launch costs more than the work (`stats/09_summary.csv`).</sub></td>
+</tr></table>
+
+
+<table><tr>
+<td width="50%"><img src="figures/09_copy_compute_overlap.png" alt="Copy/compute overlap"><br><sub>Does the hardware overlap a copy with compute? (`stats/09_summary.csv`).</sub></td>
+<td width="50%"><img src="figures/09_nvml_timeline.png" alt="NVML timeline"><br><sub>What the GPU reports while starved versus fed (`stats/09_nvml_timeline.csv`).</sub></td>
+</tr></table>
+
+
 ## Profiling
 
 `make profile` runs `scripts/run_profiles.sh` (Nsight Compute counters for `06` and `08a`; needs GPU performance counters
@@ -132,9 +196,7 @@ enabled for non-admin users) and summarises them into `output/*_ncu_summary.txt`
 
 ## Data
 
-`08f_mri_real_data` reads `data/m4raw/slice_NN.bin`. Fetch one 12.6 MB scan from Zenodo (record 8056074, CC-BY 4.0, read with HTTP range requests so the
-3 GB archive is not downloaded) with `scripts/fetch_m4raw.py get multicoil_val/2022061203_T101.h5`, then run `scripts/prepare_m4raw.py`
-(needs `h5py`). SHA-256 of the scan: `d4156466a977a8bef888dff3141f78fbe93b3191c55f2632f2bd6410522399e7`.
+Real scanner data (M4Raw) is handled in [`../05_real_data_mri`](../05_real_data_mri/README.md).
 
 `08d_mri_q_parboil` reads the Parboil MRI-Q inputs from `data/parboil_mri_q/{small,large}`. They are not stored here; run
 `scripts/fetch_parboil_data.sh`, which downloads them (454,664 B and 3,186,696 B) and verifies size and SHA-256.
